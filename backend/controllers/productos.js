@@ -1,4 +1,8 @@
-
+/*
+Este controlador se encarga de manejar las peticiones de productos. Por tanto aqui se harán validaciones mediante schemas 
+de los datos que se reciben en las peticiones y se enviarán al modelo para que este interactue con la base de datos para
+finalmente retornar una respuesta al cliente.
+*/
 
 export class ProductosController{
 
