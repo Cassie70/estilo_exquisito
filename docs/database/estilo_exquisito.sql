@@ -20,7 +20,7 @@ create table Tallas(
 create table Inventario(
 	id_producto int unsigned not null,
     id_talla int unsigned not null,
-    stock int,
+    stock int unsigned,
     foreign key(id_producto) references Productos(id_producto),
     foreign key(id_talla) references Tallas(id_talla),
     primary key(id_producto,id_talla)
@@ -87,3 +87,9 @@ create table Trabajador(
     correo_electronico varchar(255),
     primary key(id_trabajador)
 );
+
+insert into Productos(nombre,descripcion,precio,imagen_url) values('Blusa de encaje','Blusa de encaje con cuello redondo y manga corta',250.00,'https://www.google.com');
+insert into Productos(nombre,descripcion,precio,imagen_url) values('Blusa de tirantes','Blusa de tirantes con cuello en V y estampado de flores',200.00,'https://www.google.com');
+insert into Productos(nombre,descripcion,precio,imagen_url) values('Blusa de manga larga','Blusa de manga larga con cuello redondo y estampado de rayas',300.00,'https://www.google.com');
+insert into Productos(nombre,descripcion,precio,imagen_url) values('Blusa de manga corta','Blusa de manga corta con cuello en V y estampado de puntos',150.00,'https://www.google.com');
+insert into Productos(nombre,descripcion,precio,imagen_url) values('Blusa de cuello alto','Blusa de cuello alto con manga larga y estampado de cuadros',350.00,'https://www.google.com');

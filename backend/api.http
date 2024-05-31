@@ -1,0 +1,13 @@
+GET http://localhost:1234/productos
+### 
+GET http://localhost:1234/productos/a
+###
+POST http://localhost:1234/productos
+Content-Type: application/json
+
+{
+    "nombre": "Producto 1",
+    "descripcion": "Descripcion del producto 1",
+    "precio": 1000.00,
+    "imagen_url": "https://www.google.com"
+}
