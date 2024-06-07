@@ -78,3 +78,35 @@ DELETE http://localhost:1234/ventas/b1bb5614-24fe-11ef-825d-08bfb8a373be
 #########################################################
 ###############      FIN    VENTAS        ###############
 #########################################################
+
+#########################################################
+###############          TALLAS           ###############
+#########################################################
+### Recuperar todas las tallas
+GET http://localhost:1234/tallas
+
+### Recuperar una talla por su id_talla
+GET http://localhost:1234/tallas/2
+
+### Crear una talla
+POST http://localhost:1234/tallas
+Content-Type: application/json
+
+{
+    "nombre_talla": "XS"
+}
+
+### Actualizar una talla
+PATCH http://localhost:1234/tallas/2
+Content-Type: application/json
+
+{
+    "nombre_talla": "L"
+}
+
+### Eliminar una talla
+DELETE http://localhost:1234/tallas/1
+
+#########################################################
+###############      FIN    TALLAS        ###############
+#########################################################
