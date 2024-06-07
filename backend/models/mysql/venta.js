@@ -5,15 +5,7 @@ Este contiene al modelo de ventas, el cual se encarga de interactuar con la base
 se instancia una conexion a la base de datos y se exporta la clase VentaModelo que contiene los metodos
 estaticos (pueden ser llamados sin instanciar la clase) cada metodo realiza una consulta a la base de datos y retorna el resultado
 */ 
-const config = {
-    host: 'localhost',
-    user: 'root',
-    port: '3306',
-    password: 'root',
-    database: 'estilo_exquisito_db'
-}
-
-const connection = await mysql.createConnection(process.env.DATABASE_URL || config)
+import connection from "../../database.js"
 
 
 export class VentaModelo {
