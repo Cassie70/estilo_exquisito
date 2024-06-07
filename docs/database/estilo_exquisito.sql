@@ -93,3 +93,20 @@ insert into Productos(nombre,descripcion,precio,imagen_url) values('Blusa de tir
 insert into Productos(nombre,descripcion,precio,imagen_url) values('Blusa de manga larga','Blusa de manga larga con cuello redondo y estampado de rayas',300.00,'https://www.google.com');
 insert into Productos(nombre,descripcion,precio,imagen_url) values('Blusa de manga corta','Blusa de manga corta con cuello en V y estampado de puntos',150.00,'https://www.google.com');
 insert into Productos(nombre,descripcion,precio,imagen_url) values('Blusa de cuello alto','Blusa de cuello alto con manga larga y estampado de cuadros',350.00,'https://www.google.com');
+
+INSERT INTO Usuarios (id_usuario, nombre, apellido, correo_electronico, telefono)
+VALUES
+    (UUID_TO_BIN('2da0c405-24a2-11ef-ab72-00155dbba9c2'), 'Juan', 'Perez', 'juan.perez@example.com', '1234567890'),
+    (UUID_TO_BIN('3ea1c506-35b3-22ef-bc83-00266dccca1d'), 'Maria', 'Gomez', 'maria.gomez@example.com', '0987654321'),
+    (UUID_TO_BIN('4fb2d607-46c4-33ef-cd94-00377eddcb2e'), 'Luis', 'Martinez', 'luis.martinez@example.com', '1122334455'),
+    (UUID_TO_BIN('5ac3e708-57d5-44ef-dea5-00488feecb3f'), 'Ana', 'Lopez', 'ana.lopez@example.com', '6677889900'),
+    (UUID_TO_BIN('6bd4f809-68e6-55ef-efb6-00599ffee6a6'), 'Carlos', 'Hernandez', 'carlos.hernandez@example.com', '5566778899');
+
+INSERT INTO Ventas (id_venta, id_usuario, monto)
+VALUES
+    (UUID_TO_BIN('7ef5a00b-79f7-66ef-0f07-006abbffdb8d'), UUID_TO_BIN('2da0c405-24a2-11ef-ab72-00155dbba9c2'), 250.00),
+    (UUID_TO_BIN('8f06b11c-8a08-77ef-1f18-007bccffee9e'), UUID_TO_BIN('3ea1c506-35b3-22ef-bc83-00266dccca1d'), 150.00),
+    (UUID_TO_BIN('9f17c22d-9b19-88ef-2f29-008cddfffbaf'), UUID_TO_BIN('4fb2d607-46c4-33ef-cd94-00377eddcb2e'), 300.00),
+    (UUID_TO_BIN('af28d33e-ac2a-99ef-3f3a-009dffeeecb0'), UUID_TO_BIN('5ac3e708-57d5-44ef-dea5-00488feecb3f'), 400.00),
+    (UUID_TO_BIN('bf39e44f-bd3b-aaef-4f4b-00aeddffee11'), UUID_TO_BIN('6bd4f809-68e6-55ef-efb6-00599ffee6a6'), 500.00);
+

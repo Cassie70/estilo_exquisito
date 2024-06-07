@@ -2,6 +2,7 @@ import express,{json} from 'express'
 import {createProdutosRouter} from './routes/productos.js'
 import {corsMiddleware} from './middlewares/cors.js'
 import { ProductosModelo } from './models/mysql/productos.js'
+import 'dotenv/config'
 
 
 //este es el punto de entrada de la aplicacion, aqui se configura el servidor y se definen las rutas usando express
