@@ -1,7 +1,12 @@
 import express,{json} from 'express'
-import {createProdutosRouter} from './routes/productos.js'
 import {corsMiddleware} from './middlewares/cors.js'
+//Direcciones para Productos
+import {createProdutosRouter} from './routes/productos.js'
 import { ProductosModelo } from './models/mysql/productos.js'
+//Direcciones para Ventas
+import {createVentaRouter} from './routes/venta.js'
+import { VentaModelo } from './models/mysql/venta.js'
+
 import 'dotenv/config'
 
 
@@ -15,6 +20,7 @@ app.disable('x-powered-by')
 
 //al crear la ruta de productos se le pasa como parametro el modelo de productos que se va a usar
 app.use('/productos', createProdutosRouter({productosModelo:ProductosModelo}))
+app.use('/ventas', createVentaRouter({ventaModelo:VentaModelo}))
 
 
 //Aqui se define el puerto en el que se va a correr el servidor, si no se define se usara el puerto 1234
