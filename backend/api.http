@@ -235,7 +235,7 @@ DELETE http://localhost:1234/detalle-pedido-apartado/2
 #############  FIN DETALLE PEDIDO APARTADO  #############
 #########################################################
 
-"#########################################################
+#########################################################
 ###############        TRABAJADOR         ###############
 #########################################################
 
@@ -312,6 +312,67 @@ DELETE http://localhost:1234/trabajadores/3
 #########################################################
 ###############      FIN    TRABAJADOR    ###############
 #########################################################
-"
 
+#########################################################
+###############         USUARIOS          ###############
+#########################################################
+
+### Recuperar todos los usuarios
+GET http://localhost:1234/usuarios
+
+### Recuperar un usuario por su id_usuario
+GET http://localhost:1234/usuarios/2da0c405-24a2-11ef-ab72-00155dbba9c2
+
+### Recuperar un usuario por su correo electrónico
+GET http://localhost:1234/usuarios/email/soyconnor@example.com
+
+### Crear un usuario
+POST http://localhost:1234/usuarios
+Content-Type: application/json
+
+{
+    "nombre": "Connor",
+    "apellido": "Mendoza",
+    "correo_electronico": "soyconnor@example.com",
+    "telefono": "5613773057"
+}
+
+### Actualizar el nombre de un usuario
+PATCH http://localhost:1234/usuarios/2da0c405-24a2-11ef-ab72-00155dbba9c2/nombre
+Content-Type: application/json
+
+{
+    "nombre": "Juan"
+}
+
+### Actualizar el apellido de un usuario
+PATCH http://localhost:1234/usuarios/2da0c405-24a2-11ef-ab72-00155dbba9c2/apellido
+Content-Type: application/json
+
+{
+    "apellido": "PereDO"
+}
+
+### Actualizar el correo electrónico de un usuario
+PATCH http://localhost:1234/usuarios/2da0c405-24a2-11ef-ab72-00155dbba9c2/email
+Content-Type: application/json
+
+{
+    "correo_electronico": "juanito.per@example.com"
+}
+
+### Actualizar el teléfono de un usuario
+PATCH http://localhost:1234/usuarios/2da0c405-24a2-11ef-ab72-00155dbba9c2/telefono
+Content-Type: application/json
+
+{
+    "telefono": "2342342342"
+}
+
+### Eliminar un usuario QUEDA PENDIENTE ARREGLAR
+###DELETE http://localhost:1234/usuarios/2da0c405-24a2-11ef-ab72-00155dbba9c2
+
+#########################################################
+###############      FIN    USUARIOS      ###############
+#########################################################
 
