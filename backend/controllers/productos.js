@@ -13,47 +13,70 @@ export class ProductosController{
     }
 
     getAll = async (req, res)=>{
-        const productos = await this.productosModelo.getAll()
-        res.json(productos)
+        try {
+            const productos = await this.productosModelo.getAll()
+            res.json(productos)
+        } catch (error) {
+            res.status(500).json({ error: 'No se pudo consultar la base de datos de Productos' });
+        }
     }
 
     getById = async (req, res)=>{
         const {id} = req.params
-        const producto = await this.productosModelo.getById({id})
-        if(producto) return res.json(producto)
-            res.status(404).json({error: 'Producto no encontrado'})
+        try {
+            const producto = await this.productosModelo.getById({id})
+            if(producto) return res.json(producto)
+                res.status(404).json({error: 'Producto no encontrado'})
+        } catch (error) {
+            res.status(500).json({ error: error.message});
+        }
     }
 
     create = async (req, res)=>{
         const result = SchemaProducto.validarCreateProducto(req.body) 
+        
         if(!result.success) 
             return res.status(400).json(result)
-        const newProducto = await this.productosModelo.create({input: req.body})
-
-        res.status(201).json(newProducto)
+        try {
+            const newProducto = await this.productosModelo.create({input: req.body})
+            res.status(201).json(newProducto)
+        } catch (error) {
+            res.status(500).json({ error: error.message});
+        }
     }
-    update = async (req, res)=>{
-
-        console.log(req.body)
-        const {id} = req.params //falta validar que la id exista en la base de datos
-        //const result = SchemaProducto.validarUpdateProducto(req.body)
-        //if(!result.success) 
-            //return res.status(400).json(result)
-
-        const updatedProducto = await this.productosModelo.update({id, input: req.body})
-
-        res.json(updatedProducto)
     
+    update = async (req, res) => {
+        const { id } = req.params;
+
+        // Aquí puedes agregar la validación para verificar si el producto con la ID proporcionada existe en la base de datos
+        // Por ejemplo:
+        // const productoExistente = await this.productosModelo.getById({ id });
+        // if (!productoExistente) return res.status(404).json({ error: 'Producto no encontrado' });
+
+        try {
+            const result = SchemaProducto.validarUpdateProducto(req.body);
+            if (!result.success) return res.status(400).json(result);
+
+            const updatedProducto = await this.productosModelo.update({ id, input: req.body });
+            res.json(updatedProducto);
+        } catch (error) {
+            res.status(500).json({ error: error.message });
+        }
     }
 
     delete = async (req, res)=>{
         const {id} = req.params
-        const deletedProducto = await this.productosModelo.delete({id})
-    
-        res.json(deletedProducto)
+        try {
+            const deletedProducto = await this.productosModelo.delete({id})
+            res.json(deletedProducto)
+        } catch (error) {
+            res.status(500).json({ error: error.message});
+        }
     }
 
 }
+
+
 
 
 
