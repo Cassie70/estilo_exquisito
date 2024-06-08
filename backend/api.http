@@ -376,3 +376,56 @@ Content-Type: application/json
 ###############      FIN    USUARIOS      ###############
 #########################################################
 
+#########################################################
+###############     DETALLE DE VENTA     ###############
+#########################################################
+
+### Recuperar todos los detalles de venta
+GET http://localhost:1234/detalle-venta
+
+### Recuperar un detalle de venta por su id_detalle_venta
+GET http://localhost:1234/detalle-venta/detalle/11
+
+### Recuperar detalles de venta por el id_venta
+GET http://localhost:1234/detalle-venta/venta/9f17c22d-9b19-88ef-2f29-008cddfffbaf
+
+### Recuperar detalles de venta por el id_producto
+GET http://localhost:1234/detalle-venta/producto/1
+
+### Recuperar detalles de venta por el id_talla
+GET http://localhost:1234/detalle-venta/talla/2
+
+### Crear un detalle de venta
+POST http://localhost:1234/detalle-venta
+Content-Type: application/json
+
+{
+    "id_venta": "9f17c22d-9b19-88ef-2f29-008cddfffbaf",
+    "id_producto": 1,
+    "precio_unitario": 800.00,
+    "cantidad": 2,
+    "id_talla": 1
+}
+
+### Actualizar el precio unitario de un detalle de venta
+PATCH http://localhost:1234/detalle-venta/11/precio_unitario
+Content-Type: application/json
+
+{
+    "precio_unitario": 100.80
+}
+
+### Actualizar la cantidad de un detalle de venta
+PATCH http://localhost:1234/detalle-venta/11/cantidad
+Content-Type: application/json
+
+{
+    "cantidad": 3
+}
+
+### Eliminar un detalle de venta
+DELETE http://localhost:1234/detalle-venta/8f06b11c-8a08-77ef-1f18-007bccffee9e
+
+#########################################################
+###############     FIN    DETALLE DE VENTA     ###############
+#########################################################
