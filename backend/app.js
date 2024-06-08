@@ -24,6 +24,9 @@ import { DetallePedidoApartadoModelo } from './models/mysql/detalle_pedido_apart
 // Importar el enrutador de usuarios 
 import { createUsuariosRouter } from './routes/usuarios.js';
 import { UsuariosModelo } from './models/mysql/usuarios.js';
+// Importar el enrutador de detalle de venta
+import { createDetalleVentaRouter } from './routes/detalle_venta.js';
+import { DetalleVentaModelo } from './models/mysql/detalle_venta.js';
 
 
 import 'dotenv/config'
@@ -46,6 +49,7 @@ app.use('/trabajadores', createTrabajadorRouter({ trabajadorModelo: TrabajadorMo
 app.use('/pedido-apartado', createPedidoApartadoRouter({ pedidoApartadoModelo: PedidoApartadoModelo }));
 app.use('/detalle-pedido-apartado', createDetallePedidoApartadoRouter({ detallePedidoApartadoModelo: DetallePedidoApartadoModelo }));
 app.use('/usuarios', createUsuariosRouter({ usuariosModelo: UsuariosModelo }));
+app.use('/detalle-venta', createDetalleVentaRouter({ detalleVentaModelo: DetalleVentaModelo }));
 
 
 //Aqui se define el puerto en el que se va a correr el servidor, si no se define se usara el puerto 1234
