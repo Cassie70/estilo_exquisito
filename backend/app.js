@@ -9,6 +9,10 @@ import { VentaModelo } from './models/mysql/venta.js'
 //Direcciones para Tallas
 import {createTallasRouter} from './routes/tallas.js'
 import {TallasModelo} from './models/mysql/tallas.js'
+// Direcciones para Inventario
+import { createInventarioRouter } from './routes/inventario.js';
+import { InventarioModelo } from './models/mysql/inventario.js';
+
 
 import 'dotenv/config'
 
@@ -25,6 +29,7 @@ app.disable('x-powered-by')
 app.use('/productos', createProdutosRouter({productosModelo:ProductosModelo}))
 app.use('/ventas', createVentaRouter({ventaModelo:VentaModelo}))
 app.use('/tallas', createTallasRouter({tallasModelo:TallasModelo}))
+app.use('/inventario', createInventarioRouter({inventarioModelo:InventarioModelo}))
 
 
 //Aqui se define el puerto en el que se va a correr el servidor, si no se define se usara el puerto 1234
