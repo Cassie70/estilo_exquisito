@@ -1,98 +1,116 @@
-import { SchemaPedidoApartado } from "../schemas/pedido_apartado.js";
+import mysql from 'mysql2/promise';
 
-export class PedidoApartadoController {
-    constructor({ pedidoApartadoModelo }) {
-        this.pedidoApartadoModelo = pedidoApartadoModelo;
-    }
+const config = {
+    host: 'localhost',
+    user: 'root',
+    port: '3306',
+    password: 'root',
+    database: 'estilo_exquisito_db'
+};
 
-    getAll = async (req, res) => {
+const connection = await mysql.createConnection(process.env.DATABASE_URL || config);
+
+export class PedidoApartadoModelo {
+    static async getAll() {
         try {
-            const pedidosApartados = await this.pedidoApartadoModelo.getAll();
-            res.json(pedidosApartados);
+            const [pedidos, tableInfo] = await connection.query(
+                'SELECT id_pedido_apartado, BIN_TO_UUID(id_usuario) AS id_usuario, fecha_apartado, estado FROM Pedido_apartado'
+            );
+            return pedidos;
         } catch (error) {
-            res.status(500).json({ error: 'No se pudo consultar la base de datos de Pedido apartado' });
+            throw new Error('Error al obtener todos los pedidos apartados: ' + error.message);
         }
     }
 
-    getById = async (req, res) => {
-        const { id_pedido_apartado } = req.params;
+    static async getById({ id_pedido_apartado }) {
         try {
-            const pedidoApartado = await this.pedidoApartadoModelo.getById({ id_pedido_apartado });
-            if (pedidoApartado.length > 0) return res.json(pedidoApartado);
-            res.status(404).json({ error: 'Pedido apartado no encontrado' });
+            const [pedido, tableInfo] = await connection.query(
+                'SELECT id_pedido_apartado, BIN_TO_UUID(id_usuario) AS id_usuario, fecha_apartado, estado FROM Pedido_apartado WHERE id_pedido_apartado = ?',
+                [id_pedido_apartado]
+            );
+            return pedido;
         } catch (error) {
-            res.status(500).json({ error: error.message });
+            throw new Error('Error al obtener el pedido apartado por ID: ' + error.message);
         }
     }
 
-    getByUserId = async (req, res) => {
-        const { id_usuario } = req.params;
+    static async getByUserId({ id_usuario }) {
         try {
-            const pedidosApartados = await this.pedidoApartadoModelo.getByUserId({ id_usuario });
-            if (pedidosApartados.length > 0) return res.json(pedidosApartados);
-            res.status(404).json({ error: 'Pedidos apartados no encontrados' });
+            const [pedidos, tableInfo] = await connection.query(
+                'SELECT id_pedido_apartado, BIN_TO_UUID(id_usuario) AS id_usuario, fecha_apartado, estado FROM Pedido_apartado WHERE id_usuario = UUID_TO_BIN(?)',
+                [id_usuario]
+            );
+            return pedidos;
         } catch (error) {
-            res.status(500).json({ error: error.message });
+            throw new Error('Error al obtener pedidos apartados por ID de usuario: ' + error.message);
         }
     }
 
-    getByEstado = async (req, res) => {
-        const { estado } = req.params;
+    static async getByEstado({ estado }) {
+        const estadoBool = (estado === 'true' || estado === true);
+        const estadoInt = estadoBool ? 1 : 0;
+        
         try {
-            const pedidosApartados = await this.pedidoApartadoModelo.getByEstado({ estado });
-            if (pedidosApartados.length > 0) return res.json(pedidosApartados);
-            res.status(404).json({ error: 'Pedidos apartados no encontrados' });
+            const [pedidos, tableInfo] = await connection.query(
+                'SELECT id_pedido_apartado, BIN_TO_UUID(id_usuario) AS id_usuario, fecha_apartado, estado FROM Pedido_apartado WHERE estado = ?',
+                [estadoInt]
+            );
+            return pedidos;
         } catch (error) {
-            res.status(500).json({ error: error.message });
+            throw new Error('Error al obtener pedidos apartados por estado: ' + error.message);
         }
     }
 
-    getByFecha = async (req, res) => {
-        const { fecha_apartado } = req.params;
+    static async getByFecha({ fecha_apartado }) {
+        // Extraemos la parte de la fecha (sin la hora)
+        const fechaSinHora = fecha_apartado.split('T')[0]; // Esto tomará solo la parte de la fecha (YYYY-MM-DD)
+        
+        console.log(fechaSinHora);
+        
         try {
-            const pedidosApartados = await this.pedidoApartadoModelo.getByFecha({ fecha_apartado });
-            if (pedidosApartados.length > 0) return res.json(pedidosApartados);
-            res.status(404).json({ error: 'Pedidos apartados no encontrados' });
+            const [pedidos, tableInfo] = await connection.query(
+                'SELECT id_pedido_apartado, BIN_TO_UUID(id_usuario) AS id_usuario, fecha_apartado, estado FROM Pedido_apartado WHERE DATE(fecha_apartado) = ?',
+                [fechaSinHora]
+            );
+            return pedidos;
         } catch (error) {
-            res.status(500).json({ error: error.message });
+            throw new Error('Error al obtener pedidos apartados por fecha: ' + error.message);
         }
     }
 
-    create = async (req, res) => {
-        const result = SchemaPedidoApartado.validarCrearPedidoApartado(req.body);
-        if (!result.success) return res.status(400).json(result);
-
-        const { id_usuario, estado } = req.body;
-
+    static async create({ id_usuario, estado }) {
         try {
-            const nuevoPedidoApartado = await this.pedidoApartadoModelo.create({ id_usuario, estado });
-            res.status(201).json(nuevoPedidoApartado);
+            const [result] = await connection.query(
+                'INSERT INTO Pedido_apartado (id_usuario, estado) VALUES (UUID_TO_BIN(?), ?)',
+                [id_usuario, estado]
+            );
+            return result;
         } catch (error) {
-            res.status(500).json({ error: error.message });
+            throw new Error('Error al crear el pedido apartado: ' + error.message);
         }
     }
 
-    updateEstado = async (req, res) => {
-        const { id_pedido_apartado } = req.params;
-        const { estado } = req.body;
-        const result = SchemaPedidoApartado.validarEstado({ estado });
-        if (!result.success) return res.status(400).json(result);
-
+    static async updateEstado({ id_pedido_apartado, estado }) {
         try {
-            const updatedPedidoApartado = await this.pedidoApartadoModelo.updateEstado({ id_pedido_apartado, estado });
-            res.json(updatedPedidoApartado);
+            const [result] = await connection.query(
+                'UPDATE Pedido_apartado SET estado = ? WHERE id_pedido_apartado = ?',
+                [estado, id_pedido_apartado]
+            );
+            return result;
         } catch (error) {
-            res.status(500).json({ error: error.message });
+            throw new Error('Error al actualizar el estado del pedido apartado: ' + error.message);
         }
     }
 
-    delete = async (req, res) => {
-        const { id_pedido_apartado } = req.params;
+    static async delete({ id_pedido_apartado }) {
         try {
-            const deletedPedidoApartado = await this.pedidoApartadoModelo.delete({ id_pedido_apartado });
-            res.json(deletedPedidoApartado);
+            const [result] = await connection.query(
+                'DELETE FROM Pedido_apartado WHERE id_pedido_apartado = ?',
+                [id_pedido_apartado]
+            );
+            return result;
         } catch (error) {
-            res.status(500).json({ error: error.message });
+            throw new Error('Error al eliminar el pedido apartado: ' + error.message);
         }
     }
 }
