@@ -235,6 +235,83 @@ DELETE http://localhost:1234/detalle-pedido-apartado/2
 #############  FIN DETALLE PEDIDO APARTADO  #############
 #########################################################
 
+"#########################################################
+###############        TRABAJADOR         ###############
+#########################################################
 
+### Recuperar todos los trabajadores
+GET http://localhost:1234/trabajadores
+
+### Recuperar un trabajador por su id_trabajador
+GET http://localhost:1234/trabajadores/1
+
+### Recuperar trabajadores por el usuario
+GET http://localhost:1234/trabajadores/usuario/mariagomez
+
+### Recuperar trabajadores por el correo electrónico
+GET http://localhost:1234/trabajadores/email/jorgecenteno12@example.com
+
+### Recuperar trabajadores por el rol
+GET http://localhost:1234/trabajadores/rol/vendedor
+
+### Crear un trabajador
+POST http://localhost:1234/trabajadores
+Content-Type: application/json
+
+{
+    "usuario": "LuisCal10",
+    "rol": "vendedor",
+    "password": "passdedade",
+    "nombre_completo": "Luis Mendoza",
+    "correo_electronico": "LuissinS@example.com"
+}
+
+### Actualizar el usuario de un trabajador
+PATCH http://localhost:1234/trabajadores/1/usuario
+Content-Type: application/json
+
+{
+    "usuario": "mariag"
+}
+
+### Actualizar el rol de un trabajador
+PATCH http://localhost:1234/trabajadores/1/rol
+Content-Type: application/json
+
+{
+    "rol": "almacenista"
+}
+
+### Actualizar la contraseña de un trabajador
+PATCH http://localhost:1234/trabajadores/1/password
+Content-Type: application/json
+
+{
+    "password": "newpassword456"
+}
+
+### Actualizar el nombre completo de un trabajador
+PATCH http://localhost:1234/trabajadores/1/nombre_completo
+Content-Type: application/json
+
+{
+    "nombre_completo": "Maria G. Gomez"
+}
+
+### Actualizar el correo electrónico de un trabajador
+PATCH http://localhost:1234/trabajadores/1/email
+Content-Type: application/json
+
+{
+    "correo_electronico": "maria.g@example.com"
+}
+
+### Eliminar un trabajador
+DELETE http://localhost:1234/trabajadores/3
+
+#########################################################
+###############      FIN    TRABAJADOR    ###############
+#########################################################
+"
 
 
