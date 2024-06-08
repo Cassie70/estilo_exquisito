@@ -36,6 +36,7 @@ app.use('/productos', createProdutosRouter({productosModelo:ProductosModelo}))
 app.use('/ventas', createVentaRouter({ventaModelo:VentaModelo}))
 app.use('/tallas', createTallasRouter({tallasModelo:TallasModelo}))
 app.use('/inventario', createInventarioRouter({inventarioModelo:InventarioModelo}))
+app.use('/trabajadores', createTrabajadorRouter({ trabajadorModelo: TrabajadorModelo }));
 app.use('/pedido-apartado', createPedidoApartadoRouter({ pedidoApartadoModelo: PedidoApartadoModelo }));
 
 
