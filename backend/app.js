@@ -12,6 +12,9 @@ import {TallasModelo} from './models/mysql/tallas.js'
 // Direcciones para Inventario
 import { createInventarioRouter } from './routes/inventario.js';
 import { InventarioModelo } from './models/mysql/inventario.js';
+// Direcciones para Trabajadores
+import { createTrabajadorRouter } from './routes/trabajador.js';
+import { TrabajadorModelo } from './models/mysql/trabajador.js';
 // Direcciones para pedido apartado
 import { createPedidoApartadoRouter } from './routes/pedido_apartado.js';
 import { PedidoApartadoModelo } from './models/mysql/pedido_apartado.js';
