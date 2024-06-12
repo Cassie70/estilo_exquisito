@@ -88,25 +88,89 @@ create table Trabajador(
     primary key(id_trabajador)
 );
 
-insert into Productos(nombre,descripcion,precio,imagen_url) values('Blusa de encaje','Blusa de encaje con cuello redondo y manga corta',250.00,'https://www.google.com');
-insert into Productos(nombre,descripcion,precio,imagen_url) values('Blusa de tirantes','Blusa de tirantes con cuello en V y estampado de flores',200.00,'https://www.google.com');
-insert into Productos(nombre,descripcion,precio,imagen_url) values('Blusa de manga larga','Blusa de manga larga con cuello redondo y estampado de rayas',300.00,'https://www.google.com');
-insert into Productos(nombre,descripcion,precio,imagen_url) values('Blusa de manga corta','Blusa de manga corta con cuello en V y estampado de puntos',150.00,'https://www.google.com');
-insert into Productos(nombre,descripcion,precio,imagen_url) values('Blusa de cuello alto','Blusa de cuello alto con manga larga y estampado de cuadros',350.00,'https://www.google.com');
+INSERT INTO Productos (nombre, descripcion, precio, imagen_url) VALUES
+('Camiseta Básica', 'Camiseta de algodón de alta calidad', 199.99, 'url_imagen_1'),
+('Pantalón Deportivo', 'Pantalón cómodo para actividades físicas', 299.99, 'url_imagen_2'),
+('Chaqueta Casual', 'Chaqueta para uso diario', 499.99, 'url_imagen_3'),
+('Vestido de Verano', 'Vestido ligero para verano', 399.99, 'url_imagen_4'),
+('Sudadera con Capucha', 'Sudadera de lana con capucha', 349.99, 'url_imagen_5');
 
-INSERT INTO Usuarios (id_usuario, nombre, apellido, correo_electronico, telefono)
-VALUES
-    (UUID_TO_BIN('2da0c405-24a2-11ef-ab72-00155dbba9c2'), 'Juan', 'Perez', 'juan.perez@example.com', '1234567890'),
-    (UUID_TO_BIN('3ea1c506-35b3-22ef-bc83-00266dccca1d'), 'Maria', 'Gomez', 'maria.gomez@example.com', '0987654321'),
-    (UUID_TO_BIN('4fb2d607-46c4-33ef-cd94-00377eddcb2e'), 'Luis', 'Martinez', 'luis.martinez@example.com', '1122334455'),
-    (UUID_TO_BIN('5ac3e708-57d5-44ef-dea5-00488feecb3f'), 'Ana', 'Lopez', 'ana.lopez@example.com', '6677889900'),
-    (UUID_TO_BIN('6bd4f809-68e6-55ef-efb6-00599ffee6a6'), 'Carlos', 'Hernandez', 'carlos.hernandez@example.com', '5566778899');
+-- Añadiendo registros a la tabla Tallas
+INSERT INTO Tallas (nombre_talla) VALUES
+('XS'),
+('S'),
+('M'),
+('L'),
+('XL');
 
-INSERT INTO Ventas (id_venta, id_usuario, monto)
-VALUES
-    (UUID_TO_BIN('7ef5a00b-79f7-66ef-0f07-006abbffdb8d'), UUID_TO_BIN('2da0c405-24a2-11ef-ab72-00155dbba9c2'), 250.00),
-    (UUID_TO_BIN('8f06b11c-8a08-77ef-1f18-007bccffee9e'), UUID_TO_BIN('3ea1c506-35b3-22ef-bc83-00266dccca1d'), 150.00),
-    (UUID_TO_BIN('9f17c22d-9b19-88ef-2f29-008cddfffbaf'), UUID_TO_BIN('4fb2d607-46c4-33ef-cd94-00377eddcb2e'), 300.00),
-    (UUID_TO_BIN('af28d33e-ac2a-99ef-3f3a-009dffeeecb0'), UUID_TO_BIN('5ac3e708-57d5-44ef-dea5-00488feecb3f'), 400.00),
-    (UUID_TO_BIN('bf39e44f-bd3b-aaef-4f4b-00aeddffee11'), UUID_TO_BIN('6bd4f809-68e6-55ef-efb6-00599ffee6a6'), 500.00);
+-- Añadiendo registros a la tabla Inventario
+INSERT INTO Inventario (id_producto, id_talla, stock) VALUES
+(1, 1, 10), -- Camiseta Básica, XS
+(1, 2, 15), -- Camiseta Básica, S
+(1, 3, 20), -- Camiseta Básica, M
+(1, 4, 15), -- Camiseta Básica, L
+(1, 5, 10), -- Camiseta Básica, XL
+(2, 1, 12), -- Pantalón Deportivo, XS
+(2, 2, 14), -- Pantalón Deportivo, S
+(2, 3, 16), -- Pantalón Deportivo, M
+(2, 4, 18), -- Pantalón Deportivo, L
+(2, 5, 10), -- Pantalón Deportivo, XL
+(3, 1, 5),  -- Chaqueta Casual, XS
+(3, 2, 10), -- Chaqueta Casual, S
+(3, 3, 12), -- Chaqueta Casual, M
+(3, 4, 8),  -- Chaqueta Casual, L
+(3, 5, 5),  -- Chaqueta Casual, XL
+(4, 1, 20), -- Vestido de Verano, XS
+(4, 2, 18), -- Vestido de Verano, S
+(4, 3, 16), -- Vestido de Verano, M
+(4, 4, 14), -- Vestido de Verano, L
+(4, 5, 10), -- Vestido de Verano, XL
+(5, 1, 8),  -- Sudadera con Capucha, XS
+(5, 2, 12), -- Sudadera con Capucha, S
+(5, 3, 10), -- Sudadera con Capucha, M
+(5, 4, 6),  -- Sudadera con Capucha, L
+(5, 5, 4);  -- Sudadera con Capucha, XL
 
+-- Añadiendo registros a la tabla Usuarios
+INSERT INTO Usuarios (id_usuario, nombre, apellido, correo_electronico, telefono) VALUES
+(UUID_TO_BIN('a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a11'), 'Juan', 'Pérez', 'juan.perez@example.com', '5551234567'),
+(UUID_TO_BIN('b1eebc99-9c0b-4ef8-bb6d-6bb9bd380b22'), 'María', 'Gómez', 'maria.gomez@example.com', '5552345678'),
+(UUID_TO_BIN('c2eebc99-9c0b-4ef8-bb6d-6bb9bd380c33'), 'Carlos', 'López', 'carlos.lopez@example.com', '5553456789'),
+(UUID_TO_BIN('d3eebc99-9c0b-4ef8-bb6d-6bb9bd380d44'), 'Ana', 'Martínez', 'ana.martinez@example.com', '5554567890'),
+(UUID_TO_BIN('e4eebc99-9c0b-4ef8-bb6d-6bb9bd380e55'), 'Luis', 'Fernández', 'luis.fernandez@example.com', '5555678901');
+
+-- Añadiendo registros a la tabla Ventas
+INSERT INTO Ventas (id_venta, id_usuario, monto, fecha) VALUES
+(UUID_TO_BIN('f5eebc99-9c0b-4ef8-bb6d-6bb9bd380f66'), UUID_TO_BIN('a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a11'), 399.98, '2024-06-10 10:00:00'),
+(UUID_TO_BIN('b6eebc99-9c0b-4ef8-bb6d-6bb9bd380b66'), UUID_TO_BIN('b1eebc99-9c0b-4ef8-bb6d-6bb9bd380b22'), 299.99, '2024-06-11 11:00:00'),
+(UUID_TO_BIN('c7eebc99-9c0b-4ef8-bb6d-6bb9bd380c77'), UUID_TO_BIN('c2eebc99-9c0b-4ef8-bb6d-6bb9bd380c33'), 499.99, '2024-06-12 12:00:00'),
+(UUID_TO_BIN('d8eebc99-9c0b-4ef8-bb6d-6bb9bd380d88'), UUID_TO_BIN('d3eebc99-9c0b-4ef8-bb6d-6bb9bd380d44'), 349.99, '2024-06-13 13:00:00'),
+(UUID_TO_BIN('e9eebc99-9c0b-4ef8-bb6d-6bb9bd380e99'), UUID_TO_BIN('e4eebc99-9c0b-4ef8-bb6d-6bb9bd380e55'), 199.99, '2024-06-14 14:00:00');
+
+-- Añadiendo registros a la tabla Detalle_venta
+INSERT INTO Detalle_venta (id_venta, id_producto, precio_unitario, cantidad, id_talla) VALUES
+(UUID_TO_BIN('f5eebc99-9c0b-4ef8-bb6d-6bb9bd380f66'), 1, 199.99, 2, 3),
+(UUID_TO_BIN('f5eebc99-9c0b-4ef8-bb6d-6bb9bd380f66'), 2, 599.99, 1, 1),
+(UUID_TO_BIN('f5eebc99-9c0b-4ef8-bb6d-6bb9bd380f66'), 3, 99.99, 5, 4),
+(UUID_TO_BIN('b6eebc99-9c0b-4ef8-bb6d-6bb9bd380b66'), 2, 299.99, 1, 2),
+(UUID_TO_BIN('c7eebc99-9c0b-4ef8-bb6d-6bb9bd380c77'), 3, 499.99, 1, 4),
+(UUID_TO_BIN('d8eebc99-9c0b-4ef8-bb6d-6bb9bd380d88'), 5, 349.99, 1, 1),
+(UUID_TO_BIN('e9eebc99-9c0b-4ef8-bb6d-6bb9bd380e99'), 1, 199.99, 1, 5);
+
+-- Añadiendo registros a la tabla Pedido_apartado
+INSERT INTO Pedido_apartado (id_usuario, estado) VALUES
+(UUID_TO_BIN('a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a11'), TRUE),
+(UUID_TO_BIN('b1eebc99-9c0b-4ef8-bb6d-6bb9bd380b22'), FALSE),
+(UUID_TO_BIN('c2eebc99-9c0b-4ef8-bb6d-6bb9bd380c33'), TRUE),
+(UUID_TO_BIN('d3eebc99-9c0b-4ef8-bb6d-6bb9bd380d44'), TRUE),
+(UUID_TO_BIN('e4eebc99-9c0b-4ef8-bb6d-6bb9bd380e55'), FALSE);
+
+-- Añadiendo registros a la tabla Detalle_pedido_apartado
+INSERT INTO Detalle_pedido_apartado (id_pedido_apartado, id_producto, id_talla, cantidad) VALUES
+(1, 1, 2, 3),
+(1, 2, 4, 1),
+(2, 3, 1, 2),
+(3, 4, 5, 1),
+(4, 5, 3, 2),
+(5, 1, 4, 1),
+(5, 2, 3, 2);

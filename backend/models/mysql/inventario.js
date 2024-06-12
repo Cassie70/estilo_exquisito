@@ -1,14 +1,4 @@
-import mysql from 'mysql2/promise';
-
-const config = {
-    host: 'localhost',
-    user: 'root',
-    port: '3306',
-    password: 'root',
-    database: 'estilo_exquisito_db'
-}
-
-const connection = await mysql.createConnection(process.env.DATABASE_URL || config);
+import connection from "../../database.js"
 
 export class InventarioModelo {
     static async getAll() {
