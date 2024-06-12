@@ -1,31 +1,31 @@
 /*ESTILOS GENERALES*/
-body{
-  font-family: sans-serif,Arial, Helvetica;
+body {
+  font-family: sans-serif, Arial, Helvetica;
   text-align: center;
   padding: 0px;
   margin: 0px;
 }
 
-img{
+img {
   width: 100px;
   height: 150px;
   border-radius: 10px;
 }
 /*----------------------MIS RUTAS----------------------------*/
-.content-principal{
+.content-principal {
   background-color: white;
 }
 
 /*----------------------CABECERA Y NAV-----------------------*/
 /*ESTILOS CABECERA*/
-.header{
+.header {
   font-size: 10px;
   text-align: center;
   font-style: italic;
   margin-left: 100px;
 }
 
-.header-principal{
+.header-principal {
   grid-area: header;
   display: flex;
   flex-direction: row;
@@ -33,12 +33,12 @@ img{
   align-items: center;
 }
 
-.header h1{
+.header h1 {
   margin-left: 15px;
 }
 
 /*ESTILOS BARRA DE NAVEGACIÓN*/
-.nav ul{
+.nav ul {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -46,11 +46,11 @@ img{
   margin-right: 100px;
 }
 
-.nav li{
+.nav li {
   padding: 10px;
 }
 
-.nav a{
+.nav a {
   display: block;
   margin-left: 15px;
   margin-right: 15px;
@@ -61,8 +61,9 @@ img{
   transition: all 300ms;
 }
 
-.nav a:hover,.nav .active{
-  transform: scale(1.1,1.1);
+.nav a:hover,
+.nav .active {
+  transform: scale(1.1, 1.1);
   background-color: black;
   color: #f6f7f9;
   padding: 10px 10px;
@@ -71,28 +72,33 @@ img{
 }
 
 /*----------------------ALMACEN-----------------------*/
-.layout{
+.layout {
   width: 100%;
   height: auto;
 
   display: grid;
-  grid-template-areas: 
-      "header header header header"
-      "content content content lateral"
-      "content content content lateral"
-      "footer footer footer footer"
-  ;
+  grid-template-areas:
+    "header header header header"
+    "content content content lateral"
+    "content content content lateral"
+    "footer footer footer footer";
 
   grid-template-rows: 100px 70px auto 70px;
-
 }
 
-.precio{
+.layout .title-almacen {
+  width: 100%;
+  margin-left: 150px;
+  align-content: center;
+  font-size: 20px;
+}
+
+.precio {
   font-size: 20px;
   margin: 1px;
 }
 /*ESTILOS PARA EL CONTENIDO PRINCIPAL*/
-.content{
+.content {
   grid-area: content;
   margin-left: 150px;
   display: flex;
@@ -101,7 +107,7 @@ img{
   align-items: flex-start;
 }
 
-.peli-item{
+.peli-item {
   flex-grow: 1;
   background: white;
   border-radius: 10px;
@@ -115,9 +121,11 @@ img{
   padding-right: 25px;
 }
 
- .layout button,input[type="submit"],input[type="button"]{
+.layout button,
+input[type="submit"],
+input[type="button"] {
   width: 100px;
-  background:  black;
+  background: black;
   color: white;
   border: 0;
   outline: 0;
@@ -131,46 +139,46 @@ img{
   transition: all 300ms;
 }
 
-.layout .info{
+.layout .info {
   width: 5px;
   height: 5px;
   border-radius: 50px;
   margin-left: 10px;
-  background-color: lightgreen; 
+  background-color: lightgreen;
 }
 
-.layout .infoMedio{
+.layout .infoMedio {
   width: 5px;
   height: 5px;
   border-radius: 50px;
   margin-left: 10px;
-  background-color: yellow; 
+  background-color: yellow;
 }
 
-.layout .infoBajo{
+.layout .infoBajo {
   width: 5px;
   height: 5px;
   border-radius: 50px;
   margin-left: 10px;
-  background-color: red; 
+  background-color: red;
 }
 
-.peli-item .delete{
+.peli-item .delete {
   background-color: rgb(194, 194, 194);
   color: black;
 }
 
-.peli-item .edit{
+.peli-item .edit {
   margin-right: 7px;
 }
 
-.peli-item .edit:hover{
+.peli-item .edit:hover {
   background: white;
   color: black;
   border: solid #454545;
 }
 
-.peli-item .delete:hover{
+.peli-item .delete:hover {
   background: #9b0202;
   color: white;
   border: solid #9b0202;
@@ -178,7 +186,7 @@ img{
 
 .peli-item input[type="text"],
 .peli-item input[type="number"],
-.peli-item textarea{
+.peli-item textarea {
   display: block;
   margin: 0 auto;
   margin-top: 15px;
@@ -194,14 +202,14 @@ img{
 
 /*ESTILOS PARA LA BARRA LATERAL*/
 
-.lateral{
+.lateral {
   grid-area: lateral;
   border-left: 1px solid #ddd;
   padding: 20px;
   margin-right: 150px;
 }
 
-.lateral > div{
+.lateral > div {
   box-sizing: border-box;
   width: 90%;
   margin: 20px;
@@ -214,7 +222,7 @@ img{
 
 .lateral input[type="text"],
 .lateral input[type="number"],
-.lateral textarea{
+.lateral textarea {
   display: block;
   margin: 0 auto;
   margin-top: 15px;
@@ -228,21 +236,32 @@ img{
   border-color: transparent;
 }
 /*----------------------VENTAS----------------------*/
-.ventas{
+.ventas {
   display: flex;
   flex-direction: column;
   margin-left: 300px;
   margin-right: 300px;
 }
 
+.ventas button {
+  margin-left: 10px;
+  background-color: black;
+  color: white;
+  padding: 15px;
+  border-radius: 10px;
+  font-size: 15px;
+  cursor: pointer;
+  border-color: transparent;
+}
+
 /*ESCANEAR*/
-.escanear{
+.escanear {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
 }
 
-.escanear .escanear-id{
+.escanear .escanear-id {
   width: 100%;
   display: flex;
   flex-direction: row;
@@ -251,39 +270,46 @@ img{
   align-content: center;
 }
 
-
-.escanear .escanear-id input{
+.escanear .escanear-id input {
+  margin: 0;
   margin-left: 10px;
-}
-
-.escanear .escanear-id button{
-  margin-left: 10px;
+  padding: 15px;
+  border-radius: 5px;
+  background: #f6f7f9;
+  color: #454545;
+  opacity: 4;
+  outline: 0;
+  border-color: transparent;
 }
 
 /*PRODUCTO*/
-.producto{
+.producto {
   display: flex;
   flex-direction: row;
   justify-content: center;
   align-items: center;
-  gap:100px;
+  gap: 100px;
 }
 
-.producto .producto-datos{
-display: flex;
-flex-direction: column;
-justify-content: flex-start;
-background: white;
-border-radius: 10px;
-box-shadow: 0px 0px 6px #ddd;
-padding: 25px;
+.producto .producto-datos {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  background: white;
+  border-radius: 10px;
+  box-shadow: 0px 0px 6px #ddd;
+  padding: 25px;
 }
 
-.section-productos-escaneados,.section-escanear,.section-producto-escaneado,.section-metodo-pago{
+/*PRODUCTOS*/
+.section-productos-escaneados,
+.section-escanear,
+.section-producto-escaneado,
+.section-metodo-pago {
   margin-top: 50px;
 }
 
-.productos-prepago .productos-info{
+.productos-prepago .productos-info {
   display: flex;
   justify-content: space-around;
   flex-grow: 1;
@@ -293,23 +319,25 @@ padding: 25px;
   margin: 5px;
 }
 
-.productos-prepago .productos-total{
+.productos-prepago .productos-total {
   display: flex;
   flex-direction: row;
   justify-content: space-evenly;
 }
 
-.productos-prepago .productos-listado{
+.productos-prepago .productos-listado {
   border-top: 1px solid black;
   border-bottom: 1px solid black;
 }
 
-.metodos-pago{
+/*Metodo de pago*/
+.metodos-pago {
   display: flex;
   justify-content: space-evenly;
 }
 
-.metodos-pago .card-datos, .metodos-pago .cash-datos{
+.metodos-pago .card-datos,
+.metodos-pago .cash-datos {
   flex-grow: 1;
   background: white;
   border-radius: 10px;
@@ -323,12 +351,10 @@ padding: 25px;
   padding-right: 25px;
 }
 
-
-
 /*----------------------FOOTER-----------------------*/
 /*ESTILOS PARA EL PIE DE PAGINA*/
 
-.footer{
+.footer {
   grid-area: footer;
 
   background: #d1defa;
@@ -339,24 +365,23 @@ padding: 25px;
   padding-left: 25px;
 }
 
-.footer a{
+.footer a {
   color: #0b468a;
   text-decoration: none;
 }
 
-
-@media (max-width: 1085px){
-  .content{
-      flex-flow: column wrap;
-      justify-content: center;
-      align-items: center;
+@media (max-width: 1085px) {
+  .content {
+    flex-flow: column wrap;
+    justify-content: center;
+    align-items: center;
   }
 
-  .peli-item{
-      width: 80%;
+  .peli-item {
+    width: 80%;
   }
 }
 
-.no-encontrado{
+.no-encontrado {
   color: red;
 }

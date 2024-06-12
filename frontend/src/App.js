@@ -1,10 +1,11 @@
 import { MisRutas } from "./router/MisRutas";
+import './index.css';
 
 function App() {
 
   return (
 
-    <MisRutas/>
+    <MisRutas />
 
   );
 }

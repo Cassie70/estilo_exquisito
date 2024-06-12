@@ -5,13 +5,16 @@ import { Listado } from "./Listado";
 
 export const Almacen = () => {
 
-    const [listadoState, setListadoState] = useState([]);
+  const [listadoState, setListadoState] = useState([]);
 
   return (
     <div className="layout">
+      <div className='title-almacen'>
+        <h3>Almacen</h3>
+      </div>
 
-    {/*Contenido Principal*/}
-   
+      {/*Contenido Principal*/}
+
       <section className="content">
         {/*Aqui va el listado de las peliculas*/}
         <Listado listadoState={listadoState} setListadoState={setListadoState} />
