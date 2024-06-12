@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { Editar } from './Editar';
-import imgejemplo from '../img/2.jpg';
+import imgejemplo from '../../img/2.jpg';
 
 export const Listado = ({listadoState, setListadoState}) => {
 

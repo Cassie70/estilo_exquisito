@@ -11,28 +11,12 @@ img{
   height: 150px;
   border-radius: 10px;
 }
-
-.layout{
-  width: 100%;
-  height: auto;
-
-  display: grid;
-  grid-template-areas: 
-      "header header header header"
-      "content content content lateral"
-      "content content content lateral"
-      "footer footer footer footer"
-  ;
-
-  grid-template-rows: 100px 70px auto 70px;
-
+/*----------------------MIS RUTAS----------------------------*/
+.content-principal{
+  background-color: white;
 }
 
-.precio{
-  font-size: 20px;
-  margin: 1px;
-}
-
+/*----------------------CABECERA Y NAV-----------------------*/
 /*ESTILOS CABECERA*/
 .header{
   font-size: 10px;
@@ -77,7 +61,7 @@ img{
   transition: all 300ms;
 }
 
-.nav a:hover{
+.nav a:hover,.nav .active{
   transform: scale(1.1,1.1);
   background-color: black;
   color: #f6f7f9;
@@ -86,6 +70,27 @@ img{
   font-size: 15px;
 }
 
+/*----------------------ALMACEN-----------------------*/
+.layout{
+  width: 100%;
+  height: auto;
+
+  display: grid;
+  grid-template-areas: 
+      "header header header header"
+      "content content content lateral"
+      "content content content lateral"
+      "footer footer footer footer"
+  ;
+
+  grid-template-rows: 100px 70px auto 70px;
+
+}
+
+.precio{
+  font-size: 20px;
+  margin: 1px;
+}
 /*ESTILOS PARA EL CONTENIDO PRINCIPAL*/
 .content{
   grid-area: content;
@@ -110,7 +115,7 @@ img{
   padding-right: 25px;
 }
 
-button,input[type="submit"],input[type="button"]{
+ .layout button,input[type="submit"],input[type="button"]{
   width: 100px;
   background:  black;
   color: white;
@@ -126,7 +131,7 @@ button,input[type="submit"],input[type="button"]{
   transition: all 300ms;
 }
 
-.info{
+.layout .info{
   width: 5px;
   height: 5px;
   border-radius: 50px;
@@ -134,7 +139,7 @@ button,input[type="submit"],input[type="button"]{
   background-color: lightgreen; 
 }
 
-.infoMedio{
+.layout .infoMedio{
   width: 5px;
   height: 5px;
   border-radius: 50px;
@@ -142,7 +147,7 @@ button,input[type="submit"],input[type="button"]{
   background-color: yellow; 
 }
 
-.infoBajo{
+.layout .infoBajo{
   width: 5px;
   height: 5px;
   border-radius: 50px;
@@ -221,8 +226,106 @@ button,input[type="submit"],input[type="button"]{
   opacity: 4;
   outline: 0;
   border-color: transparent;
-} 
+}
+/*----------------------VENTAS----------------------*/
+.ventas{
+  display: flex;
+  flex-direction: column;
+  margin-left: 300px;
+  margin-right: 300px;
+}
 
+/*ESCANEAR*/
+.escanear{
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.escanear .escanear-id{
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+  align-content: center;
+}
+
+
+.escanear .escanear-id input{
+  margin-left: 10px;
+}
+
+.escanear .escanear-id button{
+  margin-left: 10px;
+}
+
+/*PRODUCTO*/
+.producto{
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  gap:100px;
+}
+
+.producto .producto-datos{
+display: flex;
+flex-direction: column;
+justify-content: flex-start;
+background: white;
+border-radius: 10px;
+box-shadow: 0px 0px 6px #ddd;
+padding: 25px;
+}
+
+.section-productos-escaneados,.section-escanear,.section-producto-escaneado,.section-metodo-pago{
+  margin-top: 50px;
+}
+
+.productos-prepago .productos-info{
+  display: flex;
+  justify-content: space-around;
+  flex-grow: 1;
+  background: white;
+  border-radius: 10px;
+  box-shadow: 0px 0px 6px #ddd;
+  margin: 5px;
+}
+
+.productos-prepago .productos-total{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+}
+
+.productos-prepago .productos-listado{
+  border-top: 1px solid black;
+  border-bottom: 1px solid black;
+}
+
+.metodos-pago{
+  display: flex;
+  justify-content: space-evenly;
+}
+
+.metodos-pago .card-datos, .metodos-pago .cash-datos{
+  flex-grow: 1;
+  background: white;
+  border-radius: 10px;
+  box-shadow: 0px 0px 6px #ddd;
+  margin: 20px;
+  margin-left: 30px;
+  margin-right: 30px;
+  padding-top: 60px;
+  padding-bottom: 60px;
+  padding-left: 25px;
+  padding-right: 25px;
+}
+
+
+
+/*----------------------FOOTER-----------------------*/
 /*ESTILOS PARA EL PIE DE PAGINA*/
 
 .footer{
