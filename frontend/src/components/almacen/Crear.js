@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { GuardarEnStorage } from '../helpers/GuardarEnStorage';
+import { GuardarEnStorage } from '../../helpers/GuardarEnStorage';
 
 export const Crear = ({ setListadoState }) => {
 
