@@ -1,6 +1,5 @@
-import PDF from 'pdfkit';
-import { VentaModelo } from '../models/mysql/venta.js';
-import { DetalleVentaModelo } from '../models/mysql/detalle_venta.js';
+import PDF from 'pdfkit-table';
+
 
 export class TicketController {
     constructor({ ticketModelo }) {
@@ -8,17 +7,15 @@ export class TicketController {
     }
 
     generate = async (req, res) => {
-        const doc = new PDF({bufferPages: true});
+        const doc = new PDF({bufferPages: true,size: 'A6',margin: 10});
 
         const { id } = req.params;
 
-        let venta = await VentaModelo.getById({id});
-        let detalleVenta = await VentaModelo.venta_detalle_venta({id});
+        const {infoVenta,infoProductos} = await this.ticketModelo.getInfo({ id });
 
-        if (venta.length === 0) {
-            return res.status(404).json({error: 'Venta no encontrada'});
+        if (!infoVenta) {
+            return res.status(404).json({ message: 'Venta no encontrada' });
         }
-        const filename = `ticket-${Date.now()}.pdf`;
         const stream = res.writeHead(200,{
             'Content-Type': 'application/pdf',
             'Content-Disposition': 'attachment; filename=ticket.pdf'
@@ -27,14 +24,25 @@ export class TicketController {
 
         doc.on('data', (data) => {stream.write(data)});
         doc.on('end', () => {stream.end()});
-
-        doc.text('Ticket de compra');
-        doc.text(`Venta: ${venta[0].id_venta}`);
-        doc.text(`Usuario: ${venta[0].fecha}`);
-        doc.text(detalleVenta.map((ticket) => {
-            return `${ticket.id_detalle_venta}.-${ticket.nombre}-${ticket.nombre_talla} -${ticket.precio}-${ticket.cantidad} - ${ticket.precio_unitario}`;
-        }).join('\n'));
-        doc.text(`Total: ${venta[0].monto}`);
+        doc.text('Estilo Exquisito', {align: 'center'});
+        doc.fontSize(8);
+        doc.text('uuid: '+infoVenta.id_venta, {align: 'center'});
+        doc.text('Fecha: '+infoVenta.fecha, {align: 'center'});
+        const table = {
+            headers: ['Producto', 'Talla', 'Cantidad', 'Precio Unitario', 'Precio Total'],
+            rows: infoProductos.map(producto => [producto.nombre, producto.nombre_talla, producto.cantidad, producto.precio_unitario, producto.precio]),
+        };
+        doc.moveDown()
+        doc.table(table,{
+            columnsSize: [100, 25, 50, 50, 50],
+        })
+        doc.text('Monto total: '+infoVenta.monto, {align: 'right'});
+        doc.moveDown()
+        //doc.text("Le atendió: "+req.user.nombre, {align: 'center'}); TODO: Implementar autenticación
+        doc.moveDown()
+        doc.text('Gracias por su compra', {align: 'center'});
+        doc.text('Recuerde visitar www.estiloexquisito.com', {align: 'center'});
         doc.end();
+
     }
 }

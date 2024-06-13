@@ -100,18 +100,4 @@ export class VentaModelo {
             throw new Error('Error al eliminar la venta: ' + error.message);
         }
     }
-
-    static async venta_detalle_venta({ id }) {
-        try {
-            const [venta, tableInfo] = await connection.query(
-                'SELECT id_detalle_venta,precio_unitario,cantidad,nombre_talla,nombre,precio,Productos.id_producto FROM Detalle_venta JOIN Tallas JOIN Productos WHERE id_venta = uuid_to_bin(?) AND Detalle_venta.id_talla = Tallas.id_talla AND Detalle_venta.id_producto = Productos.id_producto;',
-                [id]
-            );
-
-            return venta
-        } catch (error) {
-            throw new Error('Error al obtener la venta-detalle por ID: ' + error.message);
-        }
-    }
-
 }

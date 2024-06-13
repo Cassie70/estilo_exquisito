@@ -2,12 +2,20 @@ drop database if exists estilo_exquisito_db;
 create database estilo_exquisito_db;
 use estilo_exquisito_db;
 
+create table Categorias(
+	id_categoria int unsigned not null auto_increment,
+    nombre_categoria varchar(255),
+    primary key (id_categoria)
+);
+
 create table Productos(
 	id_producto int unsigned not null auto_increment,
     nombre varchar(255) not null, 
     descripcion text not null,
     precio decimal(10,2) not null,
+    id_categoria int unsigned,
     imagen_url varchar(255),
+    foreign key (id_categoria) references Categorias(id_categoria),
     fecha_agregada timestamp default (now()),
     primary key(id_producto)
 );
@@ -31,6 +39,7 @@ create table Usuarios(
     nombre varchar(32) not null,
     apellido varchar(32) not null,
     correo_electronico varchar(255) not null unique,
+    pass varchar(255) not null,
     telefono char(10) not null unique,
     primary key(id_usuario)
 );
@@ -39,6 +48,7 @@ create table Ventas(
 	id_venta binary(16) default (UUID_TO_BIN(UUID())),
     id_usuario binary(16) not null,
     monto decimal(10,2) not null,
+    estado boolean not null,
     fecha timestamp not null default (now()),
     foreign key(id_usuario) references Usuarios(id_usuario),
     primary key(id_venta)
@@ -88,20 +98,17 @@ create table Trabajador(
     primary key(id_trabajador)
 );
 
-INSERT INTO Productos (nombre, descripcion, precio, imagen_url) VALUES
-('Camiseta Básica', 'Camiseta de algodón de alta calidad', 199.99, 'url_imagen_1'),
-('Pantalón Deportivo', 'Pantalón cómodo para actividades físicas', 299.99, 'url_imagen_2'),
-('Chaqueta Casual', 'Chaqueta para uso diario', 499.99, 'url_imagen_3'),
-('Vestido de Verano', 'Vestido ligero para verano', 399.99, 'url_imagen_4'),
-('Sudadera con Capucha', 'Sudadera de lana con capucha', 349.99, 'url_imagen_5');
+INSERT INTO Categorias (nombre_categoria) VALUES ("Mujer"),("Hombre"),("Niño");
+
+INSERT INTO Productos (nombre, descripcion, precio, imagen_url, id_categoria) VALUES
+('Camiseta Básica', 'Camiseta de algodón de alta calidad', 199.99, 'url_imagen_1',2),
+('Pantalón Deportivo', 'Pantalón cómodo para actividades físicas', 299.99, 'url_imagen_2',2),
+('Chaqueta Casual', 'Chaqueta para uso diario', 499.99, 'url_imagen_3',1),
+('Vestido de Verano', 'Vestido ligero para verano', 399.99, 'url_imagen_4',1),
+('Sudadera con Capucha', 'Sudadera de lana con capucha', 349.99, 'url_imagen_5',3);
 
 -- Añadiendo registros a la tabla Tallas
-INSERT INTO Tallas (nombre_talla) VALUES
-('XS'),
-('S'),
-('M'),
-('L'),
-('XL');
+INSERT INTO Tallas (nombre_talla) VALUES ('XS'),('S'),('M'),('L'),('XL');
 
 -- Añadiendo registros a la tabla Inventario
 INSERT INTO Inventario (id_producto, id_talla, stock) VALUES
@@ -132,20 +139,20 @@ INSERT INTO Inventario (id_producto, id_talla, stock) VALUES
 (5, 5, 4);  -- Sudadera con Capucha, XL
 
 -- Añadiendo registros a la tabla Usuarios
-INSERT INTO Usuarios (id_usuario, nombre, apellido, correo_electronico, telefono) VALUES
-(UUID_TO_BIN('a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a11'), 'Juan', 'Pérez', 'juan.perez@example.com', '5551234567'),
-(UUID_TO_BIN('b1eebc99-9c0b-4ef8-bb6d-6bb9bd380b22'), 'María', 'Gómez', 'maria.gomez@example.com', '5552345678'),
-(UUID_TO_BIN('c2eebc99-9c0b-4ef8-bb6d-6bb9bd380c33'), 'Carlos', 'López', 'carlos.lopez@example.com', '5553456789'),
-(UUID_TO_BIN('d3eebc99-9c0b-4ef8-bb6d-6bb9bd380d44'), 'Ana', 'Martínez', 'ana.martinez@example.com', '5554567890'),
-(UUID_TO_BIN('e4eebc99-9c0b-4ef8-bb6d-6bb9bd380e55'), 'Luis', 'Fernández', 'luis.fernandez@example.com', '5555678901');
+INSERT INTO Usuarios (id_usuario, nombre, apellido, correo_electronico, telefono,pass) VALUES
+(UUID_TO_BIN('a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a11'), 'Juan', 'Pérez', 'juan.perez@example.com', '5551234567','$2b$10$YKx9ddGGWIfT6TTZPbXdSOJJYUpJ8prkrS3f/kDXo5Oo9J6HK/f52'),
+(UUID_TO_BIN('b1eebc99-9c0b-4ef8-bb6d-6bb9bd380b22'), 'María', 'Gómez', 'maria.gomez@example.com', '5552345678','$2b$10$RO7F1XTD5jHAYkkctV2etu7XVBPDrlL2d9CntDoMialzVirdNHazO'),
+(UUID_TO_BIN('c2eebc99-9c0b-4ef8-bb6d-6bb9bd380c33'), 'Carlos', 'López', 'carlos.lopez@example.com', '5553456789','$2b$10$WUagTjbvfBDMvpzEWPhSp.ku9NosU7dj4A1Y1CvzJkmldxzQCxAJS'),
+(UUID_TO_BIN('d3eebc99-9c0b-4ef8-bb6d-6bb9bd380d44'), 'Ana', 'Martínez', 'ana.martinez@example.com', '5554567890','$2b$10$c2YOVgR5o8OMxRAcwHA5G.EeCwJKTjWBPwbd9J5WDVxz.86JZYEfi'),
+(UUID_TO_BIN('e4eebc99-9c0b-4ef8-bb6d-6bb9bd380e55'), 'Luis', 'Fernández', 'luis.fernandez@example.com', '5555678901','$2b$10$JHUvAV/706Ir1AQ7Nx7iMuyY64Ehq/G0vS4nnVtowhGQPMjvzYjPO');
 
 -- Añadiendo registros a la tabla Ventas
-INSERT INTO Ventas (id_venta, id_usuario, monto, fecha) VALUES
-(UUID_TO_BIN('f5eebc99-9c0b-4ef8-bb6d-6bb9bd380f66'), UUID_TO_BIN('a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a11'), 399.98, '2024-06-10 10:00:00'),
-(UUID_TO_BIN('b6eebc99-9c0b-4ef8-bb6d-6bb9bd380b66'), UUID_TO_BIN('b1eebc99-9c0b-4ef8-bb6d-6bb9bd380b22'), 299.99, '2024-06-11 11:00:00'),
-(UUID_TO_BIN('c7eebc99-9c0b-4ef8-bb6d-6bb9bd380c77'), UUID_TO_BIN('c2eebc99-9c0b-4ef8-bb6d-6bb9bd380c33'), 499.99, '2024-06-12 12:00:00'),
-(UUID_TO_BIN('d8eebc99-9c0b-4ef8-bb6d-6bb9bd380d88'), UUID_TO_BIN('d3eebc99-9c0b-4ef8-bb6d-6bb9bd380d44'), 349.99, '2024-06-13 13:00:00'),
-(UUID_TO_BIN('e9eebc99-9c0b-4ef8-bb6d-6bb9bd380e99'), UUID_TO_BIN('e4eebc99-9c0b-4ef8-bb6d-6bb9bd380e55'), 199.99, '2024-06-14 14:00:00');
+INSERT INTO Ventas (id_venta, id_usuario, monto, fecha, estado) VALUES
+(UUID_TO_BIN('f5eebc99-9c0b-4ef8-bb6d-6bb9bd380f66'), UUID_TO_BIN('a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a11'), 399.98, '2024-06-10 10:00:00',TRUE),
+(UUID_TO_BIN('b6eebc99-9c0b-4ef8-bb6d-6bb9bd380b66'), UUID_TO_BIN('b1eebc99-9c0b-4ef8-bb6d-6bb9bd380b22'), 299.99, '2024-06-11 11:00:00',TRUE),
+(UUID_TO_BIN('c7eebc99-9c0b-4ef8-bb6d-6bb9bd380c77'), UUID_TO_BIN('c2eebc99-9c0b-4ef8-bb6d-6bb9bd380c33'), 499.99, '2024-06-12 12:00:00',FALSE),
+(UUID_TO_BIN('d8eebc99-9c0b-4ef8-bb6d-6bb9bd380d88'), UUID_TO_BIN('d3eebc99-9c0b-4ef8-bb6d-6bb9bd380d44'), 349.99, '2024-06-13 13:00:00',FALSE),
+(UUID_TO_BIN('e9eebc99-9c0b-4ef8-bb6d-6bb9bd380e99'), UUID_TO_BIN('e4eebc99-9c0b-4ef8-bb6d-6bb9bd380e55'), 199.99, '2024-06-14 14:00:00',TRUE);
 
 -- Añadiendo registros a la tabla Detalle_venta
 INSERT INTO Detalle_venta (id_venta, id_producto, precio_unitario, cantidad, id_talla) VALUES
