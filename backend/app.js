@@ -5,6 +5,9 @@ import * as models from './models/mysql/index.js';
 import 'dotenv/config';
 
 // Este es el punto de entrada de la aplicación, aquí se configura el servidor y se definen las rutas usando express
+// Direcciones para Productos Tallas Inventario
+import { createProductosTallasInventarioRouter } from './routes/productos_tallas_inventario.js';
+import { ProductosTallasInventarioModelo } from './models/mysql/productos_tallas_inventario.js';
 
 // Se crea una instancia de express para iniciar el servidor y se le pasan los middlewares que se van a usar
 const app = express();
@@ -23,10 +26,12 @@ app.use('/detalle-pedido-apartado', routes.createDetallePedidoApartadoRouter({ d
 app.use('/usuarios', routes.createUsuariosRouter({ usuariosModelo: models.UsuariosModelo }));
 app.use('/detalle-venta', routes.createDetalleVentaRouter({ detalleVentaModelo: models.DetalleVentaModelo }));
 app.use('/ticket', routes.createTicketRouter({ ticketModelo: models.TicketModelo }));
+
+//
 app.use('/productos-tallas-inventario', createProductosTallasInventarioRouter({ productosTallasInventarioModelo: ProductosTallasInventarioModelo }));
 
 // Aquí se define el puerto en el que se va a correr el servidor, si no se define se usará el puerto 1234
-const PORT = process.env.PORT ?? 1234;
+const PORT = process.env.PORT ?? 1234;A
 
 app.listen(PORT, () => {
     console.log(`Server running on port http://localhost:${PORT}`);
