@@ -8,3 +8,4 @@ export { createDetallePedidoApartadoRouter } from './detalle_pedido_apartado.js'
 export { createUsuariosRouter } from './usuarios.js';
 export { createDetalleVentaRouter } from './detalle_venta.js';
 export { createTicketRouter } from './ticket.js';
+export { createProductosTallasInventarioRouter } from './productos_tallas_inventario.js';
