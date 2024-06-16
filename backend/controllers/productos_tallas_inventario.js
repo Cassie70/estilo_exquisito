@@ -1,5 +1,3 @@
-import { SchemaProductoTallasInventario } from "../schemas/productos_tallas_inventario.js"
-
 export class ProductosTallasInventarioController {
     constructor({ productosTallasInventarioModelo }) {
         this.productosTallasInventarioModelo = productosTallasInventarioModelo;
