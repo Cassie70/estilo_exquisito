@@ -23,6 +23,7 @@ app.use('/detalle-pedido-apartado', routes.createDetallePedidoApartadoRouter({ d
 app.use('/usuarios', routes.createUsuariosRouter({ usuariosModelo: models.UsuariosModelo }));
 app.use('/detalle-venta', routes.createDetalleVentaRouter({ detalleVentaModelo: models.DetalleVentaModelo }));
 app.use('/ticket', routes.createTicketRouter({ ticketModelo: models.TicketModelo }));
+app.use('/productos-tallas-inventario', createProductosTallasInventarioRouter({ productosTallasInventarioModelo: ProductosTallasInventarioModelo }));
 
 // Aquí se define el puerto en el que se va a correr el servidor, si no se define se usará el puerto 1234
 const PORT = process.env.PORT ?? 1234;
