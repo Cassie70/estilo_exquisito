@@ -8,3 +8,4 @@ export { DetallePedidoApartadoModelo } from './detalle_pedido_apartado.js';
 export { UsuariosModelo } from './usuarios.js';
 export { DetalleVentaModelo } from './detalle_venta.js';
 export { TicketModelo } from './ticket.js';
+export { ProductosTallasInventarioModelo } from './productos_tallas_inventario.js';
