@@ -5,12 +5,12 @@ export const createProductosTallasInventarioRouter = ({ productosTallasInventari
     const productosTallasInventarioRouter = Router();
     const productosTallasInventarioController = new ProductosTallasInventarioController({ productosTallasInventarioModelo });
 
-    productosTallasInventarioRouter.get('/', productosTallasInventarioController.getAll.bind(productosTallasInventarioController));
-    productosTallasInventarioRouter.get('/id/:id', productosTallasInventarioController.getById.bind(productosTallasInventarioController));
-    productosTallasInventarioRouter.get('/nombre/:nombre', productosTallasInventarioController.getByNombre.bind(productosTallasInventarioController));
-    productosTallasInventarioRouter.get('/talla/:nombre_talla', productosTallasInventarioController.getByNombreTalla.bind(productosTallasInventarioController));
-    productosTallasInventarioRouter.get('/precio/:precio', productosTallasInventarioController.getByPrecio.bind(productosTallasInventarioController));
-    productosTallasInventarioRouter.get('/categoria/:id_categoria', productosTallasInventarioController.getByIdCategoria.bind(productosTallasInventarioController));
+    productosTallasInventarioRouter.get('/', productosTallasInventarioController.getAll);
+    productosTallasInventarioRouter.get('/:id', productosTallasInventarioController.getById);
+    productosTallasInventarioRouter.get('/nombre/:nombre', productosTallasInventarioController.getByNombre);
+    productosTallasInventarioRouter.get('/talla/:nombre_talla', productosTallasInventarioController.getByNombreTalla);
+    productosTallasInventarioRouter.get('/precio/:precio', productosTallasInventarioController.getByPrecio);
+    productosTallasInventarioRouter.get('/categoria/:id_categoria', productosTallasInventarioController.getByIdCategoria);
 
     return productosTallasInventarioRouter;
 }

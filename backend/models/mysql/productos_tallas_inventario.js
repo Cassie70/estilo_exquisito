@@ -1,52 +1,101 @@
-import mysql from 'mysql2/promise';
-
-/*
-Este contiene al modelo de productos_tallas_inventario, el cual se encarga de interactuar con la base de datos
-se instancia una conexión a la base de datos y se exporta la clase ProductosTallasInventarioModelo que contiene los métodos
-estáticos (pueden ser llamados sin instanciar la clase). Cada método realiza una consulta a la base de datos y retorna el resultado.
-*/
-const config = {
-    host: 'localhost',
-    user: 'root',
-    port: '3306',
-    password: 'root',
-    database: 'estilo_exquisito_db'
-}
-
-const connection = await mysql.createConnection(process.env.DATABASE_URL || config);
+import connection from "../../database.js"
 
 export class ProductosTallasInventarioModelo {
     static async getAll() {
         try {
-            const [productos, tableInfo] = await connection.query(`
-                SELECT p.*, t.nombre_talla AS talla, i.stock
-                FROM productos p
-                JOIN inventario i ON p.id_producto = i.id_producto
-                JOIN tallas t ON i.id_talla = t.id_talla
-                WHERE i.stock > 0;
-
+            const [results, tableInfo] = await connection.query(`
+                SELECT 
+                    Productos.id_producto, 
+                    Productos.nombre, 
+                    Productos.descripcion, 
+                    Categorias.nombre_categoria, 
+                    Productos.imagen_url, 
+                    Productos.fecha_agregada,
+                    Tallas.nombre_talla, 
+                    Inventario.stock 
+                FROM Productos
+                JOIN Categorias ON Productos.id_categoria = Categorias.id_Categoria
+                JOIN Inventario ON Productos.id_producto = Inventario.id_producto
+                JOIN Tallas ON Inventario.id_talla = Tallas.id_talla;
             `);
-            return productos;
+
+            if(results.length == 0) return [];
+    
+            const productosMap = results.reduce((acc, row) => {
+                const { id_producto, nombre, descripcion, nombre_categoria, imagen_url, fecha_agregada, nombre_talla, stock } = row;
+    
+                if (!acc[id_producto]) {
+                    acc[id_producto] = {
+                        id_producto,
+                        nombre,
+                        descripcion,
+                        nombre_categoria,
+                        imagen_url,
+                        fecha_agregada,
+                        tallas: []
+                    };
+                }
+    
+                acc[id_producto].tallas.push({
+                    nombre_talla,
+                    stock
+                });
+    
+                return acc;
+            }, {});
+    
+            const productosConTallas = Object.values(productosMap);
+    
+            return productosConTallas;
+    
         } catch (error) {
             throw new Error('Error al obtener todos los productos: ' + error.message);
         }
     }
 
-    static async getById({ id }) {
+    static async getById({id}) {
         try {
-            const [producto, tableInfo] = await connection.query(`
-                SELECT p.*, t.nombre_talla AS talla, i.stock
-                FROM productos p
-                JOIN inventario i ON p.id_producto = i.id_producto
-                JOIN tallas t ON i.id_talla = t.id_talla
-                WHERE p.id_producto = ? AND i.stock > 0;
-
+            const [results, tableInfo] = await connection.query(`
+                SELECT 
+                    Productos.id_producto, 
+                    Productos.nombre, 
+                    Productos.descripcion, 
+                    Categorias.nombre_categoria, 
+                    Productos.imagen_url, 
+                    Productos.fecha_agregada,
+                    Tallas.nombre_talla, 
+                    Inventario.stock 
+                FROM Productos
+                JOIN Categorias ON Productos.id_categoria = Categorias.id_Categoria
+                JOIN Inventario ON Productos.id_producto = Inventario.id_producto
+                JOIN Tallas ON Inventario.id_talla = Tallas.id_talla
+                WHERE Productos.id_producto = ?;
             `, [id]);
+    
+            if (results.length === 0) {
+                return null; // Retornar null si no se encuentra el producto
+            }
+    
+            const producto = {
+                id_producto: results[0].id_producto,
+                nombre: results[0].nombre,
+                descripcion: results[0].descripcion,
+                nombre_categoria: results[0].nombre_categoria,
+                imagen_url: results[0].imagen_url,
+                fecha_agregada: results[0].fecha_agregada,
+                tallas: results.map(row => ({
+                    nombre_talla: row.nombre_talla,
+                    stock: row.stock
+                }))
+            };
+    
             return producto;
+    
         } catch (error) {
-            throw new Error('Error al obtener el producto por ID: ' + error.message);
+            throw new Error('Error al obtener el producto: ' + error.message);
         }
     }
+    
 
     static async getByNombre({ nombre }) {
         try {
