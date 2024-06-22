@@ -15,26 +15,49 @@ export class SchemaDetalleVenta {
 
         return { success: true };
     }
-
-    static validarPrecioUnitario(precio ) {
-        const { precio_unitario} = precio;
+    
+    static validarPrecioUnitario(precio) {
+        const { precio_unitario } = precio;
         if (typeof precio_unitario !== 'number') {
-            return { success: false, error: 'El campo monto debe ser de tipo number' };
+            return { success: false, error: 'El campo precio_unitario debe ser de tipo number' };
         }
 
         if (precio_unitario <= 0) {
-            return { success: false, error: 'El monto debe ser mayor a 0' };
+            return { success: false, error: 'El precio_unitario debe ser mayor a 0' };
         }
         
         return { success: true };
     }
 
     static validarCantidad(cantidades) {
-        const { cantidad} = cantidades;
+        const { cantidad } = cantidades;
         if (!cantidad || typeof cantidad !== 'number' || cantidad <= 0) {
             return { success: false, error: 'La cantidad debe ser un número positivo' };
         }
 
         return { success: true };
     }
+
+    static validarUpdateDetalleVenta({ precio_unitario, cantidad, id_talla }) {
+        if (precio_unitario !== undefined) {
+            const validacionPrecio = this.validarPrecioUnitario({ precio_unitario });
+            if (!validacionPrecio.success) {
+                return validacionPrecio;
+            }
+        }
+
+        if (cantidad !== undefined) {
+            const validacionCantidad = this.validarCantidad({ cantidad });
+            if (!validacionCantidad.success) {
+                return validacionCantidad;
+            }
+        }
+
+        if (id_talla !== undefined && (typeof id_talla !== 'number' || id_talla <= 0)) {
+            return { success: false, error: 'El id_talla debe ser un número positivo' };
+        }
+
+        return { success: true };
+    }
 }
+
