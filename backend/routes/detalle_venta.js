@@ -6,13 +6,12 @@ export const createDetalleVentaRouter = ({ detalleVentaModelo }) => {
     const detalleVentaController = new DetalleVentaController({ detalleVentaModelo });
 
     detalleVentaRouter.get('/', detalleVentaController.getAll);
-    detalleVentaRouter.get('/detalle/:id_detalle_venta', detalleVentaController.getByIdDetalleVenta);
+    detalleVentaRouter.get('/:id_detalle_venta', detalleVentaController.getByIdDetalleVenta);
     detalleVentaRouter.get('/venta/:id_venta', detalleVentaController.getByIdVenta);
     detalleVentaRouter.get('/producto/:id_producto', detalleVentaController.getByProducto);
     detalleVentaRouter.get('/talla/:id_talla', detalleVentaController.getByIdTalla);
     detalleVentaRouter.post('/', detalleVentaController.create);
-    detalleVentaRouter.patch('/:id_detalle_venta/precio_unitario', detalleVentaController.updatePrecioUnitario);
-    detalleVentaRouter.patch('/:id_detalle_venta/cantidad', detalleVentaController.updateCantidad);
+    detalleVentaRouter.patch('/:id_detalle_venta', detalleVentaController.update);
     detalleVentaRouter.delete('/:id_detalle_venta', detalleVentaController.delete);
 
     return detalleVentaRouter;
