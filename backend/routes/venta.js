@@ -9,11 +9,11 @@ export const createVentaRouter = ({ ventaModelo }) => {
     ventaRouter.get('/', ventaController.getAll);
     ventaRouter.get('/:id', ventaController.getById);
     ventaRouter.get('/usuario/:id_usuario', ventaController.getByUserId);
+    ventaRouter.get('/estado/:estado', ventaController.getByEstado);
     ventaRouter.post('/', ventaController.create);
-    ventaRouter.patch('/:id/fecha', ventaController.updateFecha);
-    ventaRouter.patch('/:id/usuario', ventaController.updateUsuario);
-    ventaRouter.patch('/:id/monto', ventaController.updateMonto);
+    ventaRouter.patch('/:id', ventaController.update);
     ventaRouter.delete('/:id', ventaController.delete);
 
     return ventaRouter;
 };
+
