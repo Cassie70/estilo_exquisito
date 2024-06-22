@@ -1,4 +1,5 @@
-import connection from "../../database.js"
+import connection from "../../database.js";
+
 /*
 Este contiene al modelo de ventas, el cual se encarga de interactuar con la base de datos
 se instancia una conexion a la base de datos y se exporta la clase VentaModelo que contiene los metodos
@@ -8,7 +9,7 @@ estaticos (pueden ser llamados sin instanciar la clase) cada metodo realiza una 
 export class VentaModelo {
     static async getAll() {
         try {
-            const [venta, tableInfo] = await connection.query('SELECT BIN_TO_UUID(id_venta) AS id_venta, BIN_TO_UUID(id_usuario) AS id_usuario, monto, fecha FROM Ventas');
+            const [venta, tableInfo] = await connection.query('SELECT BIN_TO_UUID(id_venta) AS id_venta, BIN_TO_UUID(id_usuario) AS id_usuario, monto, estado, fecha FROM Ventas');
             return venta;
         } catch (error) {
             throw new Error('Error al obtener todas las ventas: ' + error.message);
@@ -18,10 +19,10 @@ export class VentaModelo {
     static async getById({ id }) {
         try {
             const [venta, tableInfo] = await connection.query(
-                'SELECT BIN_TO_UUID(id_venta) AS id_venta, BIN_TO_UUID(id_usuario) AS id_usuario, monto, fecha FROM Ventas WHERE id_venta = UUID_TO_BIN(?)',
+                'SELECT BIN_TO_UUID(id_venta) AS id_venta, BIN_TO_UUID(id_usuario) AS id_usuario, monto, estado, fecha FROM Ventas WHERE id_venta = UUID_TO_BIN(?)',
                 [id]
             );
-            return venta
+            return venta;
         } catch (error) {
             throw new Error('Error al obtener la venta por ID: ' + error.message);
         }
@@ -30,7 +31,7 @@ export class VentaModelo {
     static async getByUserId({ id_usuario }) {
         try {
             const [venta, tableInfo] = await connection.query(
-                'SELECT BIN_TO_UUID(id_venta) AS id_venta, BIN_TO_UUID(id_usuario) AS id_usuario, monto, fecha FROM Ventas WHERE id_usuario = UUID_TO_BIN(?)',
+                'SELECT BIN_TO_UUID(id_venta) AS id_venta, BIN_TO_UUID(id_usuario) AS id_usuario, monto, estado, fecha FROM Ventas WHERE id_usuario = UUID_TO_BIN(?)',
                 [id_usuario]
             );
             return venta;
@@ -39,10 +40,22 @@ export class VentaModelo {
         }
     }
 
+    static async getByEstado({ estado }) {
+        try {
+            const [ventas, tableInfo] = await connection.query(
+                'SELECT BIN_TO_UUID(id_venta) AS id_venta, BIN_TO_UUID(id_usuario) AS id_usuario, monto, estado, fecha FROM Ventas WHERE estado = ?',
+                [estado]
+            );
+            return ventas;
+        } catch (error) {
+            throw new Error('Error al obtener ventas por estado: ' + error.message);
+        }
+    }
+
     static async create({ id_usuario, monto }) {
         const query = `
-            INSERT INTO Ventas (id_venta, id_usuario, monto) 
-            VALUES (UUID_TO_BIN(UUID()), UUID_TO_BIN(?), ?)
+            INSERT INTO Ventas (id_venta, id_usuario, monto, estado) 
+            VALUES (UUID_TO_BIN(UUID()), UUID_TO_BIN(?), ?, true)
         `;
 
         try {
@@ -53,39 +66,39 @@ export class VentaModelo {
         }
     }
 
-    static async updateFecha({ id, fecha }) {
-        try {
-            const [result] = await connection.query(
-                'UPDATE Ventas SET fecha = ? WHERE id_venta = UUID_TO_BIN(?)',
-                [fecha, id]
-            );
-            return result;
-        } catch (error) {
-            throw new Error('Error al actualizar la fecha de la venta: ' + error.message);
-        }
-    }
+    static async update({ id, id_usuario, monto, fecha, estado }) {
+        const fields = [];
+        const values = [];
 
-    static async updateUsuario({ id, id_usuario }) {
-        try {
-            const [result] = await connection.query(
-                'UPDATE Ventas SET id_usuario = UUID_TO_BIN(?) WHERE id_venta = UUID_TO_BIN(?)',
-                [id_usuario, id]
-            );
-            return result;
-        } catch (error) {
-            throw new Error('Error al actualizar el usuario de la venta: ' + error.message);
+        if (id_usuario) {
+            fields.push('id_usuario = UUID_TO_BIN(?)');
+            values.push(id_usuario);
         }
-    }
 
-    static async updateMonto({ id, monto }) {
+        if (monto) {
+            fields.push('monto = ?');
+            values.push(monto);
+        }
+
+        if (fecha) {
+            fields.push('fecha = ?');
+            values.push(fecha);
+        }
+
+        if (estado !== undefined) {
+            fields.push('estado = ?');
+            values.push(estado);
+        }
+
+        values.push(id);
+
+        const query = `UPDATE Ventas SET ${fields.join(', ')} WHERE id_venta = UUID_TO_BIN(?)`;
+
         try {
-            const [result] = await connection.query(
-                'UPDATE Ventas SET monto = ? WHERE id_venta = UUID_TO_BIN(?)',
-                [monto, id]
-            );
+            const [result] = await connection.query(query, values);
             return result;
         } catch (error) {
-            throw new Error('Error al actualizar el monto de la venta: ' + error.message);
+            throw new Error('Error al actualizar la venta: ' + error.message);
         }
     }
 
