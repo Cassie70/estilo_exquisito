@@ -41,6 +41,17 @@ export class VentaController {
         }
     }
 
+    getByEstado = async (req, res) => {
+        const { estado } = req.params;
+        try {
+            const ventas = await this.ventaModelo.getByEstado({ estado });
+            if (ventas.length > 0) return res.json(ventas);
+            res.status(404).json({ error: 'No se encontraron ventas con el estado especificado' });
+        } catch (error) {
+            res.status(500).json({ error: error.message });
+        }
+    }
+
     create = async (req, res) => {
         const result = SchemaVenta.validarCreateVenta(req.body);
         if (!result.success) return res.status(400).json(result);
@@ -55,48 +66,18 @@ export class VentaController {
         }
     }
 
-    updateFecha = async (req, res) => {
+    update = async (req, res) => {
         const { id } = req.params;
-        const { fecha } = req.body;
+        const { id_usuario, monto, fecha, estado } = req.body;
+
+        const result = SchemaVenta.validarUpdateVenta(req.body);
+        if (!result.success) return res.status(400).json(result);
 
         try {
-            const result = SchemaVenta.validarUpdateFecha({ fecha });
-            if (!result.success) return res.status(400).json(result);
-
-            const updatedVenta = await this.ventaModelo.updateFecha({ id, fecha });
+            const updatedVenta = await this.ventaModelo.update({ id, id_usuario, monto, fecha, estado });
             res.json(updatedVenta);
         } catch (error) {
-            res.status(500).json({ error: 'Error al actualizar la fecha de la venta: ' + error.message });
-        }
-    }
-
-    updateUsuario = async (req, res) => {
-        const { id } = req.params;
-        const { id_usuario } = req.body;
-        
-        try {
-            const result = SchemaVenta.validarUpdateUsuario({ id_usuario });
-            if (!result.success) return res.status(400).json(result);
-
-            await this.ventaModelo.updateUsuario({ id, id_usuario });
-            res.json({ success: 'Usuario actualizado correctamente' });
-        } catch (error) {
-            res.status(500).json({ error: error.message });
-        }
-    }
-
-    updateMonto = async (req, res) => {
-        const { id } = req.params;
-        const { monto } = req.body;
-        
-        try {
-            const result = SchemaVenta.validarUpdateMonto({ monto });
-            if (!result.success) return res.status(400).json(result);
-
-            await this.ventaModelo.updateMonto({ id, monto });
-            res.json({ success: 'Monto actualizado correctamente' });
-        } catch (error) {
-            res.status(500).json({ error: error.message });
+            res.status(500).json({ error: 'Error al actualizar la venta: ' + error.message });
         }
     }
 
@@ -110,3 +91,4 @@ export class VentaController {
         }
     }
 }
+
