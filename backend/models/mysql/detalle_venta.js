@@ -70,37 +70,32 @@ export class DetalleVentaModelo {
             throw new Error('Error al crear el detalle de venta: ' + error.message);
         }
     }
+    
 
-    static async updatePrecioUnitario({ id_detalle_venta, precio_unitario }) {
-        
+    static async update({ id_detalle_venta, input }) {
+        const fields = Object.keys(input);
+        const values = Object.values(input);
+
+        const setClause = fields.map(field => `${field} = ?`).join(', ');
+
+        const query = `
+            UPDATE Detalle_venta 
+            SET ${setClause} 
+            WHERE id_detalle_venta = ?
+        `;
+
         try {
-            const [result] = await connection.query(
-                'UPDATE Detalle_venta SET precio_unitario = ? WHERE id_detalle_venta = ?',
-                [precio_unitario, id_detalle_venta]
-            );
+            const [result] = await connection.query(query, [...values, id_detalle_venta]);
             return result;
         } catch (error) {
-            throw new Error('Error al actualizar el precio unitario: ' + error.message);
-        }
-    }
-
-    static async updateCantidad({ id_detalle_venta, cantidad }) {
-        try {
-            const [result] = await connection.query(
-                'UPDATE Detalle_venta SET cantidad = ? WHERE id_detalle_venta = ?',
-                [cantidad, id_detalle_venta]
-            );
-            return result;
-        } catch (error) {
-            throw new Error('Error al actualizar la cantidad: ' + error.message);
+            throw new Error('Error al actualizar el detalle de venta: ' + error.message);
         }
     }
 
     static async delete({ id_detalle_venta }) {
-        console.log(id_detalle_venta);
         try {
             const [result] = await connection.query(
-                'DELETE FROM Detalle_venta WHERE id_venta = UUID_TO_BIN(?)',
+                'DELETE FROM Detalle_venta WHERE id_detalle_venta = ?',
                 [id_detalle_venta]
             );
             return result;
@@ -109,3 +104,4 @@ export class DetalleVentaModelo {
         }
     }
 }
+
