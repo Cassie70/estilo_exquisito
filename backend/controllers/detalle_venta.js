@@ -20,7 +20,7 @@ export class DetalleVentaController {
             const detalleVenta = await this.detalleVentaModelo.getByIdDetalleVenta(id_detalle_venta);
             
             if (detalleVenta.length > 0) return res.json(detalleVenta);
-            res.status(404).json({ error: 'Detalle de venta no encontrados' });
+            res.status(404).json({ error: 'Detalle de venta no encontrado' });
         } catch (error) {
             res.status(500).json({ error: error.message });
         }
@@ -36,6 +36,7 @@ export class DetalleVentaController {
             res.status(500).json({ error: error.message });
         }
     }
+    
 
     getByProducto = async (req, res) => {
         const { id_producto } = req.params;
@@ -72,30 +73,16 @@ export class DetalleVentaController {
             res.status(500).json({ error: error.message });
         }
     }
+    
 
-    updatePrecioUnitario = async (req, res) => {
+    update = async (req, res) => {
         const { id_detalle_venta } = req.params;
-        const { precio_unitario } = req.body;
-        const result = SchemaDetalleVenta.validarPrecioUnitario({precio_unitario});
-        if (!result.success) return res.status(400).json(result);
-        
-        try {
-            const updatedDetalleVenta = await this.detalleVentaModelo.updatePrecioUnitario({id_detalle_venta, precio_unitario} );
-            res.json(updatedDetalleVenta);
-        } catch (error) {
-            res.status(500).json({ error: error.message });
-        }
-    }
 
-    updateCantidad = async (req, res) => {
-        const { id_detalle_venta } = req.params;
-        const { cantidad } = req.body;
-        console.log(id_detalle_venta);
-        const result = SchemaDetalleVenta.validarCantidad( {cantidad} );
+        const result = SchemaDetalleVenta.validarUpdateDetalleVenta(req.body);
         if (!result.success) return res.status(400).json(result);
 
         try {
-            const updatedDetalleVenta = await this.detalleVentaModelo.updateCantidad({id_detalle_venta, cantidad} );
+            const updatedDetalleVenta = await this.detalleVentaModelo.update({ id_detalle_venta, input: req.body });
             res.json(updatedDetalleVenta);
         } catch (error) {
             res.status(500).json({ error: error.message });
@@ -104,9 +91,8 @@ export class DetalleVentaController {
 
     delete = async (req, res) => {
         const { id_detalle_venta } = req.params;
-        console.log(id_detalle_venta);
         try {
-            const deletedDetalleVenta = await this.detalleVentaModelo.delete({id_detalle_venta });
+            const deletedDetalleVenta = await this.detalleVentaModelo.delete({ id_detalle_venta });
             res.json(deletedDetalleVenta);
         } catch (error) {
             res.status(500).json({ error: error.message });
