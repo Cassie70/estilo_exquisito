@@ -1,0 +1,48 @@
+#########################################################
+###############          VENTAS           ###############
+#########################################################
+
+### Recuperar todas las ventas
+GET http://localhost:1234/ventas
+
+### Recuperar una venta por su id_venta
+GET http://localhost:1234/ventas/f5eebc99-9c0b-4ef8-bb6d-6bb9bd380f66
+
+### Recuperar ventas por el id_usuario
+GET http://localhost:1234/ventas/usuario/b1eebc99-9c0b-4ef8-bb6d-6bb9bd380b22
+
+### Otra prueba para Recuperar ventas por el id_usuario
+GET http://localhost:1234/ventas/usuario/a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a11
+
+### Recuperar ventas por estado (true o false)
+GET http://localhost:1234/ventas/estado/0
+
+### Recuperar ventas por estado (true o false)
+GET http://localhost:1234/ventas/estado/1
+
+### Crear una venta
+POST http://localhost:1234/ventas
+Content-Type: application/json
+
+{
+    "id_usuario": "e4eebc99-9c0b-4ef8-bb6d-6bb9bd380e55",
+    "monto": 120.50
+}
+
+### Actualizar una venta (incluyendo id_usuario, monto, fecha, estado)
+PATCH http://localhost:1234/ventas/f5eebc99-9c0b-4ef8-bb6d-6bb9bd380f66
+Content-Type: application/json
+
+{
+    "id_usuario": "d3eebc99-9c0b-4ef8-bb6d-6bb9bd380d44",
+    "monto": 150.75,
+    "fecha": "2024-06-07 15:32:14",
+    "estado": true
+}
+
+### Eliminar una venta
+DELETE http://localhost:1234/ventas/b1bb5614-24fe-11ef-825d-08bfb8a373be
+
+#########################################################
+###############      FIN    VENTAS        ###############
+#########################################################

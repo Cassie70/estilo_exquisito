@@ -3,7 +3,7 @@ import connection from "../../database.js";
 export class UsuariosModelo {
     static async getAll() {
         try {
-            const [usuarios] = await connection.query('SELECT * FROM Usuarios');
+            const [usuarios] = await connection.query('SELECT bin_to_uuid(id_usuario) id_usuario,nombre,apellido,correo_electronico,telefono FROM Usuarios');
             return usuarios;
         } catch (error) {
             throw new Error('Error al obtener todos los usuarios: ' + error.message);
