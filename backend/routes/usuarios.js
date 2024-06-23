@@ -9,10 +9,18 @@ export const createUsuariosRouter = ({ usuariosModelo }) => {
     usuariosRouter.get('/:id', usuariosController.getById);
     usuariosRouter.get('/email/:correo_electronico', usuariosController.getByEmail);
     usuariosRouter.post('/', usuariosController.create);
-    usuariosRouter.patch('/:id/nombre', usuariosController.updateNombre);
-    usuariosRouter.patch('/:id/apellido', usuariosController.updateApellido);
-    usuariosRouter.patch('/:id/email', usuariosController.updateEmail);
-    usuariosRouter.patch('/:id/telefono', usuariosController.updateTelefono);
+    
+    // Ruta para actualizar cualquier campo del usuario
+    usuariosRouter.patch('/:id', usuariosController.update);
+
+    // ruta de actualización para campos específicos
+    /*
+    usuariosRouter.patch('/:id/nombre', usuariosController.update);
+    usuariosRouter.patch('/:id/apellido', usuariosController.update);
+    usuariosRouter.patch('/:id/email', usuariosController.update);
+    usuariosRouter.patch('/:id/telefono', usuariosController.update);
+    */
+
     //usuariosRouter.delete('/:id', usuariosController.delete);
 
     return usuariosRouter;
