@@ -1,4 +1,4 @@
-import connection from "../../database.js"
+import connection from "../../database.js";
 
 export class TrabajadorModelo {
     static async getAll() {
@@ -71,63 +71,17 @@ export class TrabajadorModelo {
         }
     }
 
-    static async updateUser({ id, usuario }) {
+    static async update({ id, usuario, rol, password, nombre_completo, correo_electronico }) {
+        const query = `
+            UPDATE Trabajador 
+            SET usuario = ?, rol = ?, contraseña = ?, nombre_completo = ?, correo_electronico = ? 
+            WHERE id_trabajador = ?
+        `;
         try {
-            const [result] = await connection.query(
-                'UPDATE Trabajador SET usuario = ? WHERE id_trabajador = ?',
-                [usuario, id]
-            );
+            const [result] = await connection.query(query, [usuario, rol, password, nombre_completo, correo_electronico, id]);
             return result;
         } catch (error) {
-            throw new Error('Error al actualizar el usuario: ' + error.message);
-        }
-    }
-
-    static async updateRol({ id, rol }) {
-        try {
-            const [result] = await connection.query(
-                'UPDATE Trabajador SET rol = ? WHERE id_trabajador = ?',
-                [rol, id]
-            );
-            return result;
-        } catch (error) {
-            throw new Error('Error al actualizar el rol: ' + error.message);
-        }
-    }
-
-    static async updatePassword({ id, password }) {
-        try {
-            const [result] = await connection.query(
-                'UPDATE Trabajador SET contraseña = ? WHERE id_trabajador = ?',
-                [password, id]
-            );
-            return result;
-        } catch (error) {
-            throw new Error('Error al actualizar la contraseña: ' + error.message);
-        }
-    }
-
-    static async updateNombreCompleto({ id, nombre_completo }) {
-        try {
-            const [result] = await connection.query(
-                'UPDATE Trabajador SET nombre_completo = ? WHERE id_trabajador = ?',
-                [nombre_completo, id]
-            );
-            return result;
-        } catch (error) {
-            throw new Error('Error al actualizar el nombre completo: ' + error.message);
-        }
-    }
-
-    static async updateEmail({ id, correo_electronico }) {
-        try {
-            const [result] = await connection.query(
-                'UPDATE Trabajador SET correo_electronico = ? WHERE id_trabajador = ?',
-                [correo_electronico, id]
-            );
-            return result;
-        } catch (error) {
-            throw new Error('Error al actualizar el correo electrónico: ' + error.message);
+            throw new Error('Error al actualizar el trabajador: ' + error.message);
         }
     }
 
