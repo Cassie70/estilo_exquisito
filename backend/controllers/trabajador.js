@@ -1,3 +1,4 @@
+import bcrypt from 'bcrypt';
 import { SchemaTrabajador } from "../schemas/trabajador.js";
 
 export class TrabajadorController {
@@ -65,85 +66,31 @@ export class TrabajadorController {
         const { usuario, rol, password, nombre_completo, correo_electronico } = req.body;
 
         try {
-            const nuevoTrabajador = await this.trabajadorModelo.create({ usuario, rol, password, nombre_completo, correo_electronico });
+            const hashedPassword = await bcrypt.hash(password, 10);
+            const nuevoTrabajador = await this.trabajadorModelo.create({ usuario, rol, password: hashedPassword, nombre_completo, correo_electronico });
             res.status(201).json(nuevoTrabajador);
         } catch (error) {
             res.status(500).json({ error: error.message });
         }
     }
 
-    updateUser = async (req, res) => {
+    update = async (req, res) => {
         const { id } = req.params;
-        const { usuario } = req.body;
-    
-        const result = SchemaTrabajador.validarUpdateUsuario({ usuario });
+        const { usuario, rol, password, nombre_completo, correo_electronico } = req.body;
+
+        const result = SchemaTrabajador.validarUpdateTrabajador({ usuario, rol, password, nombre_completo, correo_electronico });
         if (!result.success) return res.status(400).json(result);
-    
+
         try {
-            const updatedTrabajador = await this.trabajadorModelo.updateUser({ id, usuario });
+            let hashedPassword = password;
+            if (password) {
+                hashedPassword = await bcrypt.hash(password, 10);
+            }
+
+            const updatedTrabajador = await this.trabajadorModelo.update({ id, usuario, rol, password: hashedPassword, nombre_completo, correo_electronico });
             res.json(updatedTrabajador);
         } catch (error) {
-            res.status(500).json({ error: 'Error al actualizar el usuario: ' + error.message });
-        }
-    }
-    
-    updateRol = async (req, res) => {
-        const { id } = req.params;
-        const { rol } = req.body;
-    
-        const result = SchemaTrabajador.validarUpdateRol({ rol });
-        if (!result.success) return res.status(400).json(result);
-    
-        try {
-            const updatedTrabajador = await this.trabajadorModelo.updateRol({ id, rol });
-            res.json(updatedTrabajador);
-        } catch (error) {
-            res.status(500).json({ error: 'Error al actualizar el rol: ' + error.message });
-        }
-    }
-    
-    updatePassword = async (req, res) => {
-        const { id } = req.params;
-        const { password } = req.body;
-    
-        const result = SchemaTrabajador.validarUpdatePassword({ password });
-        if (!result.success) return res.status(400).json(result);
-    
-        try {
-            const updatedTrabajador = await this.trabajadorModelo.updatePassword({ id, password });
-            res.json(updatedTrabajador);
-        } catch (error) {
-            res.status(500).json({ error: 'Error al actualizar la contraseña: ' + error.message });
-        }
-    }
-    
-    updateNombreCompleto = async (req, res) => {
-        const { id } = req.params;
-        const { nombre_completo } = req.body;
-    
-        const result = SchemaTrabajador.validarUpdateNombreCompleto({ nombre_completo });
-        if (!result.success) return res.status(400).json(result);
-    
-        try {
-            const updatedTrabajador = await this.trabajadorModelo.updateNombreCompleto({ id, nombre_completo });
-            res.json(updatedTrabajador);
-        } catch (error) {
-            res.status(500).json({ error: 'Error al actualizar el nombre completo: ' + error.message });
-        }
-    }
-    
-    updateEmail = async (req, res) => {
-        const { id } = req.params;
-        const { correo_electronico } = req.body;
-    
-        const result = SchemaTrabajador.validarUpdateEmail({ correo_electronico });
-        if (!result.success) return res.status(400).json(result);
-    
-        try {
-            const updatedTrabajador = await this.trabajadorModelo.updateEmail({ id, correo_electronico });
-            res.json(updatedTrabajador);
-        } catch (error) {
-            res.status(500).json({ error: 'Error al actualizar el correo electrónico: ' + error.message });
+            res.status(500).json({ error: 'Error al actualizar el trabajador: ' + error.message });
         }
     }
 
