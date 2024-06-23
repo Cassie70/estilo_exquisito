@@ -25,7 +25,7 @@ Content-Type: application/json
     "descripcion": "Descripcion del producto 1",
     "precio": 1000.00,
     "id_categoria": 3,
-    "imagen_url": "https://www.google.com"
+    "imagen_url": "uploads/imagen.jpg"
 }
 ### Eliminar un producto
 DELETE http://localhost:1234/productos/7

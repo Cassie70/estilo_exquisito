@@ -52,7 +52,7 @@ export class SchemaProducto {
 
         // Validar que la imagen sea una URL
         if (imagen_url) {
-            const urlPattern = /^(ftp|http|https):\/\/[^ "]+$/;
+            const urlPattern = /^uploads\/.*\.(png|jpg)$/;
             if (!urlPattern.test(imagen_url)) {
                 return { success: false, error: 'La imagen_url no es una URL válida' };
             }

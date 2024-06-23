@@ -10,3 +10,4 @@ export { createDetalleVentaRouter } from './detalle_venta.js';
 export { createTicketRouter } from './ticket.js';
 export { createProductosTallasInventarioRouter } from './productos_tallas_inventario.js';
 export { createCategoriasRouter } from './categorias.js';
+export { createLoginUsuarioRouter } from './login_usuario.js';
