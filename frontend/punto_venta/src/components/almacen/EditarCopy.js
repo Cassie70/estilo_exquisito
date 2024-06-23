@@ -1,6 +1,6 @@
 import React from 'react'
 
-export const Editar = ({ peli, conseguirProductos, setEditar, setListadoState }) => {
+export const EditarCopy = ({ peli, conseguirProductos, setEditar, setListadoState }) => {
     const titulo_componente = "Editar Pelicula"
 
 

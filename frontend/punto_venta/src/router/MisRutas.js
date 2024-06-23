@@ -6,6 +6,7 @@ import { Almacen } from '../components/almacen/Almacen';
 import { Ventas } from '../components/ventas/Ventas';
 import { Inicio } from '../components/inicio/Inicio';
 import { Reportes } from '../components/reportes/Reportes';
+import { Inventario } from '../components/inventario/Inventario';
 
 
 export const MisRutas = () => {
@@ -18,7 +19,8 @@ export const MisRutas = () => {
       <Routes>
         <Route path="/" element={<Navigate to="/inicio" />} />
         <Route path="/inicio" element={<Inicio />} /> 
-        <Route path="/almacen" element={<Almacen/>} />
+        <Route path="/productos" element={<Almacen/>} />
+        <Route path="/inventario" element={<Inventario/>} />
         <Route path="/ventas" element={<Ventas />} />
         <Route path="/reportes" element={<Reportes />} />  
       </Routes>

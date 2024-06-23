@@ -7,12 +7,13 @@ GET http://localhost:1234/productos
 GET http://localhost:1234/productos/2
 ### Crear un producto
 POST http://localhost:1234/productos
-Content-Type: application/json
+Content-Type: application/json 
 
 {
     "nombre": "Producto 1",
     "descripcion": "Descripcion del producto 1",
     "precio": 1000.00,
+    "id_categoria": 1,
     "imagen_url": "https://www.google.com"
 }
 ### Editar un producto (pendiente)

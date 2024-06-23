@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from 'react'
 import { Editar } from './Editar';
 import imgejemplo from '../../img/2.jpg';
+import { EditarCopy } from './EditarCopy';
 
-export const Listado = ({ listadoState, setListadoState }) => {
+export const ListadoCopy = ({ listadoState, setListadoState }) => {
 
     const [editar, setEditar] = useState(0);
 
@@ -82,7 +83,7 @@ export const Listado = ({ listadoState, setListadoState }) => {
 
                             {/*Aparece formulario de editar*/}
                             {editar === peli.id && (
-                                <Editar peli={peli}
+                                <EditarCopy peli={peli}
                                     conseguirProductos={conseguirProductos}
                                     setEditar={setEditar}
                                     setListadoState={setListadoState}
