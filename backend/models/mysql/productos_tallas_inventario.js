@@ -157,4 +157,84 @@ export class ProductosTallasInventarioModelo {
             throw new Error('Error al obtener productos por ID de categoría: ' + error.message);
         }
     }
+
+    //metodo para obtener 4 productos con tendencia, ahorita no funciona, me devuelve null
+    static async getByTendence() {
+        console.log("Hola");
+        try {
+             
+            // Primer consulta: obtener los 4 productos más vendidos
+            const [productos] = await connection.query(`
+                SELECT 
+                    dv.id_producto, 
+                    SUM(dv.cantidad) as total_vendidos
+                FROM Detalle_venta dv
+                GROUP BY dv.id_producto
+                ORDER BY total_vendidos DESC
+                LIMIT 4
+            `);
+              
+            // Verificar si la consulta devuelve resultados
+            if (productos.length === 0) {
+                console.log("No se encontraron productos más vendidos.");
+                return [];
+            }
+            
+            // Obtener los IDs de los productos
+            const ids_productos = productos.map(p => p.id_producto);
+            console.log("IDs de productos más vendidos:", ids_productos);
+    
+            // Segunda consulta: obtener detalles de los productos más vendidos
+            const [result] = await connection.query(`
+                SELECT 
+                    Productos.id_producto, 
+                    Productos.nombre, 
+                    Productos.descripcion, 
+                    Productos.precio,
+                    Categorias.nombre_categoria, 
+                    Productos.imagen_url, 
+                    Productos.fecha_agregada,
+                    Tallas.nombre_talla, 
+                    Inventario.stock 
+                FROM Productos
+                JOIN Inventario ON Productos.id_producto = Inventario.id_producto
+                JOIN Tallas ON Inventario.id_talla = Tallas.id_talla
+                JOIN Categorias ON Productos.id_categoria = Categorias.id_categoria
+                WHERE Productos.id_producto IN (?)
+                ORDER BY FIELD(Productos.id_producto, ${ids_productos.join(',')})
+            `, [ids_productos]);
+    
+            // Mapear los resultados para estructurarlos correctamente
+            const productosMap = result.reduce((acc, item) => {
+                if (!acc[item.id_producto]) {
+                    acc[item.id_producto] = {
+                        id_producto: item.id_producto,
+                        nombre: item.nombre,
+                        descripcion: item.descripcion,
+                        precio: item.precio,
+                        nombre_categoria: item.nombre_categoria,
+                        imagen_url: item.imagen_url,
+                        fecha_agregada: item.fecha_agregada,
+                        tallas: []
+                    };
+                }
+    
+                acc[item.id_producto].tallas.push({
+                    nombre_talla: item.nombre_talla,
+                    stock: item.stock
+                });
+    
+                return acc;
+            }, {});
+    
+            // Convertir el mapa de productos a un array
+            const productosConTallas = Object.values(productosMap);
+            console.log("Productos con tallas:", productosConTallas);
+    
+            return productosConTallas;
+        } catch (error) {
+            console.error('Error in getByTendence:', error);
+            throw error;
+        }
+    }
 }
