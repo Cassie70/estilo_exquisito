@@ -1,4 +1,4 @@
-import connection from "../../database.js"
+import connection from "../../database.js";
 
 export class UsuariosModelo {
     static async getAll() {
@@ -34,66 +34,60 @@ export class UsuariosModelo {
         }
     }
 
-    static async create({ nombre, apellido, correo_electronico, telefono }) {
+    static async create({ nombre, apellido, correo_electronico, pass, telefono }) {
         const query = `
-            INSERT INTO Usuarios (nombre, apellido, correo_electronico, telefono) 
-            VALUES (?, ?, ?, ?)
+            INSERT INTO Usuarios (nombre, apellido, correo_electronico, pass, telefono) 
+            VALUES (?, ?, ?, ?, ?)
         `;
         try {
-            const [result] = await connection.query(query, [nombre, apellido, correo_electronico, telefono]);
+            const [result] = await connection.query(query, [nombre, apellido, correo_electronico, pass, telefono]);
             return result;
         } catch (error) {
             throw new Error('Error al crear el usuario: ' + error.message);
         }
     }
 
-    static async updateNombre({ id_usuario, nombre }) {
+    static async update({ id_usuario, nombre, apellido, correo_electronico, pass, telefono }) {
+        const updateFields = [];
+        const updateParams = [];
+
+        if (nombre) {
+            updateFields.push('nombre = ?');
+            updateParams.push(nombre);
+        }
+        if (apellido) {
+            updateFields.push('apellido = ?');
+            updateParams.push(apellido);
+        }
+        if (correo_electronico) {
+            updateFields.push('correo_electronico = ?');
+            updateParams.push(correo_electronico);
+        }
+        if (pass) {
+            updateFields.push('pass = ?');
+            updateParams.push(pass);
+        }
+        if (telefono) {
+            updateFields.push('telefono = ?');
+            updateParams.push(telefono);
+        }
+
+        updateParams.push(id_usuario); // Pushing id_usuario as the last parameter
+
+        const updateQuery = `
+            UPDATE Usuarios 
+            SET ${updateFields.join(', ')} 
+            WHERE id_usuario = UUID_TO_BIN(?)
+        `;
+
         try {
-            const [result] = await connection.query(
-                'UPDATE Usuarios SET nombre = ? WHERE id_usuario = UUID_TO_BIN(?)',
-                [nombre, id_usuario]
-            );
+            const [result] = await connection.query(updateQuery, updateParams);
             return result;
         } catch (error) {
-            throw new Error('Error al actualizar el nombre: ' + error.message);
+            throw new Error('Error al actualizar el usuario: ' + error.message);
         }
     }
 
-    static async updateApellido({ id_usuario, apellido }) {
-        try {
-            const [result] = await connection.query(
-                'UPDATE Usuarios SET apellido = ? WHERE id_usuario = UUID_TO_BIN(?)',
-                [apellido, id_usuario]
-            );
-            return result;
-        } catch (error) {
-            throw new Error('Error al actualizar el apellido: ' + error.message);
-        }
-    }
-
-    static async updateEmail({ id_usuario, correo_electronico }) {
-        try {
-            const [result] = await connection.query(
-                'UPDATE Usuarios SET correo_electronico = ? WHERE id_usuario = UUID_TO_BIN(?)',
-                [correo_electronico, id_usuario]
-            );
-            return result;
-        } catch (error) {
-            throw new Error('Error al actualizar el correo electrónico: ' + error.message);
-        }
-    }
-
-    static async updateTelefono({ id_usuario, telefono }) {
-        try {
-            const [result] = await connection.query(
-                'UPDATE Usuarios SET telefono = ? WHERE id_usuario = UUID_TO_BIN(?)',
-                [telefono, id_usuario]
-            );
-            return result;
-        } catch (error) {
-            throw new Error('Error al actualizar el teléfono: ' + error.message);
-        }
-    }
     /*
     static async delete({ id_usuario }) {
         try {
@@ -105,5 +99,7 @@ export class UsuariosModelo {
         } catch (error) {
             throw new Error('Error al eliminar el usuario: ' + error.message);
         }
-    }*/
+    }
+    */
 }
+
