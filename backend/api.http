@@ -50,6 +50,11 @@ GET http://localhost:1234/productos-tallas-inventario/precio/500
 
 ### Recuperar productos por id de categoría con tallas e inventario
 GET http://localhost:1234/productos-tallas-inventario/categoria/1
+
+//aun no queda el de tendencia
+### Recuperar productos por tendencia de ventas (4 más vendidos)
+GET http://localhost:1234/productos-tallas-inventarios/tendencia
+
 #########################################################
 #######     FIN PRODUCTOS TALLAS INVENTARIO    ##########
 #########################################################
