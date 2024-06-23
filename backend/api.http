@@ -259,7 +259,7 @@ DELETE http://localhost:1234/detalle-pedido-apartado/2
 #########################################################
 
 #########################################################
-###############        TRABAJADOR         ###############
+###############        TRABAJADORES        ###############
 #########################################################
 
 ### Recuperar todos los trabajadores
@@ -268,72 +268,48 @@ GET http://localhost:1234/trabajadores
 ### Recuperar un trabajador por su id_trabajador
 GET http://localhost:1234/trabajadores/1
 
-### Recuperar trabajadores por el usuario
-GET http://localhost:1234/trabajadores/usuario/mariagomez
-
-### Recuperar trabajadores por el correo electrónico
-GET http://localhost:1234/trabajadores/email/jorgecenteno12@example.com
-
-### Recuperar trabajadores por el rol
-GET http://localhost:1234/trabajadores/rol/vendedor
+### Recuperar un trabajador por su correo electrónico
+GET http://localhost:1234/trabajadores/email/moni.vi2@example.com
 
 ### Crear un trabajador
 POST http://localhost:1234/trabajadores
 Content-Type: application/json
 
 {
-    "usuario": "LuisCal10",
+    "usuario": "jperez",
     "rol": "vendedor",
-    "password": "passdedade",
-    "nombre_completo": "Luis Mendoza",
-    "correo_electronico": "LuissinS@example.com"
+    "password": "ContraseniaSegura123",
+    "nombre_completo": "Juan Perez",
+    "correo_electronico": "juan.perez@example.com"
 }
-
-### Actualizar el usuario de un trabajador
-PATCH http://localhost:1234/trabajadores/1/usuario
+###
+POST http://localhost:1234/trabajadores
 Content-Type: application/json
 
 {
-    "usuario": "mariag"
+    "usuario": "monica32",
+    "rol": "almacenista",
+    "password": "perritos123",
+    "nombre_completo": "Monica Vidente",
+    "correo_electronico": "moni.vi2@example.com"
 }
-
-### Actualizar el rol de un trabajador
-PATCH http://localhost:1234/trabajadores/1/rol
+### Actualizar un trabajador
+PATCH http://localhost:1234/trabajadores/1
 Content-Type: application/json
 
 {
-    "rol": "almacenista"
+    "usuario": "jorgePerez2",
+    "rol": "gerente",
+    "password": "NuevaContrasenia456",
+    "nombre_completo": "Juan Perez Lopez",
+    "correo_electronico": "juan.perez.lopez@example.com"
 }
 
-### Actualizar la contraseña de un trabajador
-PATCH http://localhost:1234/trabajadores/1/password
-Content-Type: application/json
-
-{
-    "password": "newpassword456"
-}
-
-### Actualizar el nombre completo de un trabajador
-PATCH http://localhost:1234/trabajadores/1/nombre_completo
-Content-Type: application/json
-
-{
-    "nombre_completo": "Maria G. Gomez"
-}
-
-### Actualizar el correo electrónico de un trabajador
-PATCH http://localhost:1234/trabajadores/1/email
-Content-Type: application/json
-
-{
-    "correo_electronico": "maria.g@example.com"
-}
-
-### Eliminar un trabajador
-DELETE http://localhost:1234/trabajadores/3
+### Eliminar un trabajador 
+DELETE http://localhost:1234/trabajadores/2
 
 #########################################################
-###############      FIN    TRABAJADOR    ###############
+###############      FIN  Trabajador      ###############
 #########################################################
 
 #########################################################
