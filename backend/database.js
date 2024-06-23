@@ -8,7 +8,7 @@ const DEFAULT_DB_CONFIG = {
     host: 'localhost',
     user: 'root',
     port: 3306,
-    password: '',
+    password: 'root',
     database: 'estilo_exquisito_db'
 }
 

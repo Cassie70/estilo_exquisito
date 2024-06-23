@@ -1,9 +1,37 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { GuardarEnStorage } from '../../helpers/GuardarEnStorage';
 
 export const Crear = ({ setListadoState }) => {
 
     const tituloComponente = "Añadir Prenda";
+
+    // useEffect(() => {
+    //     obtenerProductos();
+    // }, []);
+
+    // const obtenerProductos = () => {
+    //     fetch('http://localhost:1234/productos')
+    //         .then(response => response.json())
+    //         .then(data => {
+    //             setListadoState(data); // Actualiza el estado con los productos obtenidos
+    //         })
+    //         .catch(error => console.error('Error al obtener productos:', error));
+    // };
+
+    fetch("http://localhost:1234/productos",{
+        method:"POST",
+        headers:{
+            'content-Type':'aplication/json'
+        },
+        body:{
+            //Objeto que se va a mandar
+        }
+    })
+
+    //PATCH editar datos
+    //Get obtener datos
+    //Delete borrar
+    //Por el momento no agregar imagen
 
     const [peliState, setPeliState] = useState({
         imagen: null,
@@ -20,7 +48,6 @@ export const Crear = ({ setListadoState }) => {
         e.preventDefault();
 
         //conseguir datos del forumario
-
         let target = e.target;
         let imagen=target.imagen.value;
         let titulo = target.titulo.value;
@@ -31,7 +58,6 @@ export const Crear = ({ setListadoState }) => {
 
         //Crear objeto de la pelicula a guardar 
         let peli = {
-            id: new Date().getTime(),
             imagen:imagen,
             titulo: titulo,
             talla: talla,
