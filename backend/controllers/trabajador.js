@@ -77,22 +77,24 @@ export class TrabajadorController {
     update = async (req, res) => {
         const { id } = req.params;
         const { usuario, rol, password, nombre_completo, correo_electronico } = req.body;
-
+      
         const result = SchemaTrabajador.validarUpdateTrabajador({ usuario, rol, password, nombre_completo, correo_electronico });
         if (!result.success) return res.status(400).json(result);
-
+      
         try {
-            let hashedPassword = password;
-            if (password) {
-                hashedPassword = await bcrypt.hash(password, 10);
-            }
-
-            const updatedTrabajador = await this.trabajadorModelo.update({ id, usuario, rol, password: hashedPassword, nombre_completo, correo_electronico });
-            res.json(updatedTrabajador);
+          let hashedPassword = null; // Inicializar hashedPassword como null
+      
+          if (password) {
+            hashedPassword = await bcrypt.hash(password, 10);
+          }
+      
+          const updatedTrabajador = await this.trabajadorModelo.update({ id, usuario, rol, password: hashedPassword, nombre_completo, correo_electronico });
+          res.json(updatedTrabajador);
         } catch (error) {
-            res.status(500).json({ error: 'Error al actualizar el trabajador: ' + error.message });
+          res.status(500).json({ error: 'Error al actualizar el trabajador: ' + error.message });
         }
-    }
+    };
+      
 
     delete = async (req, res) => {
         const { id } = req.params;

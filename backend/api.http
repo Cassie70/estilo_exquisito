@@ -295,15 +295,15 @@ Content-Type: application/json
     "correo_electronico": "moni.vi2@example.com"
 }
 ### Actualizar un trabajador
-PATCH http://localhost:1234/trabajadores/1
+PATCH http://localhost:1234/trabajadores/5
 Content-Type: application/json
 
 {
-    "usuario": "jorgePerez2",
-    "rol": "gerente",
+    "usuario": "Moni23",
+    "rol": "Vendedor",
     "password": "NuevaContrasenia456",
-    "nombre_completo": "Juan Perez Lopez",
-    "correo_electronico": "juan.perez.lopez@example.com"
+    "nombre_completo": "Monica Vidente Fuentes",
+    "correo_electronico": "mon.lu2001@example.com"
 }
 
 ### Eliminar un trabajador 
