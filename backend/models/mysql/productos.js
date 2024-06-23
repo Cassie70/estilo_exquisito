@@ -50,12 +50,13 @@ export class ProductosModelo {
                 nombre,
                 descripcion,
                 precio,
+                id_categoria,
                 imagen_url,
             } = input;
     
             const result = await connection.query(
-                'UPDATE Productos SET nombre = ?, descripcion = ?, precio = ?, imagen_url = ? WHERE id_producto = ?',
-                [nombre, descripcion, precio, imagen_url, id]
+                'UPDATE Productos SET nombre = ?, descripcion = ?, precio = ?, id_categoria= ?,imagen_url = ? WHERE id_producto = ?',
+                [nombre, descripcion, precio, id_categoria,imagen_url, id]
             );
     
             return result;

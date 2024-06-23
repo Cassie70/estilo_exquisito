@@ -24,6 +24,7 @@ Content-Type: application/json
     "nombre": "Producto 1",
     "descripcion": "Descripcion del producto 1",
     "precio": 1000.00,
+    "id_categoria": 3,
     "imagen_url": "https://www.google.com"
 }
 ### Eliminar un producto
