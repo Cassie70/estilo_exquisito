@@ -9,3 +9,4 @@ export { UsuariosModelo } from './usuarios.js';
 export { DetalleVentaModelo } from './detalle_venta.js';
 export { TicketModelo } from './ticket.js';
 export { ProductosTallasInventarioModelo } from './productos_tallas_inventario.js';
+export { CategoriasModelo } from './categorias.js';
