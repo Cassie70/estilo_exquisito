@@ -31,11 +31,12 @@ export class ProductosModelo {
                 nombre,
                 descripcion,
                 precio,
+                id_categoria,
                 imagen_url,
             } = input
 
-            const result= await connection.query('INSERT INTO Productos (nombre, descripcion, precio, imagen_url) VALUES (?, ?, ?, ?)'
-            , [nombre, descripcion, precio, imagen_url])
+            const result= await connection.query('INSERT INTO Productos (nombre, descripcion, precio, id_categoria, imagen_url) VALUES (?, ?, ?, ?, ?)'
+            , [nombre, descripcion, precio, id_categoria, imagen_url])
 
             return result;
         } catch (error) {

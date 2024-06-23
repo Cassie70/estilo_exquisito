@@ -3,7 +3,7 @@ import connection from "../../database.js"
 export class DetalleVentaModelo {
     static async getAll() {
         try {
-            const [detalleVentas] = await connection.query('SELECT * FROM Detalle_venta');
+            const [detalleVentas] = await connection.query('SELECT id_detalle_venta,bin_to_uuid(id_venta) id_venta,id_producto,precio_unitario,cantidad,id_talla FROM Detalle_venta;');
             return detalleVentas;
         } catch (error) {
             throw new Error('Error al obtener todos los detalles de venta: ' + error.message);
@@ -13,7 +13,7 @@ export class DetalleVentaModelo {
     static async getByIdDetalleVenta(id_detalle_venta) {
         try {
             const [detalleVenta] = await connection.query(
-                'SELECT * FROM Detalle_venta WHERE id_detalle_venta = ?',
+                'SELECT id_detalle_venta,bin_to_uuid(id_venta) id_venta,id_producto,precio_unitario,cantidad,id_talla FROM Detalle_venta WHERE id_detalle_venta = ?',
                 [id_detalle_venta]
             );
             return detalleVenta;
@@ -25,7 +25,7 @@ export class DetalleVentaModelo {
     static async getByIdVenta({ id_venta }) {
         try {
             const [detalleVentas] = await connection.query(
-                'SELECT * FROM Detalle_venta WHERE id_venta = UUID_TO_BIN(?)',
+                'SELECT id_detalle_venta,bin_to_uuid(id_venta) id_venta,id_producto,precio_unitario,cantidad,id_talla FROM Detalle_venta WHERE id_venta = UUID_TO_BIN(?)',
                 [id_venta]
             );
             return detalleVentas;
@@ -37,7 +37,7 @@ export class DetalleVentaModelo {
     static async getByProducto({ id_producto }) {
         try {
             const [detalleVentas] = await connection.query(
-                'SELECT * FROM Detalle_venta WHERE id_producto = ?',
+                'SELECT id_detalle_venta,bin_to_uuid(id_venta) id_venta,id_producto,precio_unitario,cantidad,id_talla FROM Detalle_venta WHERE id_producto = ?',
                 [id_producto]
             );
             return detalleVentas;
@@ -49,7 +49,7 @@ export class DetalleVentaModelo {
     static async getByIdTalla({ id_talla }) {
         try {
             const [detalleVentas] = await connection.query(
-                'SELECT * FROM Detalle_venta WHERE id_talla = ?',
+                'SELECT id_detalle_venta,bin_to_uuid(id_venta) id_venta,id_producto,precio_unitario,cantidad,id_talla FROM Detalle_venta WHERE id_talla = ?',
                 [id_talla]
             );
             return detalleVentas;
