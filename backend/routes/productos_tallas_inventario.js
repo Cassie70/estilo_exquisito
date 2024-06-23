@@ -11,6 +11,8 @@ export const createProductosTallasInventarioRouter = ({ productosTallasInventari
     productosTallasInventarioRouter.get('/talla/:nombre_talla', productosTallasInventarioController.getByNombreTalla);
     productosTallasInventarioRouter.get('/precio/:precio', productosTallasInventarioController.getByPrecio);
     productosTallasInventarioRouter.get('/categoria/:id_categoria', productosTallasInventarioController.getByIdCategoria);
+    // Nueva ruta para obtener productos por tendencia de ventas
+    productosTallasInventarioRouter.get('/tendencia', productosTallasInventarioController.getByTendence);
 
     return productosTallasInventarioRouter;
 }
