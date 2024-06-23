@@ -8,7 +8,7 @@ estaticos (pueden ser llamados sin instanciar la clase) cada metodo realiza una 
 export class ProductosModelo {
     static async getAll() {
         try {
-            const [productos, tableInfo] = await connection.query('SELECT * FROM productos')
+            const [productos, tableInfo] = await connection.query('SELECT * FROM Productos')
             
             return productos
         } catch (error) {
@@ -18,7 +18,7 @@ export class ProductosModelo {
 
     static async getById({id}) {
         try {
-            const [producto, tableInfo] = await connection.query('SELECT * FROM productos WHERE id_producto = ?', [id])          
+            const [producto, tableInfo] = await connection.query('SELECT * FROM Productos WHERE id_producto = ?', [id])          
             return producto
         } catch (error) {
             throw new Error('Error al obtener el producto por ID: ' + error.message);

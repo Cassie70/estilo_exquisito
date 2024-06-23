@@ -1,0 +1,34 @@
+#########################################################
+###############          PRODUCTOS        ###############
+#########################################################
+### Recuperar todos los productos
+GET http://localhost:1234/productos
+### Recuperar un producto por su id
+GET http://localhost:1234/productos/2
+### Crear un producto
+POST http://localhost:1234/productos
+Content-Type: application/json
+
+{
+    "nombre": "Producto Nuevo",
+    "descripcion": "Descripcion del producto NUEVO",
+    "precio": 1000.00,
+    "id_categoria": 1,
+    "imagen_url": "uploads/imagen.jpg"
+}
+### Editar un producto (pendiente)
+PATCH http://localhost:1234/productos/2
+Content-Type: application/json
+
+{
+    "nombre": "Producto 1",
+    "descripcion": "Descripcion del producto 1",
+    "precio": 1000.00,
+    "imagen_url": "https://www.google.com"
+}
+### Eliminar un producto
+DELETE http://localhost:1234/productos/7
+
+#########################################################
+###############     FIN PRODUCTOS         ###############
+#########################################################
