@@ -11,11 +11,7 @@ export const createTrabajadorRouter = ({ trabajadorModelo }) => {
     trabajadorRouter.get('/email/:email', trabajadorController.getByEmail);
     trabajadorRouter.get('/rol/:rol', trabajadorController.getByRol);
     trabajadorRouter.post('/', trabajadorController.create);
-    trabajadorRouter.patch('/:id/usuario', trabajadorController.updateUser);
-    trabajadorRouter.patch('/:id/rol', trabajadorController.updateRol);
-    trabajadorRouter.patch('/:id/password', trabajadorController.updatePassword);
-    trabajadorRouter.patch('/:id/nombre_completo', trabajadorController.updateNombreCompleto);
-    trabajadorRouter.patch('/:id/email', trabajadorController.updateEmail);
+    trabajadorRouter.patch('/:id', trabajadorController.update);
     trabajadorRouter.delete('/:id', trabajadorController.delete);
 
     return trabajadorRouter;
