@@ -1,3 +1,4 @@
+import bcrypt from 'bcrypt';
 import { SchemaUsuarios } from "../schemas/usuarios.js";
 
 export class UsuariosController {
@@ -40,71 +41,62 @@ export class UsuariosController {
         const result = SchemaUsuarios.validarCrearUsuario(req.body);
         if (!result.success) return res.status(400).json(result);
 
-        const { nombre, apellido, correo_electronico, telefono } = req.body;
+        const { nombre, apellido, correo_electronico, pass, telefono } = req.body;
 
         try {
-            const nuevoUsuario = await this.usuariosModelo.create({ nombre, apellido, correo_electronico, telefono });
+            // Encriptar la contraseña antes de almacenarla
+            const hashedPassword = await bcrypt.hash(pass, 10);
+
+            const nuevoUsuario = await this.usuariosModelo.create({ 
+                nombre, 
+                apellido, 
+                correo_electronico, 
+                pass: hashedPassword, 
+                telefono 
+            });
+
+            // No devolver la contraseña en la respuesta
+            delete nuevoUsuario.pass;
+
             res.status(201).json(nuevoUsuario);
         } catch (error) {
             res.status(500).json({ error: error.message });
         }
     }
 
-    updateNombre = async (req, res) => {
+    update = async (req, res) => {
         const { id } = req.params;
-        const { nombre } = req.body;
-        const result = SchemaUsuarios.validarNombre({ nombre });
+        const { nombre, apellido, correo_electronico, pass, telefono } = req.body;
+
+        // Validar los campos que se van a actualizar
+        const result = SchemaUsuarios.validarActualizarUsuario({ nombre, apellido, correo_electronico, telefono });
         if (!result.success) return res.status(400).json(result);
 
         try {
-            const updatedUsuario = await this.usuariosModelo.updateNombre({ id_usuario: id, nombre });
+            // Encriptar la nueva contraseña si se proporciona
+            let hashedPassword = pass;
+            if (pass) {
+                hashedPassword = await bcrypt.hash(pass, 10);
+            }
+
+            const updatedUsuario = await this.usuariosModelo.update({ 
+                id_usuario: id, 
+                nombre, 
+                apellido, 
+                correo_electronico, 
+                pass: hashedPassword, 
+                telefono 
+            });
+
+            // No devolver la contraseña en la respuesta
+            delete updatedUsuario.pass;
+
             res.json(updatedUsuario);
         } catch (error) {
             res.status(500).json({ error: error.message });
         }
     }
 
-    updateApellido = async (req, res) => {
-        const { id } = req.params;
-        const { apellido } = req.body;
-        const result = SchemaUsuarios.validarApellido({ apellido });
-        if (!result.success) return res.status(400).json(result);
-
-        try {
-            const updatedUsuario = await this.usuariosModelo.updateApellido({ id_usuario: id, apellido });
-            res.json(updatedUsuario);
-        } catch (error) {
-            res.status(500).json({ error: error.message });
-        }
-    }
-
-    updateEmail = async (req, res) => {
-        const { id } = req.params;
-        const { correo_electronico } = req.body;
-        const result = SchemaUsuarios.validarCorreo({ correo_electronico });
-        if (!result.success) return res.status(400).json(result);
-
-        try {
-            const updatedUsuario = await this.usuariosModelo.updateEmail({ id_usuario: id, correo_electronico });
-            res.json(updatedUsuario);
-        } catch (error) {
-            res.status(500).json({ error: error.message });
-        }
-    }
-
-    updateTelefono = async (req, res) => {
-        const { id } = req.params;
-        const { telefono } = req.body;
-        const result = SchemaUsuarios.validarTelefono({ telefono });
-        if (!result.success) return res.status(400).json(result);
-
-        try {
-            const updatedUsuario = await this.usuariosModelo.updateTelefono({ id_usuario: id, telefono });
-            res.json(updatedUsuario);
-        } catch (error) {
-            res.status(500).json({ error: error.message });
-        }
-    }
     /*
     delete = async (req, res) => {
         const { id } = req.params;
@@ -114,5 +106,7 @@ export class UsuariosController {
         } catch (error) {
             res.status(500).json({ error: error.message });
         }
-    }*/
+    }
+    */
 }
+
