@@ -1,3 +1,4 @@
+/*frontend/punto_venta/src/index.css*/
 /*ESTILOS GENERALES*/
 body {
   font-family: sans-serif, Arial, Helvetica;
@@ -11,6 +12,7 @@ img {
   height: 150px;
   border-radius: 10px;
 }
+
 /*----------------------MIS RUTAS----------------------------*/
 .content-principal {
   background-color: white;
@@ -390,3 +392,122 @@ input[type="button"] {
 .no-encontrado {
   color: red;
 }
+
+/* ---------------------- Estilos pestaña de Trabajadores ----------------------- */
+
+/* ESTILOS de tabla */
+.tabla-trabajadores {
+  width: 80%;
+  margin: 20px auto;
+  border-collapse: collapse;
+  box-shadow: 0px 0px 6px #ddd;
+}
+
+.tabla-trabajadores th,
+.tabla-trabajadores td {
+  padding: 12px 15px;
+  text-align: center;
+  border: 1px solid #ddd;
+}
+
+.tabla-trabajadores th {
+  background-color: #f4f4f4;
+  color: #333;
+  font-weight: bold;
+}
+
+.tabla-trabajadores td {
+  background-color: #fff;
+  color: #333;
+}
+
+.tabla-trabajadores tr:nth-child(even) {
+  background-color: #f9f9f9;
+}
+
+/* ESTILOS de formulario de trabajadores */
+.form-trabajadores {
+  width: 80%;
+  margin: 20px auto;
+}
+
+.inputs-trabajadores {
+  display: flex;
+  flex-wrap: wrap; /* Permite que los elementos se envuelvan a medida que el ancho del contenedor cambia */
+  justify-content: space-between; /* Espaciado entre los elementos */
+  gap: 10px;
+}
+
+.inputs-trabajadores input[type="text"],
+.inputs-trabajadores input[type="password"],
+.inputs-trabajadores input[type="email"],
+.inputs-trabajadores select {
+  flex: 1; /* Para que los inputs y selectores ocupen todo el espacio disponible */
+  padding: 10px;
+  border-radius: 5px;
+  border: 1px solid #ddd;
+  background: #f6f7f9;
+  color: #333;
+  outline: none;
+  transition: border-color 0.3s;
+}
+
+.inputs-trabajadores input[type="text"]:focus,
+.inputs-trabajadores input[type="password"]:focus,
+.inputs-trabajadores input[type="email"]:focus,
+.inputs-trabajadores select:focus {
+  border-color: #333;
+}
+
+.buttons {
+  margin-top: 10px; /* Espacio superior para separar los botones del contenido superior */
+  text-align: center; /* Alineación de los botones al centro */
+}
+
+.buttons button {
+  margin: 0 5px; /* Espacio entre los botones */
+  padding: 10px 20px;
+  background-color: black;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.buttons button:hover {
+  background-color: #333;
+}
+
+.tabla-trabajadores .accion-buttons {
+  
+  justify-content: space-between; /* Espacio entre los botones */
+}
+
+.tabla-trabajadores .accion-buttons button {
+  padding: 8px 15px;
+  margin-right:  10px; /* Separación de 2px entre botones */
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.tabla-trabajadores .accion-buttons button.editar {
+  background-color: #ffc107; /* Amarillo */
+  color: #333;
+}
+
+.tabla-trabajadores .accion-buttons button.editar:hover {
+  background-color: #ffca2c; /* Amarillo más claro al pasar el mouse */
+}
+
+.tabla-trabajadores .accion-buttons button.eliminar {
+  background-color: #dc3545; /* Rojo */
+  color: #fff;
+}
+
+.tabla-trabajadores .accion-buttons button.eliminar:hover {
+  background-color: #c82333; /* Rojo más oscuro al pasar el mouse */
+}
+/* ---------------------- FIN Estilos pestaña de Trabajadores ----------------------- */
