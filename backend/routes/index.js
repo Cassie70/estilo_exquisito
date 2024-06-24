@@ -11,3 +11,4 @@ export { createTicketRouter } from './ticket.js';
 export { createProductosTallasInventarioRouter } from './productos_tallas_inventario.js';
 export { createCategoriasRouter } from './categorias.js';
 export { createLoginUsuarioRouter } from './login_usuario.js';
+export { createLoginTrabajadorRouter } from './login_trabajador.js';

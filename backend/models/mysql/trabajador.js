@@ -28,7 +28,9 @@ export class TrabajadorModelo {
                 'SELECT * FROM Trabajador WHERE usuario = ?',
                 [usuario]
             );
-            return trabajador;
+            if (trabajador.length === 0) 
+                return null;
+            return trabajador[0];
         } catch (error) {
             throw new Error('Error al obtener el trabajador por usuario: ' + error.message);
         }
@@ -60,7 +62,7 @@ export class TrabajadorModelo {
 
     static async create({ usuario, rol, password, nombre_completo, correo_electronico }) {
         const query = `
-            INSERT INTO Trabajador (usuario, rol, contraseña, nombre_completo, correo_electronico) 
+            INSERT INTO Trabajador (usuario, rol, pass, nombre_completo, correo_electronico) 
             VALUES (?, ?, ?, ?, ?)
         `;
         try {

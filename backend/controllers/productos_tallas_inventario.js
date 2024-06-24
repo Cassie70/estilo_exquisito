@@ -35,6 +35,7 @@ export class ProductosTallasInventarioController {
 
     getByNombreTalla = async (req, res) => {
         const { nombre_talla } = req.params;
+        
         try {
             const result = await this.productosTallasInventarioModelo.getByNombreTalla({ nombre_talla });
             res.json(result);
@@ -64,10 +65,10 @@ export class ProductosTallasInventarioController {
     }
     //getby tendence para obtener 4 productos tendencia, al parecer no funciona, devuelve null
     getByTendence = async (req, res) => {
+        console.log('entro a tendencia');
         try {
-            console.log("1")
             const result = await this.productosTallasInventarioModelo.getByTendence();
-            console.log("2")
+            
             res.json(result);
         } catch (error) {
             res.status(500).json({ error: 'No se pudo consultar la base de datos' });
