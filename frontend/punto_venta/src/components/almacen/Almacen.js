@@ -1,13 +1,37 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Buscador } from "./Buscador";
-import { Crear } from "./Crear";
-import { Listado } from "./Listado";
 import { CrearCopy } from './Crear-copy';
 import { ListadoCopy } from './ListadoCopy';
 
 export const Almacen = () => {
 
   const [listadoState, setListadoState] = useState([]);
+  const [accion,setAccion] = useState(0);
+
+  useEffect(()=>{
+    if(accion===0){
+      fetch('http://localhost:1234/productos', {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      })
+        .then(response => {
+          if (!response.ok) {
+            throw new Error('Error en la red');
+          }
+          return response.json();
+        })
+        .then(data => {
+          console.log('Datos obtenidos:', data);
+          setListadoState(data);
+        })
+        .catch(error => {
+          console.log('Error al obtener datos:', error);
+        });
+    }else{
+    }
+  }, [listadoState]);
 
   return (
     <div className="layout">
@@ -19,13 +43,13 @@ export const Almacen = () => {
 
       <section className="content">
         {/*Aqui va el listado de las peliculas*/}
-        <ListadoCopy listadoState={listadoState} setListadoState={setListadoState} />
+        <ListadoCopy listadoState={listadoState} setListadoState={setListadoState}/>
       </section>
 
       {/*Barra Lateral*/}
       <aside className="lateral">
-        <Buscador listadoState={listadoState} setListadoState={setListadoState} />
-        <CrearCopy setListadoState={setListadoState} />
+        <Buscador listadoState={listadoState} setListadoState={setListadoState} setAccion={setAccion}/>
+        <CrearCopy setListadoState={setListadoState}/>
       </aside>
 
     </div>

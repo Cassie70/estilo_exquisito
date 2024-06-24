@@ -1,29 +1,46 @@
 import React, { useState } from 'react'
 
-export const Buscador = ({listadoState,setListadoState}) => {
+export const Buscador = ({listadoState,setListadoState, setAccion}) => {
 
     const [busqueda,setBusqueda]=useState("");
     const [noEncontrado,setNoEncontrado]=useState("");
 
-    const buscarPeli=(e)=>{
+    const buscarProducto=(e)=>{
         //Crear estado y actualizarlo
         setBusqueda(e.target.value)
 
         //Filtrar para buscar coincidencias
-        let pelis_encontradas = listadoState.filter(peli=>{
-            return peli.titulo.toLowerCase().includes(busqueda.toLowerCase());
+        let productos_encontrados = listadoState.filter(producto=>{
+            return producto.nombre.toLowerCase().includes(busqueda.toLowerCase());
         });
 
-        if(busqueda.length <= 1 || pelis_encontradas <= 0){
-            pelis_encontradas = JSON.parse(localStorage.getItem("pelis"));
+        if(busqueda.length <= 1 || productos_encontrados <= 0){
+            productos_encontrados = listadoState;
+            fetch('http://localhost:1234/productos/', {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json',
+                }
+            })
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Error en la red');
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    setAccion(1)
+                    setListadoState(data)
+                })
+                .catch(error => {
+                    console.log('Error:', error);
+                });
             setNoEncontrado(true);
         }else{
             setNoEncontrado(false);
+            //Actualizar estado del listado principal con lo que he logadro filtrar
+            setListadoState(productos_encontrados)
         }
-
-
-        //Actualizar estado del listado principal con lo que he logadro filtrar
-        setListadoState(pelis_encontradas)
     }
 
     return (
@@ -40,7 +57,7 @@ export const Buscador = ({listadoState,setListadoState}) => {
                        name="busqueda"
                        autoComplete='off'
                        value={busqueda}
-                       onChange={buscarPeli}
+                       onChange={buscarProducto}
                 />
 
                 <button>Buscar</button>

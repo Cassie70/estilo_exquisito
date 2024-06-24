@@ -1,90 +1,71 @@
-import React, { useEffect, useState } from 'react'
-import { Editar } from './Editar';
-import imgejemplo from '../../img/2.jpg';
+import React, { useState } from 'react'
 import { EditarCopy } from './EditarCopy';
 
 export const ListadoCopy = ({ listadoState, setListadoState }) => {
 
     const [editar, setEditar] = useState(0);
 
-    useEffect(() => {
-        console.log("Componente Cargado")
-        conseguirProductos();
+    const borrarProducto = (id) => {
+        //DELETE
+        fetch('http://localhost:1234/productos/' + id, {
+            method: 'DELETE',
+            headers: {
+                'Content-Type': 'application/json',
+            }
+        })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Error en la red');
+                }
+                return response.json();
+            })
+            .then(data => {
+                console.log('Producto Eliminado:', data);
+            })
+            .catch(error => {
+                console.log('Error al eliminar producto:', error);
+            });
 
-    }, []);
-
-    const conseguirProductos = () => {
-
-        // fetch('http://localhost:1234/productos')
-        // .then(response => response.json())
-        // .then(data => {
-        //     setListadoState(data); // Actualiza el estado con los productos obtenidos
-        //     return data;
-        // })
-        // .catch(error => console.error('Error al obtener productos:', error));
-
-         let peliculas = JSON.parse(localStorage.getItem("pelis"));
-
-         setListadoState(peliculas);
-
-         return peliculas;
-    }
-
-    const borrarPeli = (id) => {
-        //Conseguir peliculas almacenadas
-        let pelis_guardadas = conseguirProductos();
-
-        //Filtrar las pelis para eliminar la peli que quiero
-        let nuevo_array_peliculas = pelis_guardadas.filter(peli => peli.id !== parseInt(id));
-
-        console.log(pelis_guardadas, nuevo_array_peliculas);
-        //Actualizar estado del listado
-        setListadoState(nuevo_array_peliculas);
-
-        //Actualizar los datos en el local storage
-        localStorage.setItem('pelis', JSON.stringify(nuevo_array_peliculas));
-    }
-
-    const infoPrenda = (peli) => {
-        alert(`Stock: ${peli.prendas}`);
-    }
-
-    const datoPrenda = (peli) => {
-        let clase = "info";
-        if (peli.prendas >= 7) {
-            clase = "info";
-        } else if (peli.prendas < 7 && peli.prendas >= 4) {
-            clase = "infoMedio";
-        } else {
-            clase = "infoBajo";
-        }
-        return clase;
+        fetch('http://localhost:1234/productos/', {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+            }
+        })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Error en la red');
+                }
+                return response.json();
+            })
+            .then(data => {
+                setListadoState(data)
+            })
+            .catch(error => {
+                console.log('Error:', error);
+            });
     }
 
     return (
         <>
 
             {(listadoState != null) ?
-                listadoState.map(peli => {
-
-                    let clases = datoPrenda(peli);
+                listadoState.map(producto => {
 
                     return (
 
-                        <article key={peli.id} className="peli-item shadow-md">
-                            <img src={imgejemplo} alt='Imagen' />
-                            <h3 className="title">{peli.titulo}</h3>
-                            <h2 className='precio'>${peli.precio}</h2>
+                        <article key={producto.id_producto} className="peli-item shadow-md">
+                            <img src="" alt='Imagen' />
+                            <h3 className="title">{producto.nombre}</h3>
+                            <h2 className='precio'>${producto.precio}</h2>
 
 
-                            <button className="edit" onClick={() => { setEditar(peli.id) }}>Editar</button>
-                            <button className="delete" onClick={() => { borrarPeli(peli.id) }}>Borrar</button>
-                            <button className={clases} onClick={() => { infoPrenda(peli) }}></button>
+                            <button className="edit" onClick={() => { setEditar(producto.id_producto) }}>Editar</button>
+                            <button className="delete" onClick={() => { borrarProducto(producto.id_producto) }}>Borrar</button>
 
                             {/*Aparece formulario de editar*/}
-                            {editar === peli.id && (
-                                <EditarCopy peli={peli}
-                                    conseguirProductos={conseguirProductos}
+                            {editar === producto.id_producto && (
+                                <EditarCopy producto={producto}
                                     setEditar={setEditar}
                                     setListadoState={setListadoState}
                                 />

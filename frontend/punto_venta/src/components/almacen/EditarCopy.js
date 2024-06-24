@@ -1,6 +1,6 @@
 import React from 'react'
 
-export const EditarCopy = ({ peli, conseguirProductos, setEditar, setListadoState }) => {
+export const EditarCopy = ({ producto, setEditar, setListadoState }) => {
     const titulo_componente = "Editar Pelicula"
 
 
@@ -10,29 +10,36 @@ export const EditarCopy = ({ peli, conseguirProductos, setEditar, setListadoStat
         //Conseguir el target del evento
         let target = e.target;
 
-        //Buscar el indice del objeto de la pelicula a actualizar
-        const productos_almacenados = conseguirProductos();
-        const indice = productos_almacenados.findIndex(peli => peli.id === id);
-
         //Crear objeto con ese indice, titulo y descripcion del formulario
-        let peli_actualizada = {
-            id: id,
-            imagen: target.imagen.value,
-            titulo: target.titulo.value,
-            talla: target.talla.value,
-            prendas:target.stock.value,
-            precio:target.precio.value,
-            descripcion: target.descripcion.value
+        let producto_actualizado = {
+            nombre: target.nombre.value,
+            precio: parseInt(target.precio.value),
+            descripcion: target.descripcion.value,
+            id_categoria: target.categoria.value,
+            imagen_url: "uploads/chucho.png"
         }
 
-        //Actualizar el elemento con ese indice
-        productos_almacenados[indice] = peli_actualizada;
+        //PATCH
+        fetch('http://localhost:1234/productos/'+id, {
+            method: 'PATCH',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(producto_actualizado)
+        })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Error en la red');
+                }
+                return response.json();
+            })
+            .then(data => {
+                console.log('Producto Modificado:', data);
+            })
+            .catch(error => {
+                console.log('Error al modificar producto:', error);
+            });
 
-        //Guardar el nuevo array de objetos en el localStorage
-        localStorage.setItem("pelis", JSON.stringify(productos_almacenados));
-
-        //Actualizar estados
-        setListadoState(productos_almacenados);
         setEditar(0);
 
 
@@ -41,7 +48,7 @@ export const EditarCopy = ({ peli, conseguirProductos, setEditar, setListadoStat
     return (
         <div className='edit_form'>
             <h3 className='title'>{titulo_componente}</h3>
-            <form onSubmit={e => guardarEdicion(e, peli.id)}>
+            <form onSubmit={e => guardarEdicion(e, producto.id_producto)}>
 
                 <input
                     type="file"
@@ -50,36 +57,30 @@ export const EditarCopy = ({ peli, conseguirProductos, setEditar, setListadoStat
                 />
 
                 <input type='text'
-                    name='titulo'
+                    name='nombre'
                     className='titulo_editado'
-                    defaultValue={peli.titulo}
+                    defaultValue={producto.nombre}
                 />
 
-                {/* <input type='text'
-                    name='talla'
-                    className='talla_editado'
-                    defaultValue={peli.talla}
-                /> */}
-
-                {/* <input type='number'
-                    name='stock'
-                    className='stock_editado'
+                <input type="number"
+                    name='categoria'
+                    className='categoria_editado'
                     min='1'
-                    max='10'
-                    placeholder='Stock Nuevo'
-                /> */}
+                    max='3'
+                    defaultValue={producto.id_categoria}
+                />
 
                 <input type="number"
                     name='precio'
                     className='precio_editado'
                     min='1'
                     max='1000'
-                    placeholder='Precio Nuevo'
+                    defaultValue={producto.precio}
                 />
 
                 <textarea
                     name='descripcion'
-                    defaultValue={peli.descripcion}
+                    defaultValue={producto.descripcion}
                     className='descripcion_editada'
                 />
                 <input type='submit' className='editar' value="Actualizar" />
