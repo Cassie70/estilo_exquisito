@@ -12,10 +12,12 @@ export const HeaderNav = () => {
           <nav className="nav">
             <ul>
               <li><NavLink to="/inicio" className={({ isActive }) => isActive ? "active" : ""}>Inicio</NavLink></li>
+              
               <li><NavLink to="/productos" className={({ isActive }) => isActive ? "active" : ""}>Productos</NavLink></li>
               <li><NavLink to="/inventario" className={({ isActive }) => isActive ? "active" : ""}>Inventario</NavLink></li>
               <li><NavLink to="/ventas" className={({ isActive }) => isActive ? "active" : ""}>Ventas</NavLink></li>
               <li><NavLink to="/reportes" className={({ isActive }) => isActive ? "active" : ""}>Reportes</NavLink></li>
+              <li><NavLink to="/trabajadores" className={({ isActive }) => isActive ? "active" : ""}>Trabajadores</NavLink></li>
             </ul>
           </nav>
         </div>

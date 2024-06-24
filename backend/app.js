@@ -4,6 +4,15 @@ import * as routes from './routes/index.js';
 import * as models from './models/mysql/index.js';
 import 'dotenv/config';
 
+//Librerias para Handler de imagenes desde el front
+import { handleFileUpload } from './uploadHandler.js'; // Importa la función de manejo de subida de archivos
+import path from 'path';
+import { fileURLToPath } from 'url';
+import { dirname } from 'path';
+
+//variables que ocupamos para el handler
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
 // Este es el punto de entrada de la aplicación, aquí se configura el servidor y se definen las rutas usando express
 // Direcciones para Productos Tallas Inventario
 
@@ -13,6 +22,11 @@ app.use(json());
 app.use(corsMiddleware());
 app.disable('x-powered-by');
 
+// Servir archivos estáticos desde la carpeta 'uploads'
+app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
+
+// Ruta para subir archivos
+app.post('/upload', handleFileUpload);
 // Al crear la ruta de productos se le pasa como parámetro el modelo de productos que se va a usar
 app.use('/productos', routes.createProdutosRouter({ productosModelo: models.ProductosModelo }));
 app.use('/ventas', routes.createVentaRouter({ ventaModelo: models.VentaModelo }));
