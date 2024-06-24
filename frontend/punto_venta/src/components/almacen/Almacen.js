@@ -1,4 +1,5 @@
-import React, { useEffect, useState } from 'react'
+//Frontend/punto_venta_src_components/almacen/Almacen.j
+import React, { useEffect, useState } from 'react';
 import { Buscador } from "./Buscador";
 import { CrearCopy } from './Crear-copy';
 import { ListadoCopy } from './ListadoCopy';
@@ -6,7 +7,7 @@ import { ListadoCopy } from './ListadoCopy';
 export const Almacen = () => {
 
   const [listadoState, setListadoState] = useState([]);
-  const [accion,setAccion] = useState(0);
+  const [accion, setAccion] = useState(0);
 
   useEffect(() => {
     if (accion === 0) {
@@ -40,14 +41,10 @@ export const Almacen = () => {
         <h3>Almacen</h3>
       </div>
 
-      {/*Contenido Principal*/}
-
       <section className="content">
-        {/*Aqui va el listado de las peliculas*/}
         <ListadoCopy listadoState={listadoState} setListadoState={setListadoState}/>
       </section>
 
-      {/*Barra Lateral*/}
       <aside className="lateral">
         <Buscador listadoState={listadoState} setListadoState={setListadoState} setAccion={setAccion}/>
         <CrearCopy setListadoState={setListadoState}/>
@@ -55,4 +52,4 @@ export const Almacen = () => {
 
     </div>
   )
-}
+};

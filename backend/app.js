@@ -5,7 +5,7 @@ import * as models from './models/mysql/index.js';
 import 'dotenv/config';
 
 //Librerias para Handler de imagenes desde el front
-import { handleFileUpload } from './uploadHandler.js'; // Importa la función de manejo de subida de archivos
+import { handleFileUpload , handleFileUploadAndUpdate } from './uploadHandler.js'; // Importa la función de manejo de subida de archivos
 import path from 'path';
 import { fileURLToPath } from 'url';
 import { dirname } from 'path';
@@ -27,6 +27,9 @@ app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
 // Ruta para subir archivos
 app.post('/upload', handleFileUpload);
+// Nueva ruta PATCH para actualizar productos (incluyendo la imagen)
+// app.patch('/productos/:id', handleFileUploadAndUpdate);
+
 // Al crear la ruta de productos se le pasa como parámetro el modelo de productos que se va a usar
 app.use('/productos', routes.createProdutosRouter({ productosModelo: models.ProductosModelo }));
 app.use('/ventas', routes.createVentaRouter({ ventaModelo: models.VentaModelo }));

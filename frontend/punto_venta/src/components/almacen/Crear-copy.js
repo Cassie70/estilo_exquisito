@@ -25,6 +25,12 @@ export const CrearCopy = ({ setListadoState }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
+    // Validación de campos
+    if (!nombre || !descripcion || !precio || !id_categoria) {
+      alert('Todos los campos son obligatorios.');
+      return;
+    }
+
     const formData = new FormData();
     formData.append('nombre', nombre);
     formData.append('descripcion', descripcion);
@@ -56,7 +62,7 @@ export const CrearCopy = ({ setListadoState }) => {
         imagen: null,
       });
 
-      // Actualizar el listado de productos
+      // Actualizar el listado de productos en Almacen.js
       setListadoState(prevState => [...prevState, data]);
 
     } catch (error) {

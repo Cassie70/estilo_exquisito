@@ -1,8 +1,8 @@
 export class SchemaProducto {
     static validarCreateProducto(producto) {
-        const { nombre, descripcion, precio, imagen_url } = producto;
+        const { nombre, descripcion, precio, imagen_url, id_categoria } = producto;
 
-        if (!nombre || !descripcion || !precio || !imagen_url) {
+        if (!nombre || !descripcion || !precio || !imagen_url || !id_categoria) {
             return { success: false, error: 'Faltan campos por llenar' };
         }
 
@@ -18,6 +18,10 @@ export class SchemaProducto {
             return { success: false, error: 'El precio debe ser mayor a 0' };
         }
 
+        if (typeof id_categoria !== 'number') {
+            return { success: false, error: 'El campo id_categoria debe ser de tipo number' };
+        }
+
         // Validar que la imagen sea una URL
         const urlPattern = /^uploads\/.*\.(png|jpg)$/;
         if (!urlPattern.test(imagen_url)) {
@@ -28,7 +32,7 @@ export class SchemaProducto {
     }
 
     static validarUpdateProducto(producto) {
-        const { nombre, descripcion, precio, imagen_url } = producto;
+        const { nombre, descripcion, precio, imagen_url, id_categoria } = producto;
 
         if (nombre && typeof nombre !== 'string') {
             return { success: false, error: 'El campo nombre debe ser una cadena de texto válida' };
@@ -50,9 +54,13 @@ export class SchemaProducto {
             return { success: false, error: 'El precio debe ser mayor a 0' };
         }
 
+        if (id_categoria && typeof id_categoria !== 'number') {
+            return { success: false, error: 'El campo id_categoria debe ser de tipo number' };
+        }
+
         // Validar que la imagen sea una URL
         if (imagen_url) {
-            const urlPattern = /^uploads\/.*\.(png|jpg)$/;
+            const urlPattern = /^uploads\/.*\.(png|jpg)$/i;
             if (!urlPattern.test(imagen_url)) {
                 return { success: false, error: 'La imagen_url no es una URL válida' };
             }
@@ -61,3 +69,4 @@ export class SchemaProducto {
         return { success: true };
     }
 }
+

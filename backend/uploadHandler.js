@@ -2,10 +2,9 @@ import multer from 'multer';
 import path from 'path';
 import connection from "./database.js";
 
-// Configuración del almacenamiento
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
-    cb(null, path.join(path.resolve(), 'uploads')); // Asegúrate de que 'uploads' exista
+    cb(null, path.join(path.resolve(), 'uploads'));
   },
   filename: (req, file, cb) => {
     const timestamp = Date.now();
@@ -40,5 +39,37 @@ const handleFileUpload = (req, res, next) => {
   });
 };
 
-export { handleFileUpload };
+const handleFileUploadAndUpdate = (req, res, next) => {
+  upload.single('imagen')(req, res, (err) => {
+    if (err) {
+      console.error('Error uploading file:', err);
+      return res.status(500).send('Server error');
+    }
 
+    const { id } = req.params;
+    const { nombre, descripcion, precio, id_categoria } = req.body;
+    const imagenUrl = req.file ? `uploads/${req.file.filename}` : null;
+
+    let query = 'UPDATE Productos SET nombre = ?, descripcion = ?, precio = ?, id_categoria = ?';
+    const values = [nombre, descripcion, precio, id_categoria];
+
+    if (imagenUrl) {
+      query += ', imagen_url = ?';
+      values.push(imagenUrl);
+    }
+
+    query += ' WHERE id_producto = ?';
+    values.push(id);
+
+    connection.query(query, values, (err, result) => {
+      if (err) {
+        console.error('Error updating product:', err);
+        return res.status(500).send('Server error');
+      }
+
+      res.json({ message: 'Product updated successfully!' });
+    });
+  });
+};
+
+export { handleFileUpload, handleFileUploadAndUpdate };

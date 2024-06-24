@@ -10,21 +10,22 @@ POST http://localhost:1234/productos
 Content-Type: application/json 
 
 {
-    "nombre": "Producto 1",
-    "descripcion": "Descripcion del producto 1",
-    "precio": 1000.00,
-    "id_categoria": 1,
-    "imagen_url": "https://www.google.com"
+    "nombre": "Producto X",
+    "descripcion": "Descripcion X",
+    "precio": 999.00,
+    "id_categoria": 2,
+    "imagen_url": "uploads/imagen_1719196913513.png"
 }
 ### Editar un producto (pendiente)
-PATCH http://localhost:1234/productos/2
+PATCH http://localhost:1234/productos/12
 Content-Type: application/json
 
 {
-    "nombre": "Producto 1",
-    "descripcion": "Descripcion del producto 1",
-    "precio": 1000.00,
-    "imagen_url": "https://www.google.com"
+    "nombre": "camvio de n",
+    "descripcion": "cambio de d",
+    "precio": 500.00,
+    "id_categoria": 1,
+    "imagen_url": "uploads/imagen_1719196913513.png"
 }
 ### Eliminar un producto
 DELETE http://localhost:1234/productos/6
