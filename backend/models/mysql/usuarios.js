@@ -3,7 +3,7 @@ import connection from "../../database.js";
 export class UsuariosModelo {
     static async getAll() {
         try {
-            const [usuarios] = await connection.query('SELECT bin_to_uuid(id_usuario) id_usuario,nombre,apellido,correo_electronico,telefono FROM Usuarios');
+            const [usuarios] = await connection.query('SELECT bin_to_uuid(id_usuario) id_usuario,nombre,apellido,correo_electronico,pass,telefono FROM Usuarios');
             return usuarios;
         } catch (error) {
             throw new Error('Error al obtener todos los usuarios: ' + error.message);
@@ -13,7 +13,7 @@ export class UsuariosModelo {
     static async getById({ id_usuario }) {
         try {
             const [usuario] = await connection.query(
-                'SELECT * FROM Usuarios WHERE id_usuario = UUID_TO_BIN(?)',
+                'SELECT bin_to_uuid(id_usuario) id_usuario,nombre,apellido,correo_electronico,pass,telefono FROM Usuarios WHERE id_usuario = UUID_TO_BIN(?)',
                 [id_usuario]
             );
             return usuario;
@@ -25,10 +25,13 @@ export class UsuariosModelo {
     static async getByEmail({ correo_electronico }) {
         try {
             const [usuario] = await connection.query(
-                'SELECT * FROM Usuarios WHERE correo_electronico = ?',
+                'SELECT bin_to_uuid(id_usuario) id_usuario,nombre,apellido,correo_electronico,pass,telefono FROM Usuarios WHERE correo_electronico = ?',
                 [correo_electronico]
             );
-            return usuario;
+            if (usuario.length === 0) 
+                return null;
+            return usuario[0];
+
         } catch (error) {
             throw new Error('Error al obtener el usuario por correo electrónico: ' + error.message);
         }

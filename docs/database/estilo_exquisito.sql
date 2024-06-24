@@ -92,7 +92,7 @@ create table Trabajador(
 	id_trabajador int not null auto_increment,
     usuario varchar(50) not null,
     rol enum("gerente","vendedor","almacenista") not null,
-    contraseña varchar(255) not null,
+    pass varchar(255) not null,
 	nombre_completo varchar(100),
     correo_electronico varchar(255),
     primary key(id_trabajador)
@@ -181,3 +181,4 @@ INSERT INTO Detalle_pedido_apartado (id_pedido_apartado, id_producto, id_talla, 
 (4, 5, 3, 2),
 (5, 1, 4, 1),
 (5, 2, 3, 2);
+

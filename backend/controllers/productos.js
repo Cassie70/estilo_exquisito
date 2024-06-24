@@ -4,6 +4,7 @@ de los datos que se reciben en las peticiones y se enviarán al modelo para que 
 finalmente retornar una respuesta al cliente.
 */
 
+
 import { SchemaProducto } from "../schemas/productos.js"
 
 export class ProductosController{
@@ -13,6 +14,7 @@ export class ProductosController{
     }
 
     getAll = async (req, res)=>{
+
         try {
             const productos = await this.productosModelo.getAll()
             res.json(productos)
