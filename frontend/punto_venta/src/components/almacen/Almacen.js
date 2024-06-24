@@ -8,8 +8,8 @@ export const Almacen = () => {
   const [listadoState, setListadoState] = useState([]);
   const [accion,setAccion] = useState(0);
 
-  useEffect(()=>{
-    if(accion===0){
+  useEffect(() => {
+    if (accion === 0) {
       fetch('http://localhost:1234/productos', {
         method: 'GET',
         headers: {
@@ -29,9 +29,10 @@ export const Almacen = () => {
         .catch(error => {
           console.log('Error al obtener datos:', error);
         });
-    }else{
+    } else {
+      // Puedes manejar otros casos si es necesario
     }
-  }, [listadoState]);
+  }, [accion]);
 
   return (
     <div className="layout">

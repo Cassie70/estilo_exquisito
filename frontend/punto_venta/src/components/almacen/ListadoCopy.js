@@ -1,3 +1,4 @@
+//Frontend/punto_venta_src_components/almacen/ListadoCopy.j
 import React, { useState } from 'react'
 import { EditarCopy } from './EditarCopy';
 
@@ -55,7 +56,7 @@ export const ListadoCopy = ({ listadoState, setListadoState }) => {
                     return (
 
                         <article key={producto.id_producto} className="peli-item shadow-md">
-                            <img src="" alt='Imagen' />
+                            <img src={`http://localhost:1234/${producto.imagen_url}`} alt={producto.nombre} />
                             <h3 className="title">{producto.nombre}</h3>
                             <h2 className='precio'>${producto.precio}</h2>
 
