@@ -44,6 +44,7 @@ const HeaderNav = () => {
                 <li><NavLink to="/trabajadores" activeClassName="active">Trabajadores</NavLink></li>
                 <li><NavLink to="/usuarios" activeClassName="active">Usuarios</NavLink></li>
                 <li><NavLink to="/detalle-venta" activeClassName="active">Detalles de Ventas</NavLink></li>
+                <li><NavLink to="/categorias" activeClassName="active">Categorias</NavLink></li>
               </ul>
             )}
           </li>

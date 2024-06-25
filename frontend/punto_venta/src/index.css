@@ -98,7 +98,7 @@ img {
 nav .dropdown-menu {
   display: flex;
   flex-direction: column;
-  height: 250px;
+  height: 300px;
   position: absolute;
   top: 117%;
   left: -12px;
@@ -680,7 +680,7 @@ input[type="button"] {
 }
 
 .tabla-usuarios .accion-buttons button.eliminar {
-  background-color: #dc3545; /* Rojo */
+  background-color: #ff3b3b96; /* Rojo */
   color: #fff;
   cursor: not-allowed; /* Muestra que el botón está deshabilitado */
 }
@@ -805,3 +805,114 @@ input[type="button"] {
   cursor: not-allowed; /* Muestra que el botón está deshabilitado */
 }
 /* ---------------------- FIN Estilos pestaña de Detalle de Venta ----------------------- */
+/* ---------------------- Estilos pestaña de Categorías ----------------------- */
+
+/* ESTILOS de tabla */
+.tabla-categorias {
+  width: 80%;
+  margin: 20px auto;
+  border-collapse: collapse;
+  box-shadow: 0px 0px 6px #ddd;
+}
+
+.tabla-categorias th,
+.tabla-categorias td {
+  padding: 12px 15px;
+  text-align: center;
+  border: 1px solid #ddd;
+}
+
+.tabla-categorias th {
+  background-color: #f4f4f4;
+  color: #333;
+  font-weight: bold;
+}
+
+.tabla-categorias td {
+  background-color: #fff;
+  color: #333;
+}
+
+.tabla-categorias tr:nth-child(even) {
+  background-color: #f9f9f9;
+}
+
+/* ESTILOS de formulario de categorías */
+.form-categorias {
+  width: 80%;
+  margin: 20px auto;
+}
+
+.inputs-categorias {
+  display: absolute;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.inputs-categorias input[type="text"] {
+  flex: 1;
+  padding: 10px;
+  border-radius: 5px;
+  border: 1px solid #ddd;
+  background: #f6f7f9;
+  color: #333;
+  outline: none;
+  transition: border-color 0.3s;
+}
+
+.inputs-categorias input[type="text"]:focus {
+  border-color: #333;
+}
+
+.buttons {
+  margin-top: 10px;
+  text-align: center;
+}
+
+.buttons button {
+  margin: 0 5px;
+  padding: 10px 20px;
+  background-color: black;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.buttons button:hover {
+  background-color: #333;
+}
+
+.tabla-categorias .accion-buttons {
+  justify-content: space-between;
+}
+
+.tabla-categorias .accion-buttons button {
+  padding: 8px 15px;
+  margin-right: 10px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.tabla-categorias .accion-buttons button.editar {
+  background-color: #ffc107; /* Amarillo */
+  color: #333;
+}
+
+.tabla-categorias .accion-buttons button.editar:hover {
+  background-color: #ffca2c; /* Amarillo más claro al pasar el mouse */
+}
+
+.tabla-categorias .accion-buttons button.eliminar {
+  background-color: #dc3545; /* Rojo */
+  color: #fff;
+}
+
+.tabla-categorias .accion-buttons button.eliminar:hover {
+  background-color: #c82333; /* Rojo más oscuro al pasar el mouse */
+}
+
+/* ---------------------- FIN Estilos pestaña de Categorías ----------------------- */
