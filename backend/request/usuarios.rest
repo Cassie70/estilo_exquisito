@@ -35,7 +35,7 @@ Content-Type: application/json
     "telefono": "2342342342"
 }
 
-### Eliminar un usuario (PENDIENTE DE IMPLEMENTACIÓN)
+### Eliminar un usuario 
 ###DELETE http://localhost:1234/usuarios/a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a11
 #########################################################
 ###############      FIN    USUARIOS      ###############

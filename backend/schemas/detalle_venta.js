@@ -9,19 +9,18 @@ export class SchemaDetalleVenta {
             return { success: false, error: 'Los tipos de datos no son válidos para id_venta, id_producto, precio_unitario, cantidad o id_talla' };
         }
 
-        if (precio_unitario <= 0 || cantidad <= 0) {
-            return { success: false, error: 'El precio unitario y la cantidad deben ser valores positivos' };
+        if (precio_unitario <= 0 || cantidad < 0) {
+            return { success: false, error: 'El precio unitario debe ser un valor positivo y la cantidad debe ser mayor o igual a 0' };
         }
 
         return { success: true };
     }
     
-    static validarPrecioUnitario(precio) {
-        const { precio_unitario } = precio;
-        if (typeof precio_unitario !== 'number') {
+    static validarPrecioUnitario({ precio_unitario }) {
+        if (typeof precio_unitario !== 'number' || isNaN(precio_unitario)) {
             return { success: false, error: 'El campo precio_unitario debe ser de tipo number' };
         }
-
+    
         if (precio_unitario <= 0) {
             return { success: false, error: 'El precio_unitario debe ser mayor a 0' };
         }
@@ -29,10 +28,9 @@ export class SchemaDetalleVenta {
         return { success: true };
     }
 
-    static validarCantidad(cantidades) {
-        const { cantidad } = cantidades;
-        if (!cantidad || typeof cantidad !== 'number' || cantidad <= 0) {
-            return { success: false, error: 'La cantidad debe ser un número positivo' };
+    static validarCantidad({ cantidad }) {
+        if (typeof cantidad !== 'number' || cantidad < 0) {
+            return { success: false, error: 'La cantidad debe ser un número positivo o 0' };
         }
 
         return { success: true };

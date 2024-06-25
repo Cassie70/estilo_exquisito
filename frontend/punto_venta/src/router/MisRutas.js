@@ -9,6 +9,9 @@ import { Inicio } from '../components/inicio/Inicio';
 import { Reportes } from '../components/reportes/Reportes';
 import { Inventario } from '../components/inventario/Inventario';
 import  Trabajadores  from '../components/trabajadores/trabajadores'; // Importa el componente Trabajadores
+import  Usuarios  from '../components/usuarios/usuarios'; // Importa el componente Usuarios
+import  Detalle_venta  from '../components/detalle_venta/detalle_venta'; // Importa el componente detalle venta
+
 
 
 export const MisRutas = () => {
@@ -26,6 +29,8 @@ export const MisRutas = () => {
         <Route path="/ventas" element={<Ventas />} />
         <Route path="/reportes" element={<Reportes />} />  
         <Route path="/trabajadores" element={<Trabajadores />} />
+        <Route path="/usuarios" element={<Usuarios />} />
+        <Route path="/detalle-venta" element={<Detalle_venta />} />
       </Routes>
     </section>
     {/*Footer */}
