@@ -12,7 +12,8 @@ import { Inventario } from '../components/inventario/Inventario';
 import  Trabajadores  from '../components/trabajadores/trabajadores'; // Importa el componente Trabajadores
 import  Usuarios  from '../components/usuarios/usuarios'; // Importa el componente Usuarios
 import  Detalle_venta  from '../components/detalle_venta/detalle_venta'; // Importa el componente detalle venta
-import  Categorias  from '../components/categorias/categorias'; // Importa el componente detalle venta
+import  Categorias  from '../components/categorias/categorias'; // Importa el componente categoria
+import  Tallas  from '../components/tallas/tallas'; // Importa el componente tallas
 
 
 
@@ -34,6 +35,7 @@ export const MisRutas = () => {
         <Route path="/usuarios" element={<Usuarios />} />
         <Route path="/detalle-venta" element={<Detalle_venta />} />
         <Route path="/categorias" element={<Categorias />} />
+        <Route path="/tallas" element={<Tallas />} />
       </Routes>
     </section>
     {/*Footer */}

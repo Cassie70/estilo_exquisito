@@ -98,7 +98,7 @@ img {
 nav .dropdown-menu {
   display: flex;
   flex-direction: column;
-  height: 300px;
+  height: 380px;
   position: absolute;
   top: 117%;
   left: -12px;
@@ -916,3 +916,113 @@ input[type="button"] {
 }
 
 /* ---------------------- FIN Estilos pestaña de Categorías ----------------------- */
+/* ---------------------- Estilos pestaña de Tallas ----------------------- */
+
+/* ESTILOS de tabla */
+.tabla-tallas {
+  width: 80%;
+  margin: 20px auto;
+  border-collapse: collapse;
+  box-shadow: 0px 0px 6px #ddd;
+}
+
+.tabla-tallas th,
+.tabla-tallas td {
+  padding: 12px 15px;
+  text-align: center;
+  border: 1px solid #ddd;
+}
+
+.tabla-tallas th {
+  background-color: #f4f4f4;
+  color: #333;
+  font-weight: bold;
+}
+
+.tabla-tallas td {
+  background-color: #fff;
+  color: #333;
+}
+
+.tabla-tallas tr:nth-child(even) {
+  background-color: #f9f9f9;
+}
+
+/* ESTILOS de formulario de tallas */
+.form-tallas {
+  width: 80%;
+  margin: 20px auto;
+}
+
+.inputs-tallas {
+  display: absolute;
+  justify-content: center;
+  gap: 10px;
+}
+
+.inputs-tallas input[type="text"] {
+  flex: 1;
+  padding: 10px;
+  border-radius: 5px;
+  border: 1px solid #ddd;
+  background: #f6f7f9;
+  color: #333;
+  outline: none;
+  transition: border-color 0.3s;
+}
+
+.inputs-tallas input[type="text"]:focus {
+  border-color: #333;
+}
+
+.buttons {
+  margin-top: 10px;
+  text-align: center;
+}
+
+.buttons button {
+  margin: 0 5px;
+  padding: 10px 20px;
+  background-color: black;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.buttons button:hover {
+  background-color: #333;
+}
+
+.tabla-tallas .accion-buttons {
+  justify-content: space-between;
+}
+
+.tabla-tallas .accion-buttons button {
+  padding: 8px 15px;
+  margin-right: 10px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.tabla-tallas .accion-buttons button.editar {
+  background-color: #ffc107;
+  color: #333;
+}
+
+.tabla-tallas .accion-buttons button.editar:hover {
+  background-color: #ffca2c;
+}
+
+.tabla-tallas .accion-buttons button.eliminar {
+  background-color: #dc3545;
+  color: #fff;
+}
+
+.tabla-tallas .accion-buttons button.eliminar:hover {
+  background-color: #c82333;
+}
+/* ---------------------- FIN Estilos pestaña de Tallas ----------------------- */
