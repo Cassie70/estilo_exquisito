@@ -44,17 +44,21 @@ img {
   margin-left: 15px;
 }
 
-/*ESTILOS BARRA DE NAVEGACIÓN*/
+/* ESTILOS BARRA DE NAVEGACIÓN */
 .nav ul {
   display: flex;
   justify-content: center;
   align-items: center;
   list-style: none;
   margin-right: 100px;
+  block-size: 250%;
+  
 }
 
 .nav li {
-  padding: 10px;
+  padding: 20px;
+  position: relative; /* Para posicionar correctamente el dropdown */
+  align-items: stretch;
 }
 
 .nav a {
@@ -73,10 +77,67 @@ img {
   transform: scale(1.1, 1.1);
   background-color: black;
   color: #f6f7f9;
-  padding: 10px 10px;
+  padding: 10px 40px;
   border-radius: 10px;
   font-size: 15px;
 }
+
+/* ESTILOS DEL DROPDOWN */
+.dropdown {
+  display: flex;
+  flex-direction: column;
+}
+
+.dropdown-toggle {
+  color: black;
+  text-decoration: none;
+  cursor: pointer;
+  
+}
+
+nav .dropdown-menu {
+  display: flex;
+  flex-direction: column;
+  height: 250px;
+  position: absolute;
+  top: 117%;
+  left: -12px;
+  padding-right: 5px;
+  padding-left: 5px;
+  background-color: #ffffff; /* Color de fondo del dropdown */
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2); /* Sombra del dropdown */
+  z-index: 1;
+  width: 220px;
+  
+
+}
+
+.dropdown-menu li {
+  padding-top: 30px;
+  border: 1px solid #0000002a;
+  border-left: 1px;
+  border-right: 1px;
+  border-bottom: 5px;
+  justify-content: center;
+  align-items: center;
+}
+
+.dropdown-menu li a {
+  color: black;
+  text-decoration: none;
+  font-size: 15px;
+  justify-content: center;
+  align-items: center;
+  
+}
+
+.dropdown-menu li a:hover {
+  background-color: #000000;
+  color: rgb(255, 255, 255);
+  justify-content: center;
+  align-items: center;
+}
+
 
 /*----------------------ALMACEN-----------------------*/
 .layout {
@@ -740,4 +801,7 @@ input[type="button"] {
   background-color: #c82333; /* Rojo más oscuro al pasar el mouse */
 }
 
+.buttons button.agregar {
+  cursor: not-allowed; /* Muestra que el botón está deshabilitado */
+}
 /* ---------------------- FIN Estilos pestaña de Detalle de Venta ----------------------- */

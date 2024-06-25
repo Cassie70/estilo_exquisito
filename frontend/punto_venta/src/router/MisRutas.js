@@ -1,7 +1,8 @@
 //frontend/src/router/MisRutas.js
 import React from 'react'
 import { Routes, Route, BrowserRouter, Navigate } from "react-router-dom";
-import { HeaderNav } from '../components/layouts/HeaderNav';
+import HeaderNav from '../components/layouts/HeaderNav';  // Aquí se importa el componente HeaderNav como default
+
 import { Footer } from '../components/layouts/Footer';
 import { Almacen } from '../components/almacen/Almacen';
 import { Ventas } from '../components/ventas/Ventas';

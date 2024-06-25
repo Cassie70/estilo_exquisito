@@ -164,7 +164,7 @@ const DetalleVenta = () => {
             </>
           ) : (
             <>
-              <button type="submit">Agregar</button>
+              <button className="agregar" type="submit" disabled={!form.id_venta || !form.id_producto || !form.precio_unitario || !form.cantidad || !form.id_talla}>Agregar</button>
               <button type="button" onClick={clearForm}>Limpiar</button>
             </>
           )}
