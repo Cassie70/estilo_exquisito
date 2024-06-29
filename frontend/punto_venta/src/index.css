@@ -98,7 +98,7 @@ img {
 nav .dropdown-menu {
   display: flex;
   flex-direction: column;
-  height: 380px;
+  height: 530px;
   position: absolute;
   top: 117%;
   left: -12px;
@@ -132,10 +132,11 @@ nav .dropdown-menu {
 }
 
 .dropdown-menu li a:hover {
-  background-color: #000000;
+  background-color: #000000ce;
   color: rgb(255, 255, 255);
   justify-content: center;
   align-items: center;
+  border-radius: 90%;
 }
 
 
@@ -1026,3 +1027,232 @@ input[type="button"] {
   background-color: #c82333;
 }
 /* ---------------------- FIN Estilos pestaña de Tallas ----------------------- */
+/* ---------------------- Estilos pestaña de Ventas ----------------------- */
+
+/* ESTILOS de tabla */
+.tabla-ventas {
+  width: 80%;
+  margin: 20px auto;
+  border-collapse: collapse;
+  box-shadow: 0px 0px 6px #ddd;
+}
+
+.tabla-ventas th,
+.tabla-ventas td {
+  padding: 12px 15px;
+  text-align: center;
+  border: 1px solid #ddd;
+}
+
+.tabla-ventas th {
+  background-color: #f4f4f4;
+  color: #333;
+  font-weight: bold;
+}
+
+.tabla-ventas td {
+  background-color: #fff;
+  color: #333;
+}
+
+.tabla-ventas tr:nth-child(even) {
+  background-color: #f9f9f9;
+}
+
+/* ESTILOS de formulario de ventas */
+.form-ventas {
+  width: 80%;
+  margin: 20px auto;
+}
+
+.inputs-ventas {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.inputs-ventas input[type="text"],
+.inputs-ventas input[type="datetime-local"],
+.inputs-ventas select {
+  flex: 1;
+  padding: 10px;
+  border-radius: 5px;
+  border: 1px solid #ddd;
+  background: #f6f7f9;
+  color: #333;
+  outline: none;
+  transition: border-color 0.3s;
+}
+
+.inputs-ventas input[type="text"]:focus,
+.inputs-ventas input[type="datetime-local"]:focus,
+.inputs-ventas select:focus {
+  border-color: #333;
+}
+
+.buttons {
+  margin-top: 10px;
+  text-align: center;
+}
+
+.buttons button {
+  margin: 0 5px;
+  padding: 10px 20px;
+  background-color: black;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.buttons button:hover {
+  background-color: #333;
+}
+
+.tabla-ventas .accion-buttons {
+  display: flex;
+  justify-content: space-between;
+}
+
+.tabla-ventas .accion-buttons button {
+  padding: 8px 15px;
+  margin-right: 10px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.tabla-ventas .accion-buttons button.editar {
+  background-color: #ffc107;
+  color: #333;
+}
+
+.tabla-ventas .accion-buttons button.editar:hover {
+  background-color: #ffca2c;
+}
+
+.tabla-ventas .accion-buttons button.eliminar {
+  background-color: #dc3545;
+  color: #fff;
+}
+
+.tabla-ventas .accion-buttons button.eliminar:hover {
+  background-color: #c82333;
+}
+/* ---------------------- FIN Estilos pestaña de Ventas ----------------------- */
+/* ---------------------- Estilos pestaña de Pedido Apartado ----------------------- */
+
+/* ESTILOS de tabla */
+.tabla-pedido-apartado {
+  width: 80%;
+  margin: 20px auto;
+  border-collapse: collapse;
+  box-shadow: 0px 0px 6px #ddd;
+}
+
+.tabla-pedido-apartado th,
+.tabla-pedido-apartado td {
+  padding: 12px 15px;
+  text-align: center;
+  border: 1px solid #ddd;
+}
+
+.tabla-pedido-apartado th {
+  background-color: #f4f4f4;
+  color: #333;
+  font-weight: bold;
+}
+
+.tabla-pedido-apartado td {
+  background-color: #fff;
+  color: #333;
+}
+
+.tabla-pedido-apartado tr:nth-child(even) {
+  background-color: #f9f9f9;
+}
+
+/* ESTILOS de formulario de pedido apartado */
+.form-pedido-apartado {
+  width: 80%;
+  margin: 20px auto;
+}
+
+.inputs-pedido-apartado {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.inputs-pedido-apartado input[type="text"],
+.inputs-pedido-apartado select {
+  flex: 1;
+  padding: 10px;
+  border-radius: 5px;
+  border: 1px solid #ddd;
+  background: #f6f7f9;
+  color: #333;
+  outline: none;
+  transition: border-color 0.3s;
+}
+
+.inputs-pedido-apartado input[type="text"]:focus,
+.inputs-pedido-apartado select:focus {
+  border-color: #333;
+}
+
+.buttons {
+  margin-top: 10px;
+  text-align: center;
+}
+
+.buttons button {
+  margin: 0 5px;
+  padding: 10px 20px;
+  background-color: black;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.buttons button:hover {
+  background-color: #333;
+}
+
+.tabla-pedido-apartado .accion-buttons {
+  justify-content: space-between;
+}
+
+.tabla-pedido-apartado .accion-buttons button {
+  padding: 8px 15px;
+  margin-right: 10px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.tabla-pedido-apartado .accion-buttons button.editar {
+  background-color: #ffc107;
+  color: #333;
+}
+
+.tabla-pedido-apartado .accion-buttons button.editar:hover {
+  background-color: #ffca2c;
+}
+
+.tabla-pedido-apartado .accion-buttons button.eliminar {
+  background-color: #dc3545;
+  color: #fff;
+}
+
+.tabla-pedido-apartado .accion-buttons button.eliminar:hover {
+  background-color: #c82333;
+}
+/* ---------------------- FIN Estilos pestaña de Pedido Apartado ----------------------- */
