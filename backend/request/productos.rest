@@ -10,10 +10,10 @@ POST http://localhost:1234/productos
 Content-Type: application/json
 
 {
-    "nombre": "Producto Nuevo",
-    "descripcion": "Descripcion del producto NUEVO",
-    "precio": 1000.00,
-    "id_categoria": 1,
+    "nombre": "Producto Nuevo4",
+    "descripcion": "Descripcion del producto NUEVO4",
+    "precio": 500.00,
+    "id_categoria": 2,
     "imagen_url": "uploads/imagen.jpg"
 }
 ### Editar un producto (pendiente)

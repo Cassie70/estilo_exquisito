@@ -26,7 +26,7 @@ Content-Type: application/json
 
 {
     "id_usuario": "e4eebc99-9c0b-4ef8-bb6d-6bb9bd380e55",
-    "monto": 120.50
+    "monto": 450
 }
 
 ### Actualizar una venta (incluyendo id_usuario, monto, fecha, estado)
