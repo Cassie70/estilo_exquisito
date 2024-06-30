@@ -1,16 +1,55 @@
-import { Fragment } from "react";
-// API FUNCTIONS
+"use client";
+
+// OrderList.tsx
+import { Fragment, useEffect, useState } from "react";
+import Cookies from "js-cookie";
 import api from "@utils/__api__/orders";
-// GLOBAL CUSTOM COMPONENTS
 import Hidden from "@component/hidden";
 import TableRow from "@component/TableRow";
 import { H5 } from "@component/Typography";
 import DashboardPageHeader from "@component/layout/DashboardPageHeader";
-// PAGE SECTION COMPONENTS
 import { OrderRow, OrdersPagination } from "@sections/customer-dashboard/orders";
 
-export default async function OrderList() {
-  const orderList = await api.getOrders();
+export default function OrderList() {
+  const [orderList, setOrderList] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [currentPage, setCurrentPage] = useState(1); // Estado para controlar la página actual
+  const itemsPerPage = 5; // Tamaño de página
+
+  useEffect(() => {
+    const fetchUserOrders = async () => {
+      try {
+        const id_usuario = Cookies.get("id_usuario");
+        if (id_usuario) {
+          const response = await api.getOrders(id_usuario);
+          console.log('OrderList', response);
+          if (response.length > 0) {
+            setOrderList(response);
+          } else {
+            // Aquí podrías manejar el caso donde ya no hay más datos
+          }
+        }
+      } catch (error) {
+        console.error("Error fetching user orders:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchUserOrders();
+  }, [currentPage]);
+
+  const onPageChange = (selectedPage) => {
+    setCurrentPage(selectedPage);
+  };
+
+  if (loading) {
+    return <div>Loading...</div>;
+  }
+
+  const indexOfLastItem = currentPage * itemsPerPage;
+  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+  const currentItems = orderList.slice(indexOfFirstItem, indexOfLastItem);
 
   return (
     <Fragment>
@@ -38,11 +77,11 @@ export default async function OrderList() {
         </TableRow>
       </Hidden>
 
-      {orderList.map((item) => (
+      {currentItems.map((item) => (
         <OrderRow order={item} key={item.id} />
       ))}
 
-      <OrdersPagination orderList={orderList} />
+      <OrdersPagination orderList={orderList} currentPage={currentPage} itemsPerPage={itemsPerPage} onPageChange={onPageChange} />
     </Fragment>
   );
 }

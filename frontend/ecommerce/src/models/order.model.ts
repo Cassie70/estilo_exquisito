@@ -8,17 +8,13 @@ type Item = {
 };
 
 interface Order {
-  user: User;
-  id: string;
-  tax: number;
-  items: Item[];
-  createdAt: Date;
-  discount: number;
-  deliveredAt: Date;
-  totalPrice: number;
+  id_venta: string;
+  id_usuario: string;
+  monto: string;
+  estado: number;
+  fecha: string;
   isDelivered: boolean;
-  shippingAddress: string;
-  status: "Pending" | "Processing" | "Delivered" | "Cancelled";
+  items: Item[];
 }
 
 export default Order;

@@ -39,7 +39,7 @@ export default function CheckoutSummary2() {
       </FlexBox>
 
       <FlexBox justifyContent="space-between" alignItems="center" mb="1.5rem">
-        <Typography color="text.hint">Discount:</Typography>
+        <Typography color="text.hint">Descuento:</Typography>
         <Typography fontWeight="700">-</Typography>
       </FlexBox>
 

@@ -2,6 +2,7 @@
 import Link from "next/link";
 import { Fragment } from "react";
 // GLOBAL CUSTOM COMPONENTS
+import Swal from "sweetalert2";
 import Box from "@component/Box";
 import Select from "@component/Select";
 import Grid from "@component/grid/Grid";
@@ -19,12 +20,86 @@ import { useAppContext } from "@context/app-context";
 import countryList from "@data/countryList";
 // UTILS
 import { currency } from "@utils/utils";
+import Cookies from "js-cookie";
+import api from "@utils/__api__/ticket";
+import withReactContent from "sweetalert2-react-content";
+
+
+const MySwal = withReactContent(Swal);
+type SizeOption = {
+  id: number;
+  nombre: string;
+};
+
+const sizeOptions: SizeOption[] = [
+  { id: 1, nombre: "XS" },
+  { id: 2, nombre: "S" },
+  { id: 3, nombre: "M" },
+  { id: 4, nombre: "L" },
+  { id: 5, nombre: "XL" },
+];
+const getTallaId = (nombreTalla: string): number | undefined => {
+  const foundSize = sizeOptions.find((option) => option.nombre === nombreTalla);
+  return foundSize?.id;
+};
+const generateVentaData = (state: any) => {
+  const id_usuario = state.user.id_usuario;
+
+  const total = state.cart.reduce((accumulator: number, item: any) => {
+    return accumulator + (item.precio * item.qty);
+  }, 0);
+
+  const productos = state.cart.map((item: any) => {
+
+    const product = state.products.find((p: any) => p.id_producto === item.id_producto);
+    const id_talla = getTallaId(item.talla);
+
+    return {
+      id_producto: item.id_producto,
+      id_talla: id_talla,
+      cantidad: item.qty
+    };
+  });
+
+  const ventaData = {
+    id_usuario: id_usuario,
+    total: total,
+    es_apartado: 1 ,
+    productos: productos
+  };
+
+  return ventaData;
+};
 
 export default function Cart() {
-  const { state } = useAppContext();
+  const { state, dispatch } = useAppContext();
 
   const getTotalPrice = () => {
-    return state.cart.reduce((accumulator, item) => accumulator + item.price * item.qty, 0) || 0;
+    return state.cart.reduce((accumulator, item) => accumulator + item.precio * item.qty, 0) || 0;
+  };
+
+  const handleApartar = async () => {
+    try {
+      const data = generateVentaData(state);
+      const response = await api.createTicket(data);
+      dispatch({ type: "CLEAR_CART" });
+      console.log("response", response);
+
+      Swal.fire({
+        title: "Venta Apartada",
+        text: "Tu venta ha sido apartada con éxito.",
+        icon: "success",
+        confirmButtonText: "OK"
+      });
+    } catch (error) {
+      console.error("Error al apartar la venta", error);
+      Swal.fire({
+        title: "Error",
+        text: "Hubo un problema al apartar la venta. Por favor, inténtalo de nuevo.",
+        icon: "error",
+        confirmButtonText: "OK"
+      });
+    }
   };
 
   return (
@@ -34,13 +109,13 @@ export default function Cart() {
           {state.cart.map((item) => (
             <ProductCard7
               mb="1.5rem"
-              id={item.id}
-              key={item.id}
+              id_producto={item.id_producto}
+              key={item.id_producto}
               qty={item.qty}
-              slug={item.slug}
-              name={item.name}
-              price={item.price}
-              imgUrl={item.imgUrl}
+              nombre={item.nombre}
+              precio={item.precio}
+              imagen_url={item.imagen_url}
+              talla={item.talla}
             />
           ))}
         </Grid>
@@ -57,72 +132,16 @@ export default function Cart() {
 
             <Divider mb="1rem" />
 
-            {/* <FlexBox alignItems="center" mb="1rem">
-              <Typography fontWeight="600" mr="10px">
-                Additional Comments
-              </Typography>
-
-              <Box p="3px 10px" bg="primary.light" borderRadius="3px">
-                <Typography fontSize="12px" color="primary.main">
-                  Note
-                </Typography>
-              </Box>
-            </FlexBox> */}
-
-            {/* <TextArea rows={6} fullwidth mb="1rem" /> */}
-
-            {/* <Divider mb="1rem" /> */}
-
-            {/* <TextField placeholder="Voucher" fullwidth />
-
-            <Button variant="outlined" color="primary" mt="1rem" mb="30px" fullwidth>
-              Apply Voucher
-            </Button> */}
-
-            {/* <Divider mb="1.5rem" />
-
-            <Typography fontWeight="600" mb="1rem">
-              Shipping Estimates
-            </Typography>
-
-            <Select
-              mb="1rem"
-              label="Country"
-              options={countryList}
-              placeholder="Select Country"
-              onChange={(e) => console.log(e)}
-            />
-
-            <Select
-              label="State"
-              options={stateList}
-              placeholder="Select State"
-              onChange={(e) => console.log(e)}
-            />
-
-            <Box mt="1rem">
-              <TextField label="Zip Code" placeholder="3100" fullwidth />
-            </Box>
-
-            <Button variant="outlined" color="primary" my="1rem" fullwidth>
-              Calculate Shipping
-            </Button> */}
-
             <Link href="/payment">
               <Button variant="contained" color="primary" fullwidth>
                 Pagar Ahora
               </Button>
             </Link>
           </Card1>
-          <Card1>            
-
-
-
-            <Link href="/payment">
-              <Button variant="contained" color="primary" fullwidth>
-                Apartar
-              </Button>
-            </Link>
+          <Card1>
+          <Button variant="contained" color="primary" fullwidth onClick={handleApartar}>
+          Apartar
+            </Button>
           </Card1>
         </Grid>
       </Grid>

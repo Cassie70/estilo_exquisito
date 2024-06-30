@@ -10,7 +10,7 @@ import Stepper from "@component/Stepper";
 const stepperList = [
   { title: "Carrito", disabled: false },
   { title: "Pago", disabled: false },
-  { title: "Resumen", disabled: true }
+  { title: "Ticket", disabled: true }
 ];
 
 export default function Layout({ children }: PropsWithChildren) {

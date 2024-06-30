@@ -1,4 +1,4 @@
 import SearchInput from "./SearchInput";
-import SearchInputWithCategory from "./SearchInputWithCategory";
+import SearchInputHeader from "./SearchInputWithCategory";
 
-export { SearchInput, SearchInputWithCategory };
+export { SearchInput, SearchInputHeader };

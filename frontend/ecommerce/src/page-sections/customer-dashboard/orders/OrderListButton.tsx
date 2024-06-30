@@ -8,7 +8,7 @@ export default function OrderListButton() {
 
   return (
     <Button px="2rem" color="primary" bg="primary.light" onClick={() => push("/orders")}>
-      Order List
+      Regresar al listado
     </Button>
   );
 }

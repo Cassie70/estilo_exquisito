@@ -11,21 +11,18 @@ type Props = { products: Product[] };
 // ==========================================================
 
 export default function ProductListView({ products }: Props) {
+  console.log('ProductListView------',products);
+  
   return (
     <Fragment>
       {products.map((item) => (
         <ProductCard9
-          mb="1.25rem"
-          id={item.id}
-          key={item.id}
-          slug={item.slug}
-          price={item.price}
-          title={item.title}
-          off={item.discount}
-          rating={item.rating}
-          images={item.images}
-          imgUrl={item.thumbnail}
-          categories={item.categories}
+          id_producto={item.id_producto}
+          key={item.id_producto}
+          precio={item.precio}
+          nombre={item.nombre}
+          imagen_url={item.imagen_url}
+          categoria={item.nombre_categoria}
         />
       ))}
 

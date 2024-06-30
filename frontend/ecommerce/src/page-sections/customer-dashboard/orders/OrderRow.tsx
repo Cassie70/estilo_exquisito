@@ -34,24 +34,24 @@ export default function OrderRow({ order }: OrderRowProps) {
   };
 
   return (
-    <Link href={`/orders/${order.id}`}>
+    <Link href={`/orders/${order.id_venta}`}>
       <TableRow my="1rem" padding="6px 18px">
         <H5 m="6px" textAlign="left">
-          #{order.id.substring(0, 8)}
+          #{order.id_venta.substring(0, 8)}
         </H5>
 
         <Box m="6px">
-          <Chip p="0.25rem 1rem" bg={`${getColor(order.status)}.light`}>
-            <Small color={`${getColor(order.status)}.main`}>{order.status}</Small>
+          <Chip p="0.25rem 1rem" bg={`${getColor(order.estado)}.light`}>
+            <Small color={`${getColor(order.estado)}.main`}>{order.estado}</Small>
           </Chip>
         </Box>
 
         <Typography className="flex-grow pre" m="6px" textAlign="left">
-          {format(new Date(order.createdAt), "MMM dd, yyyy")}
+          {format(new Date(order.fecha), "MMM dd, yyyy")}
         </Typography>
 
         <Typography m="6px" textAlign="left">
-          {currency(order.totalPrice)}
+          {currency(order.monto)}
         </Typography>
 
         <Hidden flex="0 0 0 !important" down={769}>

@@ -10,6 +10,98 @@ export class DetalleVentaModelo {
         }
     }
 
+    static async getVentaDetalles(id_venta) {
+        try {
+            // Verificar si la venta es apartada y han pasado más de 24 horas
+            const [ventaResult] = await connection.query(
+                `SELECT id_estado, TIMESTAMPDIFF(HOUR, fecha, NOW()) AS horas_transcurridas 
+                 FROM Ventas 
+                 WHERE BIN_TO_UUID(id_venta) = ?`,
+                [id_venta]
+            );
+
+            const venta = ventaResult[0];
+            if (!venta) {
+                throw new Error(`Venta con ID ${id_venta} no encontrada`);
+            }
+
+            // Si es un apartado y han pasado más de 24 horas, cancelar la venta
+            if (venta.id_estado === 1 && venta.horas_transcurridas > 24) { // 1: apartada
+                await connection.query(
+                    `UPDATE Ventas SET id_estado = 3 WHERE BIN_TO_UUID(id_venta) = ?`, // 3: cancelada
+                    [id_venta]
+                );
+            }
+
+            // Obtener los detalles de la venta
+            const [detalles] = await connection.query(
+                `SELECT 
+                    BIN_TO_UUID(v.id_venta) as id_venta,
+                    v.monto AS total_venta,
+                    v.fecha,
+                    v.fecha_entrega,
+                    ev.descripcion AS estado,
+                    dv.id_producto,
+                    p.nombre AS nombre_producto,
+                    p.imagen_url,
+                    t.id_talla,
+                    t.nombre_talla,
+                    dv.cantidad,
+                    dv.precio_unitario
+                 FROM 
+                    Ventas v
+                 JOIN 
+                    Detalle_venta dv ON v.id_venta = UUID_TO_BIN(?)
+                 JOIN 
+                    Productos p ON dv.id_producto = p.id_producto
+                 JOIN 
+                    Tallas t ON dv.id_talla = t.id_talla
+                 JOIN 
+                    EstadoVentas ev ON v.id_estado = ev.id_estado`,
+                [id_venta]
+            );
+
+            if (detalles.length === 0) {
+                throw new Error(`No se encontraron detalles para la venta con ID getVentaDetalles ${id_venta}`);
+            }
+
+            // Reestructurar la respuesta agrupando los productos
+            const productosMap = new Map();
+            detalles.forEach(detalle => {
+                const key = `${detalle.id_producto}-${detalle.id_talla}`;
+                if (!productosMap.has(key)) {
+                    productosMap.set(key, {
+                        id_producto: detalle.id_producto,
+                        nombre_producto: detalle.nombre_producto,
+                        id_talla: detalle.id_talla,
+                        nombre_talla: detalle.nombre_talla,
+                        cantidad: detalle.cantidad,
+                        precio_unitario: detalle.precio_unitario,
+                        total_producto: (detalle.cantidad * detalle.precio_unitario).toFixed(2),
+                        imagen_url: detalle.imagen_url
+                    });
+                } else {
+                    const producto = productosMap.get(key);
+                    producto.cantidad += detalle.cantidad;
+                    producto.total_producto = (producto.cantidad * producto.precio_unitario).toFixed(2);
+                }
+            });
+
+            const ventaInfo = {
+                id_venta: detalles[0].id_venta,
+                total_venta: detalles[0].total_venta,
+                fecha: detalles[0].fecha,
+                fecha_entrega: detalles[0].fecha_entrega,
+                estado: detalles[0].estado,
+                productos: Array.from(productosMap.values())
+            };
+
+            return ventaInfo;
+        } catch (error) {
+            throw new Error('Error al obtener los detalles de la venta: ' + error.message);
+        }
+    }
+
     static async getByIdDetalleVenta(id_detalle_venta) {
         try {
             const [detalleVenta] = await connection.query(
@@ -70,7 +162,7 @@ export class DetalleVentaModelo {
             throw new Error('Error al crear el detalle de venta: ' + error.message);
         }
     }
-    
+
 
     static async update({ id_detalle_venta, input }) {
         const fields = Object.keys(input);

@@ -1,6 +1,7 @@
-import { useCallback, useEffect, useState } from "react";
+"use client";
+
+import { useState, useEffect, useCallback } from "react";
 import Link from "next/link";
-import { debounce } from "lodash";
 
 import Box from "@component/Box";
 import Menu from "@component/Menu";
@@ -11,33 +12,62 @@ import MenuItem from "@component/MenuItem";
 import { Span } from "@component/Typography";
 import TextField from "@component/text-field";
 import StyledSearchBox from "./styled";
+import { useAppContext } from "@context/app-context"; // Importar el contexto
 
-export default function SearchInputWithCategory() {
-  const [resultList, setResultList] = useState<string[]>([]);
+export default function SearchInputHeader() {
+  const [resultList, setResultList] = useState<{ id: string | number, nombre: string }[]>([]);
   const [category, setCategory] = useState("Categorías");
+  const [selectedIndex, setSelectedIndex] = useState(-1); // Estado para la opción seleccionada
+  const [searchValue, setSearchValue] = useState(""); // Estado para el valor del campo de búsqueda
+
+  const { state } = useAppContext(); // Accede a los productos desde el contexto
+  const { products } = state;
 
   const handleCategoryChange = (cat: string) => () => setCategory(cat);
 
-  const search = debounce((e) => {
-    const value = e.target?.value.toLowerCase();
+  const handleSearch = useCallback((event: React.ChangeEvent<HTMLInputElement>) => {
+    const value = event.target.value.toLowerCase().trim();
+    setSearchValue(value); // Actualiza el valor del campo de búsqueda
 
     if (!value) {
       setResultList([]);
+      setSelectedIndex(-1); // Restablece la opción seleccionada
     } else {
-      // Filtrar los resultados que coinciden con la entrada del usuario
-      const filteredResults = dummySearchResult.filter((item) =>
-        item.toLowerCase().includes(value)
-      );
+      const filteredResults = products
+        .filter(product => {
+          const productName = product.nombre.toLowerCase().trim();
+          const productDescription = product.descripcion.toLowerCase().trim();
+          return productName.includes(value) || productDescription.includes(value);
+        })
+        .map(product => ({ id: product.id_producto, nombre: product.nombre }));
+
       setResultList(filteredResults);
+      setSelectedIndex(-1); // Restablece la opción seleccionada
     }
-  }, 200);
+  }, [products]);
 
-  const handleSearch = useCallback((event: any) => {
-    event.persist();
-    search(event);
-  }, []);
+  const handleKeyDown = (event: React.KeyboardEvent) => {
+    if (event.key === 'ArrowDown') {
+      // Mueve la selección hacia abajo
+      setSelectedIndex(prevIndex => Math.min(prevIndex + 1, resultList.length - 1));
+    } else if (event.key === 'ArrowUp') {
+      // Mueve la selección hacia arriba
+      setSelectedIndex(prevIndex => Math.max(prevIndex - 1, 0));
+    } else if (event.key === 'Enter') {
+      // Navega a la opción seleccionada si se presiona Enter
+      if (selectedIndex >= 0 && selectedIndex < resultList.length) {
+        const selectedItem = resultList[selectedIndex];
+        window.location.href = `/product/${selectedItem.id}`;
+        setSearchValue(""); // Limpia el campo de búsqueda
+        setResultList([]); // Limpia los resultados
+      }
+    }
+  };
 
-  const handleDocumentClick = () => setResultList([]);
+  const handleDocumentClick = () => {
+    setResultList([]);
+    setSelectedIndex(-1); // Restablece la opción seleccionada
+  };
 
   useEffect(() => {
     window.addEventListener("click", handleDocumentClick);
@@ -53,7 +83,9 @@ export default function SearchInputWithCategory() {
 
         <TextField
           fullwidth
+          value={searchValue}
           onChange={handleSearch}
+          onKeyDown={handleKeyDown} // Manejo de teclas
           className="search-field"
           placeholder="Buscar producto..."
         />
@@ -68,19 +100,31 @@ export default function SearchInputWithCategory() {
             </FlexBox>
           }>
           {categories.map((item) => (
-            <MenuItem key={item} onClick={handleCategoryChange(item)}>
-              {item}
-            </MenuItem>
+            <Link href={`/product/category/${encodeURIComponent(item)}`} passHref key={item}>
+              <MenuItem onClick={handleCategoryChange(item)}>
+                {item}
+              </MenuItem>
+            </Link>
           ))}
         </Menu>
       </StyledSearchBox>
 
       {!!resultList.length && (
         <Card position="absolute" top="100%" py="0.5rem" width="100%" boxShadow="large" zIndex={99}>
-          {resultList.map((item) => (
-            <Link href={`/product/search/${item}`} key={item}>
-              <MenuItem key={item}>
-                <Span fontSize="14px">{item}</Span>
+          {resultList.map((item, index) => (
+            <Link href={`/product/${item.id}`} key={item.id}>
+              <MenuItem
+                style={{
+                  backgroundColor: selectedIndex === index ? '#f0f0f0' : 'transparent',
+                  cursor: 'pointer'
+                }}
+                onMouseOver={() => setSelectedIndex(index)}
+                onClick={() => {
+                  setSearchValue(""); // Limpia el campo de búsqueda
+                  setResultList([]); // Limpia los resultados
+                }}
+              >
+                <Span fontSize="14px">{item.nombre}</Span>
               </MenuItem>
             </Link>
           ))}
@@ -91,10 +135,7 @@ export default function SearchInputWithCategory() {
 }
 
 const categories = [
-  "Todas las categorías",
   "Hombre",
   "Mujer",
   "Niños",
 ];
-
-const dummySearchResult = ["Macbook Air 13", "Ksus K555LA", "Acer Aspire X453", "iPad Mini 3", "Playeras", "Camisas"];

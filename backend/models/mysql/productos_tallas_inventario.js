@@ -7,7 +7,8 @@ export class ProductosTallasInventarioModelo {
                 SELECT 
                     Productos.id_producto, 
                     Productos.nombre, 
-                    Productos.descripcion, 
+                    Productos.descripcion,
+                    Productos.precio, 
                     Categorias.nombre_categoria, 
                     Productos.imagen_url, 
                     Productos.fecha_agregada,
@@ -22,12 +23,13 @@ export class ProductosTallasInventarioModelo {
             if(results.length == 0) return [];
     
             const productosMap = results.reduce((acc, row) => {
-                const { id_producto, nombre, descripcion, nombre_categoria, imagen_url, fecha_agregada, nombre_talla, stock } = row;
+                const { id_producto, nombre, precio, descripcion, nombre_categoria, imagen_url, fecha_agregada, nombre_talla, stock } = row;
     
                 if (!acc[id_producto]) {
                     acc[id_producto] = {
                         id_producto,
                         nombre,
+                        precio,
                         descripcion,
                         nombre_categoria,
                         imagen_url,
@@ -59,7 +61,8 @@ export class ProductosTallasInventarioModelo {
                 SELECT 
                     Productos.id_producto, 
                     Productos.nombre, 
-                    Productos.descripcion, 
+                    Productos.descripcion,
+                    Productos.precio, 
                     Categorias.nombre_categoria, 
                     Productos.imagen_url, 
                     Productos.fecha_agregada,
@@ -79,6 +82,7 @@ export class ProductosTallasInventarioModelo {
             const producto = {
                 id_producto: results[0].id_producto,
                 nombre: results[0].nombre,
+                precio: results[0].precio,
                 descripcion: results[0].descripcion,
                 nombre_categoria: results[0].nombre_categoria,
                 imagen_url: results[0].imagen_url,

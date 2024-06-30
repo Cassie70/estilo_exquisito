@@ -15,17 +15,13 @@ export default function RelatedProducts({ products }: Props) {
 
       <Grid container spacing={8}>
         {products.map((item) => (
-          <Grid item lg={3} md={4} sm={6} xs={12} key={item.id}>
+          <Grid item lg={3} md={4} sm={6} xs={12} key={item.id_producto}>
             <ProductCard1
               hoverEffect
-              id={item.id}
-              slug={item.slug}
-              price={item.price}
-              title={item.title}
-              off={item.discount}
-              images={item.images}
-              imgUrl={item.thumbnail}
-              rating={item.rating || 4}
+              id_producto={item.id_producto}
+              precio={item.precio}
+              nombre={item.nombre}
+              imagen_url={item.imagen_url}
             />
           </Grid>
         ))}

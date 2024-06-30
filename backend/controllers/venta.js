@@ -32,14 +32,19 @@ export class VentaController {
 
     getByUserId = async (req, res) => {
         const { id_usuario } = req.params;
+
         try {
-            const venta = await this.ventaModelo.getByUserId({ id_usuario });
-            if (venta.length > 0) return res.json(venta);
-            res.status(404).json({ error: 'Venta no encontrada' });
+            const pedidosApartados = await this.ventaModelo.getByUserId({ id_usuario });
+
+            if (pedidosApartados.length > 0) {
+                return res.json(pedidosApartados);
+            }
+
+            res.status(404).json({ error: 'Pedidos apartados no encontrados' });
         } catch (error) {
             res.status(500).json({ error: error.message });
         }
-    }
+    };
 
     getByEstado = async (req, res) => {
         const { estado } = req.params;
@@ -90,5 +95,16 @@ export class VentaController {
             res.status(500).json({ error: error.message });
         }
     }
+
+    createVentaEcommerce = async (req, res) => {
+        const { id_usuario, total, productos, es_apartado } = req.body;
+
+        try {
+            const result = await this.ventaModelo.createVentaConDetallesEcommerce({ id_usuario, total, productos, es_apartado });
+            res.status(201).json(result);
+        } catch (error) {
+            res.status(500).json({ error: error.message });
+        }
+    };
 }
 

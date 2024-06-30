@@ -14,6 +14,16 @@ export class DetalleVentaController {
         }
     }
 
+    getDetallesVenta = async (req, res) => {
+        const { id_venta } = req.params;
+        try {
+            const detalleVentas = await this.detalleVentaModelo.getVentaDetalles(id_venta);
+            res.json(detalleVentas);
+        } catch (error) {
+            res.status(500).json({ error: 'No se pudo obtener los detalles de la veta'+ error.message });
+        }
+    }
+
     getByIdDetalleVenta = async (req, res) => {
         const { id_detalle_venta } = req.params;
         try {

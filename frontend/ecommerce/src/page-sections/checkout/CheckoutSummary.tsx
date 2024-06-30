@@ -15,7 +15,7 @@ export default function CheckoutSummary() {
 
         <FlexBox alignItems="flex-end">
           <Typography fontSize="18px" fontWeight="600" lineHeight="1">
-            $2610.
+            $26100000
           </Typography>
 
           <Typography fontWeight="600" fontSize="14px" lineHeight="1">
@@ -49,7 +49,7 @@ export default function CheckoutSummary() {
       </FlexBox>
 
       <FlexBox justifyContent="space-between" alignItems="center" mb="1rem">
-        <Typography color="text.hint">Discount:</Typography>
+        <Typography color="text.hint">Descuento:</Typography>
 
         <FlexBox alignItems="flex-end">
           <Typography fontSize="18px" fontWeight="600" lineHeight="1">
@@ -61,7 +61,7 @@ export default function CheckoutSummary() {
       <Divider mb="1rem" />
 
       <Typography fontSize="25px" fontWeight="600" lineHeight="1" textAlign="right" mb="1.5rem">
-        $2610.00
+        $2610000.00
       </Typography>
 
       {/* <TextField placeholder="Voucher" fullwidth />

@@ -7,7 +7,7 @@ export default function BackToSupport() {
   const { push } = useRouter();
 
   return (
-    <Button px="2rem" color="primary" bg="primary.light" onClick={() => push("/support-tickets")}>
+    <Button px="2rem" color="primary" bg="primary.light" onClick={() => push("/apart-tickets")}>
       Back to Support Ticket
     </Button>
   );

@@ -13,7 +13,9 @@ export const createVentaRouter = ({ ventaModelo }) => {
     ventaRouter.post('/', ventaController.create);
     ventaRouter.patch('/:id', ventaController.update);
     ventaRouter.delete('/:id', ventaController.delete);
+    ventaRouter.post('/venta_ecommerce', ventaController.createVentaEcommerce);
 
     return ventaRouter;
 };
+
 

@@ -1,4 +1,7 @@
-import { Fragment } from "react";
+"use client";
+
+
+import { Fragment , useEffect, useState} from "react";
 import { format } from "date-fns";
 // API FUNCTIONS
 import api from "@utils/__api__/users";
@@ -9,20 +12,42 @@ import Avatar from "@component/avatar";
 import Grid from "@component/grid/Grid";
 import FlexBox from "@component/FlexBox";
 import TableRow from "@component/TableRow";
+import Cookies from "js-cookie";
 import Typography, { H3, H5, Small } from "@component/Typography";
 import DashboardPageHeader from "@component/layout/DashboardPageHeader";
 // PAGE SECTION COMPONENTS
 import { EditProfileButton } from "@sections/customer-dashboard/profile";
 
-export default async function Profile() {
-  const user = await api.getUser();
+export default function Profile() {
 
-  const infoList = [
-    { title: "16", subtitle: "All Orders" },
-    { title: "02", subtitle: "Awaiting Payments" },
-    { title: "00", subtitle: "Awaiting Shipment" },
-    { title: "01", subtitle: "Awaiting Delivery" }
-  ];
+  const [user, setUser] = useState(null);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchUser = async () => {
+      try {
+        const id_usuario = Cookies.get("id_usuario");
+        if (id_usuario) {
+          const userInfo = await api.getInformationUser(id_usuario);
+          setUser(userInfo);
+        }
+      } catch (error) {
+        console.error("Error fetching user information:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchUser();
+  }, []);
+
+  if (loading) {
+    return <div>Loading...</div>;
+  }
+
+  if (!user) {
+    return <div>Error loading user information</div>;
+  }
 
   return (
     <Fragment>
@@ -31,60 +56,13 @@ export default async function Profile() {
         iconName="user_filled"
         button={<EditProfileButton />}
       />
-
-      <Box mb="30px">
-        <Grid container spacing={6}>
-          <Grid item lg={6} md={6} sm={12} xs={12}>
-            <FlexBox as={Card} p="14px 32px" height="100%" borderRadius={8} alignItems="center">
-              <Avatar src={user.avatar} size={64} />
-
-              <Box ml="12px" flex="1 1 0">
-                <FlexBox flexWrap="wrap" justifyContent="space-between" alignItems="center">
-                  <div>
-                    <H5 my="0px">{`${user.name.firstName} ${user.name.lastName}`}</H5>
-
-      
-                  </div>
-
-                </FlexBox>
-              </Box>
-            </FlexBox>
-          </Grid>
-
-          {/* <Grid item lg={6} md={6} sm={12} xs={12}> */}
-            {/* <Grid container spacing={4}>
-              {infoList.map((item) => (
-                <Grid item lg={3} sm={6} xs={6} key={item.subtitle}>
-                  <FlexBox
-                    as={Card}
-                    height="100%"
-                    p="1rem 1.25rem"
-                    borderRadius={8}
-                    alignItems="center"
-                    flexDirection="column"
-                    justifyContent="center">
-                    <H3 color="primary.main" my="0px" fontWeight="600">
-                      {item.title}
-                    </H3>
-
-                    <Small color="text.muted" textAlign="center">
-                      {item.subtitle}
-                    </Small>
-                  </FlexBox>
-                </Grid>
-              ))}
-            </Grid> */}
-          {/* </Grid> */}
-        </Grid>
-      </Box>
-
       <TableRow p="0.75rem 1.5rem">
         <FlexBox flexDirection="column" p="0.5rem">
           <Small color="text.muted" mb="4px">
             Nombres
           </Small>
 
-          <span>{user.name.firstName}</span>
+          <span>{user.nombre}</span>
         </FlexBox>
 
         <FlexBox flexDirection="column" p="0.5rem">
@@ -92,7 +70,7 @@ export default async function Profile() {
             Apellido
           </Small>
 
-          <span>{user.name.lastName}</span>
+          <span>{user.apellido}</span>
         </FlexBox>
 
         <FlexBox flexDirection="column" p="0.5rem">
@@ -100,7 +78,7 @@ export default async function Profile() {
             Email
           </Small>
 
-          <span>{user.email}</span>
+          <span>{user.correo_electronico}</span>
         </FlexBox>
 
         <FlexBox flexDirection="column" p="0.5rem">
@@ -108,7 +86,7 @@ export default async function Profile() {
             Telefono
           </Small>
 
-          <span>{user.phone}</span>
+          <span>{user.telefono}</span>
         </FlexBox>
 
       </TableRow>

@@ -2,6 +2,9 @@
 
 const nextConfig = {
   reactStrictMode: true,
+  images: {
+    domains: ['localhost'], 
+  },
   compiler: {
     styledComponents: true,
   },

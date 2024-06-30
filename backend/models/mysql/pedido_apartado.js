@@ -27,7 +27,7 @@ export class PedidoApartadoModelo {
     static async getByUserId({ id_usuario }) {
         try {
             const [pedidos, tableInfo] = await connection.query(
-                'SELECT id_pedido_apartado, BIN_TO_UUID(id_usuario) AS id_usuario, fecha_apartado, estado FROM Pedido_apartado WHERE id_usuario = UUID_TO_BIN(?)',
+                'SELECT BIN_TO_UUID(id_venta) AS id_venta, BIN_TO_UUID(id_usuario) AS id_usuario, monto, id_estado, fecha FROM Ventas WHERE id_usuario = UUID_TO_BIN(?) AND id_estado = 1',
                 [id_usuario]
             );
             return pedidos;

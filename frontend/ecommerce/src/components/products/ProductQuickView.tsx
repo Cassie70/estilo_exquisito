@@ -11,11 +11,10 @@ type Props = {
   open: boolean;
   onClose: () => void;
   product: {
-    slug: string;
-    title: string;
-    price: number;
-    images: string[];
-    id: string | number;
+    nombre: string;
+    precio: number;
+    imagen_url: string;
+    id_producto: string | number;
   };
 };
 // ===================================================
@@ -25,10 +24,10 @@ export default function ProductQuickView({ open, onClose, product }: Props) {
     <Modal open={open} onClose={onClose}>
       <Card p="1rem" width="100%" maxWidth="800px" borderRadius={8} position="relative">
         <ProductIntro
-          id={product.id}
-          title={product.title}
-          price={product.price}
-          images={product.images}
+          id_producto={product.id_producto}
+          nombre={product.nombre}
+          precio={product.precio}
+          imagen_url={product.imagen_url}
         />
 
         <Box position="absolute" top="0.75rem" right="0.75rem" cursor="pointer">
