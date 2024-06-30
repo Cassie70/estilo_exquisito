@@ -79,8 +79,8 @@ const navbarNavigations = [
       {
         title: "Tickets Apartados",
         child: [
-          { title: "All tickets", url: "/support-tickets" },
-          { title: "Ticket details", url: "/support-tickets/product-broken.-i-need-refund" }
+          { title: "All tickets", url: "/apart-tickets" },
+          { title: "Ticket details", url: "/apart-tickets/product-broken.-i-need-refund" }
         ]
       },
       // { title: "Wishlist", url: "/wish-list" }

@@ -31,6 +31,8 @@ app.post('/upload', handleFileUpload);
 // app.patch('/productos/:id', handleFileUploadAndUpdate);
 
 // Al crear la ruta de productos se le pasa como parámetro el modelo de productos que se va a usar
+app.use('/imagen', express.static(path.join(__dirname, 'uploads/productos')));
+
 app.use('/productos', routes.createProdutosRouter({ productosModelo: models.ProductosModelo }));
 app.use('/ventas', routes.createVentaRouter({ ventaModelo: models.VentaModelo }));
 app.use('/tallas', routes.createTallasRouter({ tallasModelo: models.TallasModelo }));

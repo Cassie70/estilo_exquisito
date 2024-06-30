@@ -5,7 +5,6 @@ import { useCallback, useState } from "react";
 import styled from "styled-components";
 
 import Box from "@component/Box";
-import Rating from "@component/rating";
 import Icon from "@component/icon/Icon";
 import FlexBox from "@component/FlexBox";
 import { Button } from "@component/buttons";
@@ -16,6 +15,7 @@ import ProductQuickView from "@component/products/ProductQuickView";
 import { useAppContext } from "@context/app-context";
 import { currency } from "@utils/utils";
 import { theme } from "@utils/theme";
+const API_URL = process.env.NEXT_PUBLIC_API_BACK;
 
 // styled components
 const Wrapper = styled(Box)({
@@ -43,14 +43,6 @@ const AddToCartButton = styled(IconButton)({
   backgroundColor: "transparent"
 });
 
-const FavoriteButton = styled(IconButton)({
-  top: 45,
-  right: -40,
-  position: "absolute",
-  transition: "right 0.3s .2s",
-  backgroundColor: "transparent"
-});
-
 const QuickViewButton = styled(Button)({
   left: 0,
   bottom: 0,
@@ -64,27 +56,43 @@ const QuickViewButton = styled(Button)({
 });
 
 // ==============================================================
+interface ProductSize {
+  nombre_talla: string;
+  stock: number;
+}
+
+
 type ProductCard17Props = {
-  slug: string;
-  title: string;
-  price: number;
-  imgUrl: string;
-  rating?: number;
-  category: string;
-  images: string[];
-  id: string | number;
+  id_producto: number;
+  nombre: string;
+  descripcion: string;
+  precio?: number;
+  nombre_categoria: string;
+  imagen_url: string;
+  fecha_agregada: string;
+  tallas: ProductSize[];
 };
 
 // ==============================================================
 
+// const generateSlug = (nombre: string) => {
+//   return slug
+//     .toLowerCase()
+//     .replace(/[^a-z0-9\s-]/g, '')
+//     .trim()
+//     .replace(/\s+/g, '-');
+// };
+
 export default function ProductCard17(props: ProductCard17Props) {
-  const { id, title, price, imgUrl, category,slug, images } = props;
+  console.log('ProductCard17Props',props);
+  
+  const { id_producto, nombre, descripcion, precio, nombre_categoria, fecha_agregada, imagen_url, tallas } = props;
 
   const { state, dispatch } = useAppContext();
   const [openDialog, setOpenDialog] = useState(false);
   const [isFavorite, setIsFavorite] = useState(false);
 
-  const cartItem = state.cart.find((item) => item.slug === slug);
+  const cartItem = state.cart.find((item) => item.id_producto === id_producto);
 
   const handleFavorite = () => setIsFavorite((fav) => !fav);
   const toggleDialog = useCallback(() => setOpenDialog((open) => !open), []);
@@ -92,11 +100,14 @@ export default function ProductCard17(props: ProductCard17Props) {
   // handle add to cart
   const handleAddToCart = () => {
     const payload = {
-      id,
-      slug,
-      price,
-      imgUrl,
-      name: title,
+      id_producto,
+      nombre,
+      descripcion,
+      nombre_categoria,
+      precio,
+      fecha_agregada,
+      tallas,
+      imagen_url,
       qty: (cartItem?.qty || 0) + 1
     };
 
@@ -106,46 +117,38 @@ export default function ProductCard17(props: ProductCard17Props) {
   return (
     <Wrapper>
       <CardMedia>
-        <Link href={`/product/${slug}`}>
-          <NextImage width={300} height={300} src={imgUrl} alt="category" className="product-img" />
+        <Link href={`/product/${id_producto}`}>
+          <NextImage width={300} height={300} src={ `${API_URL}/imagen/${imagen_url}.png`} alt={nombre} className="product-img" />
         </Link>
 
         <AddToCartButton className="product-actions" onClick={handleAddToCart}>
           <Icon size="18px">shopping-cart</Icon>
         </AddToCartButton>
 
-        {/* <FavoriteButton className="product-actions" onClick={handleFavorite}>
-          <Icon size="18px">{isFavorite ? "heart-filled" : "heart"}</Icon>
-        </FavoriteButton> */}
-
-        <QuickViewButton
-          size="large"
-          variant="contained"
-          className="product-view-action"
-          onClick={() => setOpenDialog(true)}>
-          Ver Producto
-        </QuickViewButton>
+        <Link href={`/product/${id_producto}`}>
+          <QuickViewButton
+            size="large"
+            variant="contained"
+            className="product-view-action"
+            //onClick={() => setOpenDialog(true)}
+          >
+            Ver Producto
+          </QuickViewButton>
+        </Link>
       </CardMedia>
 
       <ProductQuickView
         open={openDialog}
         onClose={toggleDialog}
-        product={{ id, images, slug, price, title }}
+        product={{ id_producto, imagen_url, precio, nombre }}
       />
 
       <Box p={1} textAlign="center">
-        <Small color="gray.500">{category}</Small>
-        <Paragraph fontWeight="bold">{title}</Paragraph>
+        <Small color="gray.500">Categoría {nombre_categoria}</Small>
+        <Paragraph fontWeight="bold">{nombre}</Paragraph>
         <H4 fontWeight={700} py={0.5}>
-          {currency(price)}
+          {currency(precio)}
         </H4>
-
-        {/* <FlexBox alignItems="center" justifyContent="center">
-          <Rating value={4} color="warn" />
-          <Small fontWeight={600} color="gray.500" ml=".5rem">
-            ({reviews} Reviews)
-          </Small>
-        </FlexBox> */}
       </Box>
     </Wrapper>
   );

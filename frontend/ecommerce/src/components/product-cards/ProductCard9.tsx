@@ -95,29 +95,20 @@ const Wrapper = styled(Card)`
 
 // ============================================================================
 type ProductCard9Props = {
-  off?: number;
-  slug: string;
-  title: string;
-  price: number;
-  imgUrl: string;
-  rating: number;
-  images: string[];
-  id: string | number;
-  categories: string[];
-  [key: string]: unknown;
+  nombre: string;
+  precio: number;
+  imagen_url: string;
+  id_producto: string | number;
+  categoria: string;
 };
 // ============================================================================
 
 export default function ProductCard9({
-  id,
-  off,
-  slug,
-  title,
-  price,
-  imgUrl,
-  rating,
-  images,
-  categories,
+  id_producto,
+  nombre,
+  precio,
+  imagen_url,
+  categoria,
   ...props
 }: ProductCard9Props) {
   const [open, setOpen] = useState(false);
@@ -129,7 +120,7 @@ export default function ProductCard9({
   const handleCartAmountChange = (qty: number) => () => {
     dispatch({
       type: "CHANGE_CART_AMOUNT",
-      payload: { price, imgUrl, id, qty, slug, name: title }
+      payload: { precio, imagen_url, id_producto, qty, nombre }
     });
   };
 
@@ -138,7 +129,7 @@ export default function ProductCard9({
       <Grid container spacing={1}>
         <Grid item md={3} sm={4} xs={12}>
           <Box position="relative">
-            {!!off && (
+            {/* {!!off && (
               <Chip
                 top="10px"
                 left="10px"
@@ -150,7 +141,7 @@ export default function ProductCard9({
                 color="primary.text">
                 {off}% off
               </Chip>
-            )}
+            )} */}
 
             <Icon color="secondary" variant="small" className="quick-view" onClick={toggleDialog}>
               eye-alt

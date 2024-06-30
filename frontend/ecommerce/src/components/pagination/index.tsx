@@ -1,30 +1,29 @@
-"use client";
-
+import React from "react";
 import ReactPaginate from "react-paginate";
 import { SpaceProps } from "styled-system";
-
 import Icon from "@component/icon/Icon";
 import { Button } from "@component/buttons";
 import { StyledPagination } from "./styled";
 
-// ==============================================================
-export interface PaginationProps extends SpaceProps {
+interface PaginationProps extends SpaceProps {
   pageCount: number;
   pageRangeDisplayed?: number;
   marginPagesDisplayed?: number;
-  onChange?: (data: number) => void;
+  currentPage: number;
+  onPageChange?: (selectedPage: number) => void;
 }
-// ==============================================================
 
-export default function Pagination({
-  onChange,
+const Pagination: React.FC<PaginationProps> = ({
   pageCount,
-  pageRangeDisplayed,
-  marginPagesDisplayed,
+  pageRangeDisplayed = 2,
+  marginPagesDisplayed = 1,
+  currentPage,
+  onPageChange,
   ...props
-}: PaginationProps) {
-  const handlePageChange = async (page: any) => {
-    if (onChange) onChange(page.selected);
+}) => {
+  const handlePageChange = (selectedItem: { selected: number }) => {
+    const selectedPage = selectedItem.selected + 1; // ReactPaginate devuelve el índice base 0, sumamos 1 para obtener la página correcta
+    if (onPageChange) onPageChange(selectedPage);
   };
 
   const PREVIOUS_BUTTON = (
@@ -34,7 +33,10 @@ export default function Pagination({
       color="primary"
       overflow="hidden"
       borderRadius="50%"
-      className="control-button">
+      className="control-button"
+      onClick={() => onPageChange && onPageChange(currentPage - 1)}
+      disabled={currentPage <= 1}
+    >
       <Icon defaultcolor="currentColor" variant="small">
         chevron-left
       </Icon>
@@ -48,7 +50,10 @@ export default function Pagination({
       color="primary"
       overflow="hidden"
       borderRadius="50%"
-      className="control-button">
+      className="control-button"
+      onClick={() => onPageChange && onPageChange(currentPage + 1)}
+      disabled={currentPage >= pageCount}
+    >
       <Icon defaultcolor="currentColor" variant="small">
         chevron-right
       </Icon>
@@ -74,8 +79,9 @@ export default function Pagination({
         onPageChange={handlePageChange}
         pageRangeDisplayed={pageRangeDisplayed}
         marginPagesDisplayed={marginPagesDisplayed}
-        // subContainerClassName="pages pagination"
       />
     </StyledPagination>
   );
-}
+};
+
+export default Pagination;

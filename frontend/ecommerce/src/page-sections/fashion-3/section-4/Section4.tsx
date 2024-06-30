@@ -13,7 +13,7 @@ export default function Section4() {
   return (
     <Container mt="4rem">
       <H2 textAlign="center" mb={4}>
-        Categorias
+        Categorías
       </H2>
 
       <Grid container spacing={5}>
@@ -27,19 +27,19 @@ export default function Section4() {
             />
 
             <ContentBox>
-              <H2 fontSize={24}>PADDED CLOTHES</H2>
+              <H2 fontSize={24}>Colección</H2>
               <H3 fontSize={22} fontWeight={400}>
-                Collection
+                Chamarras
               </H3>
             </ContentBox>
 
             <ButtonWrapper>
               <Button variant="contained" color="primary">
-                Women&#39;s
+                Mujer
               </Button>
 
               <Button variant="contained" color="primary">
-                Men&#39;s
+                Hombre
               </Button>
             </ButtonWrapper>
           </Box>
@@ -53,13 +53,13 @@ export default function Section4() {
             justifyContent="space-between">
             <SingleCategory
               url="#"
-              buttonText="Women's T-Shirt"
+              buttonText="Payeras de Mujer"
               img="/assets/images/categories/2.jpg"
             />
 
             <SingleCategory
               url="#"
-              buttonText="Men's T-Shirt"
+              buttonText="Payeras de Hombre"
               img="/assets/images/categories/3.jpg"
             />
           </FlexBox>

@@ -1,12 +1,3 @@
-<<<<<<< Updated upstream
-# Ignorar la carpeta node_modules
-node_modules/
-
-# Ignorar la carpeta de salida de Next.js
-.next/
-
-# Ignorar archivos de configuración de dependencias
-=======
 # See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
 
 # dependencies
@@ -29,80 +20,10 @@ node_modules/
 *.pem
 
 # debug
->>>>>>> Stashed changes
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 
-<<<<<<< Updated upstream
-# Ignorar archivos de entorno
-.env
-.env.local
-.env.development.local
-.env.test.local
-.env.production.local
-
-# Ignorar directorios de logs
-logs
-*.log
-
-# Ignorar archivos de configuraciones del sistema operativo
-.DS_Store
-Thumbs.db
-
-# Ignorar carpetas de configuraciones de editores de texto
-.vscode/
-.idea/
-
-# Ignorar archivos de compilación locales
-out/
-dist/
-
-# Ignorar carpetas y archivos de pruebas de Cypress
-cypress/videos/
-cypress/screenshots/
-
-# Ignorar archivos de resultados de pruebas
-coverage/
-*.lcov
-*.lcov-report
-
-# Ignorar configuraciones de Docker
-docker-compose.override.yml
-
-# Ignorar el caché de npm y Yarn
-.npm/
-.yarn/
-
-# Ignorar archivos y carpetas de IntelliJ IDEA
-.idea/
-*.iml
-*.iws
-
-# Ignorar archivos de configuración de AWS Amplify
-amplify/\#current-cloud-backend
-amplify/.config/local-*
-amplify/backend/\#current-cloud-backend
-amplify/backend/amplify-meta.json
-amplify/backend/awscloudformation
-amplify/backend/.*
-amplify/.amplify-rc
-amplify/.config/local-env-info.json
-amplify/.config/project-config.json
-amplify/.config/transform.conf.json
-amplify/hooks/*.sample
-amplify/hooks/*.js
-amplify/team-provider-info.json
-
-# Ignorar archivos y carpetas de Storybook
-storybook-static/
-
-# Ignorar archivos y carpetas de Strapi
-public/
-build/
-strapi-backend/public/
-strapi-backend/build/
-=======
 # local env files
 .env*.local
 
@@ -112,4 +33,3 @@ strapi-backend/build/
 # typescript
 *.tsbuildinfo
 next-env.d.ts
->>>>>>> Stashed changes

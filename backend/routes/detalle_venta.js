@@ -13,6 +13,7 @@ export const createDetalleVentaRouter = ({ detalleVentaModelo }) => {
     detalleVentaRouter.post('/', detalleVentaController.create);
     detalleVentaRouter.patch('/:id_detalle_venta', detalleVentaController.update);
     detalleVentaRouter.delete('/:id_detalle_venta', detalleVentaController.delete);
+    detalleVentaRouter.get('/detalle/:id_venta', detalleVentaController.getDetallesVenta);
 
     return detalleVentaRouter;
 };

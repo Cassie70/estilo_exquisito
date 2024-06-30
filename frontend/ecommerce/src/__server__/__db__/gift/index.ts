@@ -1,7 +1,3 @@
-// FOLLOWING CODES ARE MOCK SERVER IMPLEMENTATION
-// YOU NEED TO BUILD YOUR OWN SERVER
-// IF YOU NEED HELP ABOUT SERVER SIDE IMPLEMENTATION
-// CONTACT US AT support@ui-lib.com
 import type MockAdapter from "axios-mock-adapter";
 import * as db from "./data";
 

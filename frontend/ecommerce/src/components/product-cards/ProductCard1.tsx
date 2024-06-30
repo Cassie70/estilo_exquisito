@@ -19,6 +19,7 @@ import ProductQuickView from "@component/products/ProductQuickView";
 
 import { calculateDiscount, currency, getTheme } from "@utils/utils";
 import { deviceSize } from "@utils/constants";
+const API_URL = process.env.NEXT_PUBLIC_API_BACK;
 
 // STYLED COMPONENT
 const Wrapper = styled(Card)`
@@ -108,30 +109,24 @@ const Wrapper = styled(Card)`
 // =======================================================================
 interface ProductCard1Props extends CardProps {
   off?: number;
-  slug: string;
-  title: string;
-  price: number;
-  imgUrl: string;
-  rating: number;
-  images: string[];
-  id?: string | number;
+  nombre: string;
+  precio: number;
+  imagen_url: string;
+  id_producto?: string | number;
 }
 // =======================================================================
 
 export default function ProductCard1({
-  id,
+  id_producto,
   off,
-  slug,
-  title,
-  price,
-  imgUrl,
-  images,
-  rating = 4,
+  nombre,
+  precio,
+  imagen_url,
   ...props
 }: ProductCard1Props) {
   const [open, setOpen] = useState(false);
   const { state, dispatch } = useAppContext();
-  const cartItem = state.cart.find((item) => item.id === id);
+  const cartItem = state.cart.find((item) => item.id_producto === id_producto);
 
   const toggleDialog = useCallback(() => setOpen((open) => !open), []);
 
@@ -139,11 +134,10 @@ export default function ProductCard1({
     dispatch({
       type: "CHANGE_CART_AMOUNT",
       payload: {
-        id: id as number | string,
-        slug,
-        price,
-        imgUrl,
-        name: title,
+        id_producto: id_producto as number | string,
+        precio,
+        imagen_url,
+        nombre: nombre,
         qty: amount
       }
     });
@@ -174,24 +168,24 @@ export default function ProductCard1({
             </Icon>
           </FlexBox>
 
-          <Link href={`/product/${slug}`}>
-            <NextImage alt={title} width={277} src={imgUrl} height={270} />
+          <Link href={`/product/${id_producto}`}>
+            <NextImage alt={nombre} width={277} src={ `${API_URL}/imagen/${imagen_url}.png`} height={270} />
           </Link>
         </div>
 
         <div className="details">
           <FlexBox>
             <Box flex="1 1 0" minWidth="0px" mr="0.5rem">
-              <Link href={`/product/${slug}`}>
+              <Link href={`/product/${id_producto}`}>
                 <H3
                   mb="10px"
-                  title={title}
+                  title={nombre}
                   fontSize="14px"
                   textAlign="left"
                   fontWeight="600"
                   className="title"
                   color="text.secondary">
-                  {title}
+                  {nombre}
                 </H3>
               </Link>
 
@@ -199,14 +193,15 @@ export default function ProductCard1({
 
               <FlexBox alignItems="center" mt="10px">
                 <SemiSpan pr="0.5rem" fontWeight="600" color="primary.main">
-                  ${calculateDiscount(price, off as number)}
+                ${currency(precio)}
+                  {/* ${calculateDiscount(precio, off as number)} */}
                 </SemiSpan>
 
-                {!!off && (
+                {/* {!!off && (
                   <SemiSpan color="text.muted" fontWeight="600">
-                    <del>${currency(price)}</del>
+                    <del>${currency(precio)}</del>
                   </SemiSpan>
-                )}
+                )} */}
               </FlexBox>
             </Box>
 
@@ -250,7 +245,7 @@ export default function ProductCard1({
       <ProductQuickView
         open={open}
         onClose={toggleDialog}
-        product={{ images, title, price, id: id as number | string, slug }}
+        product={{ imagen_url, nombre, precio, id_producto: id_producto as string}}
       />
     </>
   );

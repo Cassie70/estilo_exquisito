@@ -283,13 +283,13 @@ const customerPageList = [
   },
   {
     imgUrl: "/assets/images/landing/customer/page-7.png",
-    previewUrl: "/support-tickets",
+    previewUrl: "/apart-tickets",
     title: "Support Tickets",
     new: false
   },
   {
     imgUrl: "/assets/images/landing/customer/page-8.png",
-    previewUrl: "/support-tickets/product-broken.-i-need-refund",
+    previewUrl: "/apart-tickets/product-broken.-i-need-refund",
     title: "Ticket Details",
     new: false
   },

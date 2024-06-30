@@ -10,7 +10,7 @@ export default function Section2() {
       <Grid container spacing={5}>
         <Grid item md={6} xs={12}>
           <BannerCard1
-            url="#"
+            url="/product/category/Hombre"
             title="Para Hombres"
             subTitle="Desde $99"
             img="/assets/images/banners/men.jpg"
@@ -20,7 +20,7 @@ export default function Section2() {
 
         <Grid item md={6} xs={12}>
           <BannerCard1
-            url="#"
+            url="/product/category/Mujer"
             subTitle="Descuentos de hasta 50%"
             title="Para Mujeres"
             contentPosition="right"

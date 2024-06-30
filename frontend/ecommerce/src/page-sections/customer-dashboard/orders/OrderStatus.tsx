@@ -11,14 +11,26 @@ import useWindowSize from "@hook/useWindowSize";
 
 type Status = "packaging" | "shipping" | "delivering" | "complete";
 
-export default function OrderStatus() {
+interface OrderStatusProps {
+  status: Status;
+  fecha : string;
+}
+
+export default function OrderStatus({ status, fecha }: OrderStatusProps) {
   const width = useWindowSize();
-  const orderStatus: Status = "shipping";
   const stepIconList = ["package-box", "truck-1", "delivery"];
-  const orderStatusList = ["packaging", "shipping", "delivering", "complete"];
+  //const orderStatusList = ["packaging", "shipping", "delivering", "complete"];
+  const orderStatusList: Status[] = ["Apartada", "Pagada", "Efectivo", "Cancelada", "Entregado", "Pendiente"];
+  type Status = "Apartada" | "Pagada" | "Efectivo" | "Cancelada" | "Entregado" | "Pendiente";
 
   const breakpoint = 350;
-  const statusIndex = orderStatusList.indexOf(orderStatus);
+  const statusIndex = orderStatusList.indexOf(status);
+  console.log('OrderStatus', statusIndex);
+  const formatDate = (fecha) => {
+    if (!fecha) return 'N/A';
+    const date = new Date(fecha);
+    return new Intl.DateTimeFormat('es-ES', { dateStyle: 'long' }).format(date);
+  };
 
   return (
     <Card p="2rem 1.5rem" mb="30px" borderRadius={8}>
@@ -70,7 +82,7 @@ export default function OrderStatus() {
           textAlign="center"
           borderRadius="300px"
           color="primary.main">
-          Estimated Delivery Date <b>4th October</b>
+          Entregado: <b>{ formatDate(fecha) == 'N/A' ? 'Pendiente': formatDate(fecha) }</b>
         </Typography>
       </FlexBox>
     </Card>

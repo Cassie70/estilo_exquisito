@@ -1,23 +1,17 @@
-import Shop from "./shop.model";
-import Review from "./Review.model";
+interface ProductSize {
+  nombre_talla: string;
+  stock: number;
+}
 
 interface Product {
-  unit?: any;
-  slug: string;
-  price: number;
-  title: string;
-  rating: number;
-  discount: number;
-  thumbnail: string;
-  id: string;
-  shop?: Shop;
-  brand?: string;
-  size?: string[];
-  status?: string;
-  colors?: string[];
-  images?: string[];
-  categories: any[];
-  published?: boolean;
+  id_producto: number;
+  nombre: string;
+  descripcion: string;
+  precio?: number;
+  nombre_categoria: string;
+  imagen_url: string;
+  fecha_agregada: string;
+  tallas: ProductSize[];
 }
 
 export default Product;

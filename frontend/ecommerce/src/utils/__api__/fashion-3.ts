@@ -3,9 +3,10 @@ import Blog from "models/blog.model";
 import Product from "models/product.model";
 import Service from "models/service.model";
 import { MainCarouselItem } from "models/market-2.model";
+const API_URL = process.env.NEXT_PUBLIC_API_BACK;
 
 const getProducts = async (): Promise<Product[]> => {
-  const response = await axios.get("/api/fashion-shop-3/products");
+  const response = await axios.get(`${API_URL}/productos-stock`);
   return response.data;
 };
 
@@ -29,4 +30,4 @@ const getBlogs = async (): Promise<Blog[]> => {
   return response.data;
 };
 
-export default { getProducts, getFeatureProducts, getMainCarouselData, getServices, getBlogs };
+export default { getProducts, getFeatureProducts, getMainCarouselData, getServices, getBlogs};

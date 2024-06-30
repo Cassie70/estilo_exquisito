@@ -10,7 +10,9 @@ import TextField from "@component/text-field";
 import { Accordion, AccordionHeader } from "@component/accordion";
 import { H5, H6, Paragraph, SemiSpan } from "@component/Typography";
 
-export default function ProductFilterCard() {
+export default function ProductFilterCard({ minPrice, maxPrice, setMinPrice, setMaxPrice }) {
+  const handleMinPriceChange = (e) => setMinPrice(Number(e.target.value));
+  const handleMaxPriceChange = (e) => setMaxPrice(Number(e.target.value));
   const render = (items: string[] | string) =>
     (Array.isArray(items) ? items : [items]).map((name) => (
       <Paragraph
@@ -29,17 +31,17 @@ export default function ProductFilterCard() {
       <H6 mb="10px">Categorias</H6>
 
       {categoryList.map((item) =>
-        item.title ? (
-          <Accordion key={item.title} expanded>
-            <AccordionHeader px="0px" py="6px" color="text.muted">
-              <SemiSpan className="cursor-pointer" mr="9px">
-                {item.title}
-              </SemiSpan>
-            </AccordionHeader>
+        // item.title ? (
+        //   <Accordion key={item.title} expanded>
+        //     <AccordionHeader px="0px" py="6px" color="text.muted">
+        //       <SemiSpan className="cursor-pointer" mr="9px">
+        //         {item.title}
+        //       </SemiSpan>
+        //     </AccordionHeader>
 
-            {render(item.title)}
-          </Accordion>
-        ) : (
+        //     {render(item.title)}
+        //   </Accordion>
+        // ) : (
           <Paragraph
             py="6px"
             fontSize="14px"
@@ -48,24 +50,36 @@ export default function ProductFilterCard() {
             className="cursor-pointer">
             {item.title}
           </Paragraph>
-        )
+        // )
       )}
 
       <Divider mt="18px" mb="24px" />
 
       {/* PRICE RANGE FILTER */}
-      <H6 mb="16px">Price Range</H6>
+      <H6 mb="16px">Rango de Precio</H6>
       <FlexBox justifyContent="space-between" alignItems="center">
-        <TextField placeholder="0" type="number" fullwidth />
+      <TextField
+          placeholder="0"
+          type="number"
+          fullwidth
+          value={minPrice}
+          onChange={handleMinPriceChange}
+        />
 
         <H5 color="text.muted" px="0.5rem">
           -
         </H5>
 
-        <TextField placeholder="250" type="number" fullwidth />
+        <TextField
+          placeholder="250"
+          type="number"
+          fullwidth
+          value={maxPrice}
+          onChange={handleMaxPriceChange}
+        />
       </FlexBox>
 
-      <Divider my="24px" />
+      {/* <Divider my="24px" /> */}
 
       {/* BRANDS FILTER */}
       {/* <H6 mb="16px">Brands</H6> */}
@@ -81,10 +95,10 @@ export default function ProductFilterCard() {
         />
       ))} */}
 
-      <Divider my="24px" />
+      {/* <Divider my="24px" /> */}
 
       {/* STOCK AND SALES FILTERS */}
-      {otherOptions.map((item) => (
+      {/* {otherOptions.map((item) => (
         <CheckBox
           my="10px"
           key={item}
@@ -94,9 +108,9 @@ export default function ProductFilterCard() {
           label={<SemiSpan color="inherit">{item}</SemiSpan>}
           onChange={(e) => console.log(e.target.value, e.target.checked)}
         />
-      ))}
+      ))} */}
 
-      <Divider my="24px" />
+      {/* <Divider my="24px" /> */}
 
       {/* RATING FILTER */}
       {/* <H6 mb="16px">Ratings</H6>

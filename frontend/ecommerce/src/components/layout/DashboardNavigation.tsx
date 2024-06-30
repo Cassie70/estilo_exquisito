@@ -37,7 +37,7 @@ export default function DashboardNavigation() {
                 <span>{item.title}</span>
               </FlexBox>
 
-              <span>{item.count}</span>
+              {/* <span>{item.count}</span> */}
             </StyledDashboardNav>
           ))}
         </Fragment>
@@ -50,15 +50,15 @@ const linkList = [
   {
     title: "DASHBOARD",
     list: [
-      { href: "/orders", title: "Tickets", iconName: "bag", count: 5 },
-      { href: "/support-tickets", title: "Tickets Apartados", iconName: "customer-service", count: 1 }
+      { href: "/orders", title: "Tickets", iconName: "bag" },
+      { href: "/apart-tickets", title: "Tickets Apartados", iconName: "bag"}
     ]
   },
   {
     title: "CUENTA",
     list: [
       { href: "/profile", title: "Perfil", iconName: "user"},
-      { href: "/payment-methods", title: "Metodos de Pago", iconName: "credit-card" }
+      // { href: "/payment-methods", title: "Metodos de Pago", iconName: "credit-card" }
     ]
   }
 ];

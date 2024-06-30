@@ -21,13 +21,6 @@ const SyledRadio = styled.input<
 >(
   (props) =>
     systemCss({
-      /* remove standard background appearance */
-      // "-webkit-appearance": "none",
-      // "-moz-appearance": "none",
-      // "-webkit-user-select": "none",
-      // "-moz-user-select": "none",
-      // "-ms-user-select": "none",
-      // "user-select": "none",
       appearance: "none",
       outline: "none",
       cursor: "pointer",
@@ -44,24 +37,22 @@ const SyledRadio = styled.input<
         borderColor: `${props.color}.main`,
       },
 
-      /* create custom radiobutton appearance */
       "&:after": {
         width: "calc(100% - 6px)",
         height: "calc(100% - 6px)",
         top: "50%",
         left: "50%",
-        transform: "translateX(-50%) translateY(-50%)",
+        transform: "translate(-50%, -50%)",
         borderRadius: "50%",
         position: "absolute",
-        bg: "transparent",
-        content: '" "',
+        backgroundColor: "transparent",
+        content: '""',
         visibility: "visible",
         transition: "all 150ms cubic-bezier(0.4, 0, 0.2, 1) 0ms",
       },
 
-      /* appearance for checked radiobutton */
       "&:checked:after": {
-        bg: `${props.color}.main`,
+        backgroundColor: `${props.color}.main`,
       },
 
       "&:disabled": {
@@ -69,7 +60,7 @@ const SyledRadio = styled.input<
       },
 
       "&:checked:disabled:after": {
-        bg: `text.disabled`,
+        backgroundColor: `text.disabled`,
       },
     }),
   compose(color)
@@ -90,7 +81,7 @@ const Wrapper = styled.div<WrapperProps>`
     cursor: pointer;
   }
   input[disabled] + label {
-    color: disabled;
+    color: ${(props) => props.theme.colors.text.disabled};
     cursor: unset;
   }
 
@@ -120,7 +111,7 @@ const Radio: FC<
 
   useEffect(() => {
     setRadioId(id || Math.random());
-  }, []);
+  }, [id]);
 
   return (
     <Wrapper
@@ -128,7 +119,7 @@ const Radio: FC<
       color={color || `${labelColor}.main`}
       {...spacingProps}
     >
-      <SyledRadio id={radioId} type="radio" {...props} />
+      <SyledRadio id={radioId} type="radio" color={color} {...props} />
       <label htmlFor={radioId}>{label}</label>
     </Wrapper>
   );

@@ -14,7 +14,7 @@ import { IconButton } from "@component/buttons";
 
 import { currency, getTheme, isValidProp } from "@utils/utils";
 import { useAppContext } from "@context/app-context";
-
+const API_URL = process.env.NEXT_PUBLIC_API_BACK;
 // STYLED COMPONENTS
 const Wrapper = styled.div.withConfig({
   shouldForwardProp: (prop) => isValidProp(prop)
@@ -48,32 +48,32 @@ const Wrapper = styled.div.withConfig({
 // =====================================================================
 interface ProductCard7Props extends SpaceProps {
   qty: number;
-  name: string;
-  slug: string;
-  price: number;
-  imgUrl?: string;
-  id: string | number;
+  nombre: string;
+  precio: number;
+  imagen_url?: string;
+  id_producto: string | number;
+  talla: string;
 }
 // =====================================================================
 
 export default function ProductCard7(props: ProductCard7Props) {
-  const { id, name, qty, price, imgUrl, slug, ...others } = props;
+  const { id_producto, nombre, qty, precio, imagen_url, talla } = props;
 
   const { dispatch } = useAppContext();
   const handleCartAmountChange = (amount: number) => () => {
     dispatch({
       type: "CHANGE_CART_AMOUNT",
-      payload: { qty: amount, name, price, imgUrl, id }
+      payload: { qty: amount, nombre, precio, imagen_url, id_producto, talla }
     });
   };
 
   return (
-    <Wrapper {...others}>
+    <Wrapper>
       <LazyImage
-        alt={name}
+        alt={nombre}
         width={140}
         height={140}
-        src={imgUrl || "/assets/images/products/iphone-xi.png"}
+        src={ `${API_URL}/imagen/${imagen_url}.png`}
       />
 
       <FlexBox
@@ -82,9 +82,12 @@ export default function ProductCard7(props: ProductCard7Props) {
         flexDirection="column"
         className="product-details"
         justifyContent="space-between">
-        <Link href={`/product/${slug}`}>
+        <Link href={`/product/${id_producto}`}>
           <Typography className="title" fontWeight="600" fontSize="18px" mb="0.5rem">
-            {name}
+            {nombre}
+          </Typography>
+          <Typography className="title" fontWeight="600" fontSize="18px" mb="0.5rem">
+            Talla : {talla}
           </Typography>
         </Link>
 
@@ -97,11 +100,11 @@ export default function ProductCard7(props: ProductCard7Props) {
         <FlexBox justifyContent="space-between" alignItems="flex-end">
           <FlexBox flexWrap="wrap" alignItems="center">
             <Typography color="gray.600" mr="0.5rem">
-              {currency(price)} x {qty}
+              {currency(precio)} x {qty}
             </Typography>
 
             <Typography fontWeight={600} color="primary.main" mr="1rem">
-              {currency(price * qty)}
+              {currency(precio * qty)}
             </Typography>
           </FlexBox>
 

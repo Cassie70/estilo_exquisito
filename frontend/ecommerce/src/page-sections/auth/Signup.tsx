@@ -3,206 +3,240 @@
 import Link from "next/link";
 import { useFormik } from "formik";
 import * as yup from "yup";
-
+import Swal from "sweetalert2";
+import withReactContent from "sweetalert2-react-content";
+import { Formik } from "formik";
+import api from "@utils/__api__/users";
 import useVisibility from "./useVisibility";
 
 import Box from "@component/Box";
 import Icon from "@component/icon/Icon";
-import Divider from "@component/Divider";
 import FlexBox from "@component/FlexBox";
-import CheckBox from "@component/CheckBox";
 import TextField from "@component/text-field";
 import { Button, IconButton } from "@component/buttons";
-import { H3, H5, H6, SemiSpan, Small, Span } from "@component/Typography";
+import { H3, H5, H6, SemiSpan } from "@component/Typography";
 // STYLED COMPONENT
 import { StyledRoot } from "./styles";
+
+// Instancia de SweetAlert2 para React
+const MySwal = withReactContent(Swal);
 
 export default function Signup() {
   const { passwordVisibility, togglePasswordVisibility } = useVisibility();
 
   const initialValues = {
-    name: "",
-    email: "",
-    password: "",
+    nombre: "",
+    apellido: "",
+    correo_electronico: "",
+    pass: "",
     re_password: "",
-    agreement: false
+    telefono: "",
   };
 
-  const formSchema = yup.object().shape({
-    name: yup.string().required("${path} is required"),
-    email: yup.string().email("invalid email").required("${path} is required"),
-    password: yup.string().required("${path} is required"),
-    re_password: yup
-      .string()
-      .oneOf([yup.ref("password"), null], "Passwords must match")
-      .required("Please re-type password"),
-    agreement: yup
-      .bool()
-      .test(
-        "agreement",
-        "You have to agree with our Terms and Conditions!",
-        (value) => value === true
-      )
-      .required("You have to agree with our Terms and Conditions!")
-  });
+  // Comentamos las validaciones para depuración
+  // const formSchema = yup.object().shape({
+  //   name: yup.string().required("${path} is required"),
+  //   email: yup.string().email("invalid email").required("${path} is required"),
+  //   phone: yup
+  //     .string()
+  //     .required("Teléfono es requerido")
+  //     .matches(/^\d{10}$/, "El número de teléfono debe tener 10 dígitos"),
+  //   password: yup.string().required("${path} is required"),
+  //   re_password: yup
+  //     .string()
+  //     .oneOf([yup.ref("password"), null], "Passwords must match")
+  //     .required("Please re-type password"),
+  //   agreement: yup
+  //     .bool()
+  //     .test(
+  //       "agreement",
+  //       "You have to agree with our Terms and Conditions!",
+  //       (value) => value === true
+  //     )
+  //     .required("You have to agree with our Terms and Conditions!")
+  // });
 
   const handleFormSubmit = async (values: any) => {
-    console.log(values);
+    console.log("Form Values", values);
+    try {
+      // Llamar a la API para crear el usuario
+      let response = await api.createUser(values);
+      console.log("User Created", response);
+  
+      // Validar que el usuario fue creado exitosamente
+      if (response.affectedRows === 1) {
+        // Mostrar mensaje de éxito
+        MySwal.fire({
+          title: "Cuenta Creada",
+          text: "¡Tu cuenta ha sido creada exitosamente!",
+          icon: "success",
+          confirmButtonText: "OK"
+        });
+      } else {
+        // Mostrar mensaje de error
+        throw new Error("No se pudo crear la cuenta");
+      }
+    } catch (error) {
+      // Mostrar mensaje de error
+      MySwal.fire({
+        title: "Error",
+        text: "Hubo un error al crear tu cuenta. Por favor, intenta nuevamente.",
+        icon: "error",
+        confirmButtonText: "OK"
+      });
+    }
   };
 
-  const { values, errors, touched, handleBlur, handleChange, handleSubmit } = useFormik({
+  const formik = useFormik({
     initialValues,
     onSubmit: handleFormSubmit,
-    validationSchema: formSchema
+    // validationSchema: formSchema // Comentamos las validaciones para depuración
   });
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+
+    // Limitar el campo de teléfono a 10 dígitos
+    if (name === "telefono") {
+      // Remover caracteres no numéricos y limitar a 10 dígitos
+      const phoneValue = value.replace(/\D/g, "").slice(0, 10);
+      formik.setFieldValue(name, phoneValue);
+    } else {
+      formik.handleChange(e);
+    }
+  };
+
+  const handleButtonClick = (e) => {
+    console.log("Button Clicked");
+
+    // Llamar a formik.handleSubmit para manejar el envío del formulario
+    formik.handleSubmit();
+  };
 
   return (
     <StyledRoot mx="auto" my="2rem" boxShadow="large" borderRadius={8}>
-      <form className="content" onSubmit={handleSubmit}>
-        <H3 textAlign="center" mb="0.5rem">
-          Crear Cuenta
-        </H3>
+      <Formik
+        onSubmit={handleFormSubmit}
+        initialValues={initialValues}
+        // validationSchema={formSchema} // Comentamos las validaciones para depuración
+      >
+        {({ values, errors, touched, handleChange, handleBlur, handleSubmit }) => (
+          <form onSubmit={handleSubmit} className="content">
+            <H3 textAlign="center" mb="0.5rem">
+              Crear Cuenta
+            </H3>
 
-        <H5 fontWeight="600" fontSize="12px" color="gray.800" textAlign="center" mb="2.25rem">
-          Por favor, ingrese sus datos
-        </H5>
+            <H5 fontWeight="600" fontSize="12px" color="gray.800" textAlign="center" mb="2.25rem">
+              Por favor, ingrese sus datos
+            </H5>
 
-        <TextField
-          fullwidth
-          name="name"
-          mb="0.75rem"
-          label="Nombre Completo"
-          onBlur={handleBlur}
-          value={values.name}
-          onChange={handleChange}
-          placeholder="Carlos Guzmán"
-          errorText={touched.name && errors.name}
-        />
+            <TextField
+              fullwidth
+              name="nombre"
+              mb="0.75rem"
+              label="Nombres"
+              onBlur={handleBlur}
+              value={values.nombre}
+              onChange={handleChange}
+              placeholder="Juan"
+              // errorText={touched.nombre && errors.nombre} // Comentamos las validaciones para depuración
+            />
 
-        <TextField
-          fullwidth
-          mb="0.75rem"
-          name="email"
-          type="email"
-          onBlur={handleBlur}
-          value={values.email}
-          onChange={handleChange}
-          placeholder="exmple@mail.com"
-          label="Email"
-          errorText={touched.email && errors.email}
-        />
+            <TextField
+              fullwidth
+              name="apellido"
+              mb="0.75rem"
+              label="Apellido"
+              onBlur={handleBlur}
+              value={values.apellido}
+              onChange={handleChange}
+              placeholder="Perez"
+              // errorText={touched.apellido && errors.apellido} // Comentamos las validaciones para depuración
+            />
 
-        <TextField
-          fullwidth
-          mb="0.75rem"
-          name="password"
-          label="Password"
-          placeholder="*********"
-          onBlur={handleBlur}
-          value={values.password}
-          onChange={handleChange}
-          errorText={touched.password && errors.password}
-          type={passwordVisibility ? "text" : "password"}
-          endAdornment={
-            <IconButton
-              p="0.25rem"
-              mr="0.25rem"
-              type="button"
-              color={passwordVisibility ? "gray.700" : "gray.600"}
-              onClick={togglePasswordVisibility}>
-              <Icon variant="small" defaultcolor="currentColor">
-                {passwordVisibility ? "eye-alt" : "eye"}
-              </Icon>
-            </IconButton>
-          }
-        />
-        <TextField
-          mb="1rem"
-          fullwidth
-          name="re_password"
-          placeholder="*********"
-          label="Confirm Password"
-          onBlur={handleBlur}
-          onChange={handleChange}
-          value={values.re_password}
-          type={passwordVisibility ? "text" : "password"}
-          errorText={touched.re_password && errors.re_password}
-          endAdornment={
-            <IconButton
-              p="0.25rem"
-              size="small"
-              mr="0.25rem"
-              type="button"
-              onClick={togglePasswordVisibility}
-              color={passwordVisibility ? "gray.700" : "gray.600"}>
-              <Icon variant="small" defaultcolor="currentColor">
-                {passwordVisibility ? "eye-alt" : "eye"}
-              </Icon>
-            </IconButton>
-          }
-        />
+            <TextField
+              fullwidth
+              mb="0.75rem"
+              name="correo_electronico"
+              type="email"
+              onBlur={handleBlur}
+              value={values.correo_electronico}
+              onChange={handleChange}
+              placeholder="example@mail.com"
+              label="Email"
+              // errorText={touched.correo_electronico && errors.correo_electronico} // Comentamos las validaciones para depuración
+            />
 
-        {/* <CheckBox
-          mb="1.75rem"
-          name="agreement"
-          color="secondary"
-          onChange={handleChange}
-          checked={values.agreement}
-          label={
-            <FlexBox>
-              <SemiSpan>By signing up, you agree to</SemiSpan>
-              <a href="/" target="_blank" rel="noreferrer noopener">
-                <H6 ml="0.5rem" borderBottom="1px solid" borderColor="gray.900">
-                  Terms & Condition
-                </H6>
-              </a>
-            </FlexBox>
-          }
-        /> */}
+            <TextField
+              fullwidth
+              mb="0.75rem"
+              name="telefono"
+              type="tel"
+              onBlur={handleBlur}
+              value={values.telefono}
+              onChange={handleChange}
+              placeholder="5555555555"
+              label="Teléfono"
+              // errorText={touched.telefono && errors.telefono} // Comentamos las validaciones para depuración
+            />
 
-        <Button mb="1.65rem" variant="contained" color="primary" type="submit" fullwidth>
-          Crear Cuenta
-        </Button>
+            <TextField
+              fullwidth
+              mb="0.75rem"
+              name="pass"
+              label="Password"
+              placeholder="*********"
+              onBlur={handleBlur}
+              value={values.pass}
+              onChange={handleChange}
+              // errorText={touched.pass && errors.pass} // Comentamos las validaciones para depuración
+              type={passwordVisibility ? "text" : "password"}
+              endAdornment={
+                <IconButton
+                  p="0.25rem"
+                  mr="0.25rem"
+                  type="button"
+                  color={passwordVisibility ? "gray.700" : "gray.600"}
+                  onClick={togglePasswordVisibility}>
+                  <Icon variant="small" defaultcolor="currentColor">
+                    {passwordVisibility ? "eye-alt" : "eye"}
+                  </Icon>
+                </IconButton>
+              }
+            />
 
-        {/* <Box mb="1rem">
-          <Divider width="200px" mx="auto" />
-          <FlexBox justifyContent="center" mt="-14px">
-            <Span color="text.muted" bg="body.paper" px="1rem">
-              on
-            </Span>
-          </FlexBox>
-        </Box> */}
+            <TextField
+              mb="1rem"
+              fullwidth
+              name="re_password"
+              placeholder="*********"
+              label="Confirm Password"
+              onBlur={handleBlur}
+              onChange={handleChange}
+              value={values.re_password}
+              // errorText={touched.re_password && errors.re_password} // Comentamos las validaciones para depuración
+              type={passwordVisibility ? "text" : "password"}
+              endAdornment={
+                <IconButton
+                  p="0.25rem"
+                  size="small"
+                  mr="0.25rem"
+                  type="button"
+                  onClick={togglePasswordVisibility}
+                  color={passwordVisibility ? "gray.700" : "gray.600"}>
+                  <Icon variant="small" defaultcolor="currentColor">
+                    {passwordVisibility ? "eye-alt" : "eye"}
+                  </Icon>
+                </IconButton>
+              }
+            />
 
-        {/* <FlexBox
-          mb="0.75rem"
-          height="40px"
-          color="white"
-          bg="#3B5998"
-          borderRadius={5}
-          cursor="pointer"
-          alignItems="center"
-          justifyContent="center">
-          <Icon variant="small" defaultcolor="auto" mr="0.5rem">
-            facebook-filled-white
-          </Icon>
-          <Small fontWeight="600">Continue with Facebook</Small>
-        </FlexBox> */}
-
-        {/* <FlexBox
-          mb="1.25rem"
-          height="40px"
-          color="white"
-          bg="#4285F4"
-          borderRadius={5}
-          cursor="pointer"
-          alignItems="center"
-          justifyContent="center">
-          <Icon variant="small" defaultcolor="auto" mr="0.5rem">
-            google-1
-          </Icon>
-          <Small fontWeight="600">Continue with Google</Small>
-        </FlexBox> */}
-      </form>
+            <Button mb="1.65rem" variant="contained" color="primary" type="submit" fullwidth>
+              Crear Cuenta
+            </Button>
+          </form>
+        )}
+      </Formik>
 
       <FlexBox justifyContent="center" bg="gray.200" py="19px">
         <SemiSpan>¿Ya tienes cuenta?</SemiSpan>
