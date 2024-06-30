@@ -79,7 +79,7 @@ export const CrearCopy = ({ setListadoState }) => {
           type="file"
           id="imagen"
           name="imagen"
-          accept="image/*"
+          accept=".png,.jpg,.jpeg"
           onChange={handleInputChange}
         />
 
