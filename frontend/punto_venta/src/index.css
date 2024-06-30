@@ -395,8 +395,15 @@ input[type="button"] {
 }
 
 .productos-prepago .productos-listado {
+  display: flex;
+  flex-direction: column;
   border-top: 1px solid black;
   border-bottom: 1px solid black;
+}
+
+.productos-prepago .articulo-prenda{
+  display: flex;
+  flex-direction: row;
 }
 
 /*Metodo de pago*/

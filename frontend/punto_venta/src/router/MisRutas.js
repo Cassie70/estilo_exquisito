@@ -14,7 +14,7 @@ import  Usuarios  from '../components/usuarios/usuarios'; // Importa el componen
 import  Detalle_venta  from '../components/detalle_venta/detalle_venta'; // Importa el componente detalle venta
 import  Categorias  from '../components/categorias/categorias'; // Importa el componente categoria
 import  Tallas  from '../components/tallas/tallas'; // Importa el componente tallas
-import  Ventas  from '../components/ventas/ventas'; // Importa el componente ventas
+import  Ventas  from '../components/ventas/Ventas'; // Importa el componente ventas
 import  Pedido_apartado  from '../components/pedido_apartado/pedido_apartado'; // Importa el componente pedido_apartado
 
 

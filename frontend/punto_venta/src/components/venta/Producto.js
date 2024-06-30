@@ -1,15 +1,40 @@
 import React from 'react'
 
-export const Producto = () => {
+export const Producto = ({ productoEsca , setProductos }) => {
+
+  let producto = productoEsca.length > 0 ? productoEsca[0] : null;
+  // let lista=[]
+
+  // const anadiraProductos = () => {
+  //   lista.push(...productoEsca);
+  //   setProductos(lista)
+  // }
+  
+  const anadiraProductos = () => {
+    if (producto) {
+        setProductos(prevProductos => [...prevProductos, producto]);
+    }
+};
+
   return (
     <div className='producto'>
-        <h2>Aqui va una imagen</h2>
-        <div className='producto-datos'>
-            <h3>Nombre del producto</h3>
-            <p>Descricpcion</p>
-            <p>Precio</p>
-            <button>Añadir</button>
-        </div>
+      {producto ? (
+        <img src={`http://localhost:1234/${producto.imagen_url}`} />
+      ) : (
+        <p>No hay producto disponible</p>
+      )}
+      <div className='producto-datos'>
+        {producto ? (
+          <>
+            <h3>{producto.nombre}</h3>
+            <p>{producto.descripcion}</p>
+            <p>{producto.precio}</p>
+            <button onClick={anadiraProductos}>Añadir</button>
+          </>
+        ) : (
+          <p>No hay producto disponible</p>
+        )}
+      </div>
     </div>
   )
 }

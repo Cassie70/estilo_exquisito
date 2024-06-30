@@ -1,23 +1,26 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { Escanear } from './Escanear'
 import { Producto } from './Producto'
 import { ProductosEsca } from './ProductosEsca'
-import { MetodoPago } from './MetodoPago'
 
 export const Venta = () => {
+
+    //Este será el producto escaneas
+    const [productoEsca, setProductoEsca]=useState([])
+
+    //Aqui se irán agregando los productos que se vayan seleccionando
+    const [productos, setProductos]= useState([]);
+
     return (
         <div className='ventas'>
             <section className='section-escanear'>
-                <Escanear/>
+                <Escanear setProductoEsca={setProductoEsca}/>
             </section>
             <section className='section-producto-escaneado'>
-                <Producto/>
+                <Producto productoEsca={productoEsca} setProductos={setProductos}/>
             </section>
             <section className='section-productos-escaneados'>
-                <ProductosEsca/>
-            </section>
-            <section className='section-metodo-pago'>
-                <MetodoPago/>
+                <ProductosEsca productos={productos} setProductos={setProductos}/>
             </section>
         </div>
     )

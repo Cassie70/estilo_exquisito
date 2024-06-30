@@ -6,44 +6,47 @@ export const Buscador = ({ listadoState, setListadoState, setAccion }) => {
 
     const buscarProducto = (e) => {
         const valorBusqueda = e.target.value.trim();
-
+        
         // Actualizar el estado de la búsqueda
-        setBusqueda(valorBusqueda);
+         setBusqueda(valorBusqueda);
 
-        // Filtrar productos por id_producto
+
+          // Filtrar productos por id_producto
         let productos_encontrados = listadoState.filter(producto => {
-            // Convertir busqueda a número y verificar si coincide con id_producto
-            return valorBusqueda.length === 0 || producto.id_producto === parseInt(valorBusqueda);
-        });
+          // Convertir busqueda a número y verificar si coincide con id_producto
+          return valorBusqueda.length === 0 || producto.id_producto === parseInt(valorBusqueda);
+      });
+
 
         // Verificar si se encontraron productos
         if (valorBusqueda.length === 0 && productos_encontrados.length === 0) {
-            setAccion(0)
-            setNoEncontrado(true);
-        }else{
-            // Si se encontraron productos o la búsqueda está vacía, mostrar la lista filtrada o original
-            setNoEncontrado(false);
-            setListadoState(productos_encontrados);;
+            productos_encontrados=listadoState;
+            fetch('http://localhost:1234/inventario/', {
+              method: 'GET',
+              headers: {
+                'Content-Type': 'application/json',
+              },
+            })
+              .then(response => {
+                if (!response.ok) {
+                  throw new Error('Error en la red');
+                }
+                return response.json();
+              })
+              .then(data => {
+                console.log('Datos obtenidos:', data);
+                // setAccion(1)
+                setListadoState(data);
+              })
+              .catch(error => {
+                console.log('Error al obtener datos:', error);
+              });
+              setNoEncontrado(true)
+         }else{
+              // Si se encontraron productos o la búsqueda está vacía, mostrar la lista filtrada o original
+              setNoEncontrado(false)
+              setListadoState(productos_encontrados)
         }
-        fetch('http://localhost:1234/inventario', {
-            method: 'GET',
-            headers: {
-              'Content-Type': 'application/json',
-            },
-          })
-            .then(response => {
-              if (!response.ok) {
-                throw new Error('Error en la red');
-              }
-              return response.json();
-            })
-            .then(data => {
-              console.log('Datos obtenidos:', data);
-              setListadoState(data);
-            })
-            .catch(error => {
-              console.log('Error al obtener datos:', error);
-            });
     };
 
     return (
@@ -55,11 +58,10 @@ export const Buscador = ({ listadoState, setListadoState, setAccion }) => {
 
             <form>
                 <input 
-                    type="text" 
+                    type="number" 
                     id="search_field"
                     name="busqueda"
                     autoComplete='off'
-                    value={busqueda}
                     onChange={buscarProducto}
                 />
                 <button type="button" onClick={buscarProducto}>Buscar</button>

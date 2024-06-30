@@ -10,7 +10,7 @@ export const Inventario = () => {
 
   useEffect(()=>{
     if(accion===0){
-      fetch('http://localhost:1234/inventario', {
+      fetch('http://localhost:1234/inventario/', {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',

@@ -114,8 +114,6 @@ export const Crear = ({ setListadoState }) => {
          let target = e.target;
          let imagen = target.imagen.value;
          let titulo = target.titulo.value;
-         let talla = target.talla.value;
-         let prendas = target.stock.value;
          let precio = target.precio.value;
          let descripcion = target.descripcion.value;
 
@@ -123,8 +121,6 @@ export const Crear = ({ setListadoState }) => {
          let peli = {
              imagen: imagen,
              titulo: titulo,
-             // talla: talla,
-             // prendas: prendas,
              precio: precio,
              descripcion: descripcion
          };
@@ -213,6 +209,7 @@ export const Crear = ({ setListadoState }) => {
                     min='1'
                     max='1000'
                     placeholder="Precio"
+                    step ="0.01"
                 />
 
                 <textarea
