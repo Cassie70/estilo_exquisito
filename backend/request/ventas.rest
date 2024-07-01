@@ -18,7 +18,7 @@ GET http://localhost:1234/ventas/usuario/e4eebc99-9c0b-4ef8-bb6d-6bb9bd380e55
 GET http://localhost:1234/ventas/estado/3
 
 ### Recuperar ventas por mes y año
-GET http://localhost:1234/ventas/fecha/6/2024
+GET http://localhost:1234/ventas/date/6/2024
 
 ### Crear una venta
 POST http://localhost:1234/ventas

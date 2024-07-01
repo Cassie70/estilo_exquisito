@@ -127,7 +127,7 @@ const DetallePedidoApartado = () => {
       <form onSubmit={handleSubmit} className="form-detalle-pedido-apartado">
         <div className="inputs-detalle-pedido-apartado">
           <input
-            type="text"
+            type="number"
             placeholder="ID Pedido Apartado"
             name="id_pedido_apartado"
             value={form.id_pedido_apartado}
@@ -135,7 +135,7 @@ const DetallePedidoApartado = () => {
             required
           />
           <input
-            type="text"
+            type="number"
             placeholder="ID Producto"
             name="id_producto"
             value={form.id_producto}
@@ -143,7 +143,7 @@ const DetallePedidoApartado = () => {
             required
           />
           <input
-            type="text"
+            type="number"
             placeholder="ID Talla"
             name="id_talla"
             value={form.id_talla}

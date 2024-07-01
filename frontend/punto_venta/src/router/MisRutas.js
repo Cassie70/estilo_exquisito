@@ -7,7 +7,6 @@ import { Footer } from '../components/layouts/Footer';
 import { Almacen } from '../components/almacen/Almacen';
 import { Venta } from '../components/venta/Venta';
 import { Inicio } from '../components/inicio/Inicio';
-import { Reportes } from '../components/reportes/Reportes';
 import { Inventario } from '../components/inventario/Inventario';
 import  Trabajadores  from '../components/trabajadores/trabajadores'; // Importa el componente Trabajadores
 import  Usuarios  from '../components/usuarios/usuarios'; // Importa el componente Usuarios
@@ -17,7 +16,7 @@ import  Tallas  from '../components/tallas/tallas'; // Importa el componente tal
 import  Ventas  from '../components/ventas/VentasD'; // Importa el componente ventas
 import  PedidoApartado  from '../components/pedido_apartado/pedido_apartado'; // Importa el componente pedido_apartado
 import  DetallePedidoApartado  from '../components/detalle_pedido_apartado/detalle_pedido_apartado'; // Importa el componente pedido_apartado
-
+import  Reportes  from '../components/reportes/reportes';
 
 
 export const MisRutas = () => {
@@ -32,8 +31,8 @@ export const MisRutas = () => {
         <Route path="/inicio" element={<Inicio />} /> 
         <Route path="/productos" element={<Almacen/>} />
         <Route path="/inventario" element={<Inventario/>} />
-        <Route path="/venta" element={<Venta />} />
-        <Route path="/reportes" element={<Reportes />} />  
+        <Route path="/venta" element={<Venta />} /> 
+        <Route path="/reportes" element={<Reportes />} />
         <Route path="/trabajadores" element={<Trabajadores />} />
         <Route path="/usuarios" element={<Usuarios />} />
         <Route path="/detalle-venta" element={<DetalleVenta />} />
