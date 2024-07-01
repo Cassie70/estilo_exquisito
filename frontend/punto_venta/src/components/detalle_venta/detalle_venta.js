@@ -112,7 +112,7 @@ const DetalleVenta = () => {
   return (
     <div>
       <h2>Detalle de Venta</h2>
-      <form onSubmit={handleSubmit} className="form-detalle-venta">
+      <form onSubmit={handleSubmit} className="form-detalle-venta" hidden>
         <div className="inputs-detalle-venta">
           <input
             type="text"
@@ -156,7 +156,7 @@ const DetalleVenta = () => {
             required
           />
         </div>
-        <div className="buttons">
+        <div className="buttons" hidden>
           {editing ? (
             <>
               <button type="submit">Actualizar</button>
@@ -194,7 +194,7 @@ const DetalleVenta = () => {
               <td>{detalle.id_talla}</td>
               <td className="accion-buttons">
                 <button className="editar" onClick={() => handleEdit(detalle)}>Editar</button>
-                <button className="eliminar" onClick={() => handleDelete(detalle.id_detalle_venta)}>Eliminar</button>
+                <button className="eliminar" disabled>Eliminar</button>
               </td>
             </tr>
           ))}

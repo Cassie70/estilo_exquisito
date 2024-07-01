@@ -124,7 +124,7 @@ const DetallePedidoApartado = () => {
   return (
     <div>
       <h2>Detalles de Pedido Apartado</h2>
-      <form onSubmit={handleSubmit} className="form-detalle-pedido-apartado">
+      <form onSubmit={handleSubmit} className="form-detalle-pedido-apartado" hidden>
         <div className="inputs-detalle-pedido-apartado">
           <input
             type="number"
@@ -195,8 +195,8 @@ const DetallePedidoApartado = () => {
               <td>{detalle.id_talla}</td>
               <td>{detalle.cantidad}</td>
               <td className="accion-buttons">
-                <button className="editar" onClick={() => handleEdit(detalle)}>Editar</button>
-                <button className="eliminar" onClick={() => handleDelete(detalle.id_detalle_pedido_apartado)}>Eliminar</button>
+                <button className="editar" disabled>Editar</button>
+                <button className="eliminar" disabled>Eliminar</button>
               </td>
             </tr>
           ))}

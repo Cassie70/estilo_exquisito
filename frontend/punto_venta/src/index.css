@@ -792,26 +792,28 @@ input[type="button"] {
 }
 
 .tabla-detalle-venta .accion-buttons button.editar {
-  background-color: #ffc107; /* Amarillo */
+  background-color: #ffc1079d; /* Amarillo */
   color: #333;
+  cursor: not-allowed; /* Muestra que el botón está deshabilitado */
 }
 
 .tabla-detalle-venta .accion-buttons button.editar:hover {
-  background-color: #ffca2c; /* Amarillo más claro al pasar el mouse */
+  background-color: #ffc1079d; /* Amarillo más claro al pasar el mouse */
 }
 
 .tabla-detalle-venta .accion-buttons button.eliminar {
-  background-color: #dc3545; /* Rojo */
+  background-color: #ff3b3b96; /* Rojo */
   color: #fff;
+  cursor: not-allowed; /* Muestra que el botón está deshabilitado */
 }
-
 .tabla-detalle-venta .accion-buttons button.eliminar:hover {
-  background-color: #c82333; /* Rojo más oscuro al pasar el mouse */
+  background-color: #ff3b3b96; /* Rojo más oscuro al pasar el mouse */
 }
 
 .buttons button.agregar {
   cursor: not-allowed; /* Muestra que el botón está deshabilitado */
 }
+
 /* ---------------------- FIN Estilos pestaña de Detalle de Venta ----------------------- */
 /* ---------------------- Estilos pestaña de Categorías ----------------------- */
 
@@ -1359,21 +1361,23 @@ input[type="button"] {
 }
 
 .tabla-detalle-pedido-apartado .accion-buttons button.editar {
-  background-color: #ffc107;
+  background-color: #ffc1079d;
   color: #333;
+  cursor: not-allowed; /* Muestra que el botón está deshabilitado */
 }
 
 .tabla-detalle-pedido-apartado .accion-buttons button.editar:hover {
-  background-color: #ffca2c;
+  background-color: #ffc1079d;
 }
 
 .tabla-detalle-pedido-apartado .accion-buttons button.eliminar {
-  background-color: #dc3545;
+  background-color: #ff3b3b96;
   color: #fff;
+  cursor: not-allowed; /* Muestra que el botón está deshabilitado */
 }
 
 .tabla-detalle-pedido-apartado .accion-buttons button.eliminar:hover {
-  background-color: #c82333;
+  background-color: #ff3b3b96;
 }
 /* ---------------------- FIN Estilos pestaña de Detalle Pedido Apartado ----------------------- */
 /* ---------------------- Estilos pestaña de Reportes ----------------------- */
@@ -1495,3 +1499,148 @@ input[type="button"] {
     width: 80%; /* Ajusta el tamaño para pantallas más pequeñas */
   }
 }
+
+/* ---------------------- Estilos para el componente Producto ----------------------- */
+
+.producto2 {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 80%;
+  margin: 20px auto;
+  padding: 20px;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  box-shadow: 0px 0px 6px #ddd;
+  background-color: #fff;
+}
+
+.producto2 img {
+  width: 100%;
+  max-width: 130px;
+  border-radius: 10px;
+  max-height: 150px;
+}
+
+.producto-datos2 {
+  width: 100%;
+  max-width: 300px;
+  position: relative;
+  top: 0px; 
+}
+
+.producto-datos2 h3 {
+  margin: 10px 0;
+  color: #333;
+}
+
+.producto-datos2 p {
+  margin-top: 10px;
+  color: #555;
+}
+
+.producto-datos2 label {
+  display: block;
+  margin: 10px 0 5px;
+  color: #333;
+  font-weight: bold;
+}
+
+.producto-datos2 select,
+.producto-datos2 input {
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 10px;
+  border-radius: 5px;
+  border: 1px solid #ddd;
+  background: #f6f7f9;
+  color: #333;
+  outline: none;
+  transition: border-color 0.3s;
+}
+
+.producto-datos2 select:focus,
+.producto-datos2 input:focus {
+  border-color: #333;
+}
+
+.producto-datos2 button {
+  width: 100%;
+  padding: 10px;
+  background-color: black;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.producto-datos2 button:hover {
+  background-color: #333;
+}
+
+/* ---------------------- FIN Estilos para el componente Producto ----------------------- */
+/* ---------------------- Estilos para el componente Escanear ----------------------- */
+
+.escanear2 {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 80%;
+  margin: 20px auto;
+  padding: 20px;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  box-shadow: 0px 0px 6px #ddd;
+  background-color: #fff;
+}
+
+.escanear2 h2 {
+  margin-bottom: 20px;
+  color: #333;
+}
+
+.escanear-id2 {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  max-width: 300px;
+}
+
+.escanear-id2 .inputBuscador {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 10px; /* Espacio entre el input y el botón */
+  border-radius: 5px;
+  border: 2px solid #ccc; /* Borde más visible */
+  background: #f6f7f9;
+  color: #333;
+  outline: none;
+  transition: border-color 0.3s;
+}
+
+.escanear-id2 .inputBuscador:focus {
+  border-color: #333;
+}
+
+.buttonescaner2{
+  width: 20%;
+  padding: 10px;
+  margin-top: 20px;
+  background-color: black;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.buttonescaner2:hover {
+  background-color: #333;
+}
+
+/* ---------------------- FIN Estilos para el componente Escanear ----------------------- */
