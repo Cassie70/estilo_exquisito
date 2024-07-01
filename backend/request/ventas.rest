@@ -9,16 +9,16 @@ GET http://localhost:1234/ventas
 GET http://localhost:1234/ventas/f5eebc99-9c0b-4ef8-bb6d-6bb9bd380f66
 
 ### Recuperar ventas por el id_usuario
-GET http://localhost:1234/ventas/usuario/b1eebc99-9c0b-4ef8-bb6d-6bb9bd380b22
+GET http://localhost:1234/ventas/usuario/af8ce9c7-337c-11ef-8690-00e04c368ecb
 
 ### Otra prueba para Recuperar ventas por el id_usuario
-GET http://localhost:1234/ventas/usuario/a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a11
+GET http://localhost:1234/ventas/usuario/e4eebc99-9c0b-4ef8-bb6d-6bb9bd380e55
 
-### Recuperar ventas por estado (true o false)
-GET http://localhost:1234/ventas/estado/0
+### Recuperar ventas por estado (id_estado 1, 2 o 3)
+GET http://localhost:1234/ventas/estado/3
 
-### Recuperar ventas por estado (true o false)
-GET http://localhost:1234/ventas/estado/1
+### Recuperar ventas por mes y año
+GET http://localhost:1234/ventas/fecha/6/2024
 
 ### Crear una venta
 POST http://localhost:1234/ventas
@@ -26,22 +26,25 @@ Content-Type: application/json
 
 {
     "id_usuario": "e4eebc99-9c0b-4ef8-bb6d-6bb9bd380e55",
-    "monto": 450
+    "monto": 450,
+    "id_estado": 1,
+    "fecha": "2024-06-07 15:32:14"
 }
 
-### Actualizar una venta (incluyendo id_usuario, monto, fecha, estado)
+### Actualizar una venta (incluyendo id_usuario, monto, fecha, id_estado)
 PATCH http://localhost:1234/ventas/f5eebc99-9c0b-4ef8-bb6d-6bb9bd380f66
 Content-Type: application/json
 
 {
-    "id_usuario": "d3eebc99-9c0b-4ef8-bb6d-6bb9bd380d44",
+    "id_usuario": "a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a11",
     "monto": 150.75,
     "fecha": "2024-06-07 15:32:14",
-    "estado": true
+    "id_estado": 2
 }
 
+
 ### Eliminar una venta
-DELETE http://localhost:1234/ventas/b1bb5614-24fe-11ef-825d-08bfb8a373be
+DELETE http://localhost:1234/ventas/58aec0a3-374c-11ef-b07d-08bfb8a373be
 
 #########################################################
 ###############      FIN    VENTAS        ###############

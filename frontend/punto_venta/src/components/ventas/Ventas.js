@@ -6,7 +6,7 @@ const Ventas = () => {
   const [form, setForm] = useState({
     id_usuario: '',
     monto: '',
-    estado: '',
+    id_estado: '',
     fecha: ''
   });
   const [editing, setEditing] = useState(false);
@@ -46,8 +46,8 @@ const Ventas = () => {
       const newVenta = {
         id_usuario: form.id_usuario,
         monto: parseFloat(form.monto),
-        estado: form.estado === 'true',
-        fecha: formatDateTime(form.fecha)
+        id_estado: parseInt(form.id_estado, 10),
+        fecha: formatDateTimeForBackend(form.fecha)
       };
       console.log('Formulario enviado:', newVenta);
       const response = await axios.post('http://localhost:1234/ventas', newVenta);
@@ -64,8 +64,8 @@ const Ventas = () => {
       const updatedVenta = {
         id_usuario: form.id_usuario,
         monto: parseFloat(form.monto),
-        estado: form.estado === 'true',
-        fecha: formatDateTime(form.fecha)
+        id_estado: parseInt(form.id_estado, 10),
+        fecha: formatDateTimeForBackend(form.fecha)
       };
       console.log('Formulario enviado:', updatedVenta);
       const response = await axios.patch(`http://localhost:1234/ventas/${editId}`, updatedVenta);
@@ -82,8 +82,8 @@ const Ventas = () => {
     setForm({
       id_usuario: venta.id_usuario,
       monto: venta.monto.toString(),
-      estado: venta.estado.toString(),
-      fecha: venta.fecha.replace(' ', 'T') // Convertir fecha al formato del input datetime-local
+      id_estado: venta.id_estado.toString(),
+      fecha: formatDateTimeForInput(venta.fecha) // Convertir fecha al formato del input datetime-local
     });
     setEditing(true);
     setEditId(venta.id_venta);
@@ -102,7 +102,7 @@ const Ventas = () => {
     setForm({
       id_usuario: '',
       monto: '',
-      estado: '',
+      id_estado: '',
       fecha: ''
     });
     setEditing(false);
@@ -113,7 +113,19 @@ const Ventas = () => {
     clearForm();
   };
 
-  const formatDateTime = (dateTime) => {
+  // Convierte la fecha al formato YYYY-MM-DDTHH:mm para el input datetime-local
+  const formatDateTimeForInput = (dateTime) => {
+    const date = new Date(dateTime);
+    const year = date.getFullYear();
+    const month = String(date.getMonth() + 1).padStart(2, '0');
+    const day = String(date.getDate()).padStart(2, '0');
+    const hours = String(date.getHours()).padStart(2, '0');
+    const minutes = String(date.getMinutes()).padStart(2, '0');
+    return `${year}-${month}-${day}T${hours}:${minutes}`;
+  };
+
+  // Convierte la fecha del input datetime-local al formato YYYY-MM-DD HH:MM:SS para el backend
+  const formatDateTimeForBackend = (dateTime) => {
     const date = new Date(dateTime);
     const year = date.getFullYear();
     const month = String(date.getMonth() + 1).padStart(2, '0');
@@ -146,14 +158,15 @@ const Ventas = () => {
             required
           />
           <select
-            name="estado"
-            value={form.estado}
+            name="id_estado"
+            value={form.id_estado}
             onChange={handleChange}
             required
           >
             <option value="">Seleccione un estado</option>
-            <option value="true">Completado</option>
-            <option value="false">Pendiente</option>
+            <option value="1">Completado</option>
+            <option value="2">Pendiente</option>
+            <option value="3">Cancelado</option>
           </select>
           <input
             type="datetime-local"
@@ -195,7 +208,7 @@ const Ventas = () => {
               <td>{venta.id_venta}</td>
               <td>{venta.id_usuario}</td>
               <td>{venta.monto}</td>
-              <td>{venta.estado ? 'Completado' : 'Pendiente'}</td>
+              <td>{venta.id_estado === 1 ? 'Completado' : venta.id_estado === 2 ? 'Pendiente' : 'Cancelado'}</td>
               <td>{venta.fecha}</td>
               <td className="accion-buttons">
                 <button className="editar" onClick={() => handleEdit(venta)}>Editar</button>
