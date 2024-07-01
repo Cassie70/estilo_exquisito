@@ -1,15 +1,10 @@
 import connection from "../../database.js";
 import { v4 as uuidv4 } from 'uuid';
-/*
-Este contiene al modelo de ventas, el cual se encarga de interactuar con la base de datos
-se instancia una conexion a la base de datos y se exporta la clase VentaModelo que contiene los metodos
-estaticos (pueden ser llamados sin instanciar la clase) cada metodo realiza una consulta a la base de datos y retorna el resultado
-*/
 
 export class VentaModelo {
     static async getAll() {
         try {
-            const [venta, tableInfo] = await connection.query('SELECT BIN_TO_UUID(id_venta) AS id_venta, BIN_TO_UUID(id_usuario) AS id_usuario, monto, estado, fecha FROM Ventas');
+            const [venta, tableInfo] = await connection.query('SELECT BIN_TO_UUID(id_venta) AS id_venta, BIN_TO_UUID(id_usuario) AS id_usuario, monto, id_estado, fecha FROM Ventas');
             return venta;
         } catch (error) {
             throw new Error('Error al obtener todas las ventas: ' + error.message);
@@ -19,7 +14,7 @@ export class VentaModelo {
     static async getById({ id }) {
         try {
             const [venta, tableInfo] = await connection.query(
-                'SELECT BIN_TO_UUID(id_venta) AS id_venta, BIN_TO_UUID(id_usuario) AS id_usuario, monto, estado, fecha FROM Ventas WHERE id_venta = UUID_TO_BIN(?)',
+                'SELECT BIN_TO_UUID(id_venta) AS id_venta, BIN_TO_UUID(id_usuario) AS id_usuario, monto, id_estado, fecha FROM Ventas WHERE id_venta = UUID_TO_BIN(?)',
                 [id]
             );
             return venta;
@@ -41,11 +36,11 @@ export class VentaModelo {
         }
     }
 
-    static async getByEstado({ estado }) {
+    static async getByEstado({ id_estado }) {
         try {
             const [ventas, tableInfo] = await connection.query(
-                'SELECT BIN_TO_UUID(id_venta) AS id_venta, BIN_TO_UUID(id_usuario) AS id_usuario, monto, estado, fecha FROM Ventas WHERE estado = ?',
-                [estado]
+                'SELECT BIN_TO_UUID(id_venta) AS id_venta, BIN_TO_UUID(id_usuario) AS id_usuario, monto, id_estado, fecha FROM Ventas WHERE id_estado = ?',
+                [id_estado]
             );
             return ventas;
         } catch (error) {
@@ -53,21 +48,21 @@ export class VentaModelo {
         }
     }
 
-    static async create({ id_usuario, monto }) {
+    static async create({ id_usuario, monto, id_estado, fecha }) {
         const query = `
-            INSERT INTO Ventas (id_venta, id_usuario, monto, estado) 
-            VALUES (UUID_TO_BIN(UUID()), UUID_TO_BIN(?), ?, true)
+            INSERT INTO Ventas (id_venta, id_usuario, monto, id_estado, fecha) 
+            VALUES (UUID_TO_BIN(UUID()), UUID_TO_BIN(?), ?, ?, ?)
         `;
-
+    
         try {
-            const [result] = await connection.query(query, [id_usuario, monto]);
+            const [result] = await connection.query(query, [id_usuario, monto, id_estado, fecha]);
             return result;
         } catch (error) {
             throw new Error('Error al crear la venta: ' + error.message);
         }
-    }
+    }    
 
-    static async update({ id, id_usuario, monto, fecha, estado }) {
+    static async update({ id, id_usuario, monto, fecha, id_estado }) {
         const fields = [];
         const values = [];
 
@@ -86,9 +81,9 @@ export class VentaModelo {
             values.push(fecha);
         }
 
-        if (estado !== undefined) {
-            fields.push('estado = ?');
-            values.push(estado);
+        if (id_estado !== undefined) {
+            fields.push('id_estado = ?');
+            values.push(id_estado);
         }
 
         values.push(id);
@@ -115,7 +110,7 @@ export class VentaModelo {
         }
     }
 
-    static async createVentaConDetallesEcommerce({ id_usuario, total, productos, es_apartado }) {
+    static async createVentaEcommerce({ id_usuario, total, productos, es_apartado }) {
         try {
             await connection.beginTransaction();
 
@@ -191,6 +186,18 @@ export class VentaModelo {
         } catch (error) {
             await connection.rollback();
             throw new Error('Error al crear la venta o apartado con detalles: ' + error.message);
+        }
+    }
+
+    static async getByDate({ mes, anio }) {
+        try {
+            const [ventas, tableInfo] = await connection.query(
+                'SELECT BIN_TO_UUID(id_venta) AS id_venta, BIN_TO_UUID(id_usuario) AS id_usuario, monto, id_estado, fecha FROM Ventas WHERE MONTH(fecha) = ? AND YEAR(fecha) = ?',
+                [mes, anio]
+            );
+            return ventas;
+        } catch (error) {
+            throw new Error('Error al obtener ventas por fecha: ' + error.message);
         }
     }
 }

@@ -7,7 +7,7 @@ const DetallePedidoApartado = () => {
     id_pedido_apartado: '',
     id_producto: '',
     id_talla: '',
-    cantidad: 1, // Inicializado como 1
+    cantidad: "", // Inicializado como 1
   });
   const [editing, setEditing] = useState(false);
   const [editId, setEditId] = useState(null);
@@ -26,7 +26,7 @@ const DetallePedidoApartado = () => {
   };
 
   const handleChange = (e) => {
-    const value = e.target.name === 'cantidad' ? parseInt(e.target.value, 10) : e.target.value;
+    const value = e.target.name === 'cantidad' ? parseInt(e.target.value, 10) : parseInt(e.target.value, 10);
     setForm({
       ...form,
       [e.target.name]: value
@@ -73,6 +73,11 @@ const DetallePedidoApartado = () => {
       }
 
       console.log('Formulario enviado:', form);
+      if (!editId) {
+        console.error('El id de edición es nulo o indefinido');
+        return;
+      }
+
       const response = await axios.patch(`http://localhost:1234/detalle-pedido-apartado/${editId}/cantidad`, {
         cantidad: form.cantidad
       });
@@ -111,7 +116,7 @@ const DetallePedidoApartado = () => {
       id_pedido_apartado: '',
       id_producto: '',
       id_talla: '',
-      cantidad: 1
+      cantidad: ""
     });
     setEditing(false);
     setEditId(null);
@@ -127,7 +132,7 @@ const DetallePedidoApartado = () => {
       <form onSubmit={handleSubmit} className="form-detalle-pedido-apartado">
         <div className="inputs-detalle-pedido-apartado">
           <input
-            type="text"
+            type="number"
             placeholder="ID Pedido Apartado"
             name="id_pedido_apartado"
             value={form.id_pedido_apartado}
@@ -135,7 +140,7 @@ const DetallePedidoApartado = () => {
             required
           />
           <input
-            type="text"
+            type="number"
             placeholder="ID Producto"
             name="id_producto"
             value={form.id_producto}
@@ -143,7 +148,7 @@ const DetallePedidoApartado = () => {
             required
           />
           <input
-            type="text"
+            type="number"
             placeholder="ID Talla"
             name="id_talla"
             value={form.id_talla}
