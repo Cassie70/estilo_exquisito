@@ -11,12 +11,12 @@ import { Reportes } from '../components/reportes/Reportes';
 import { Inventario } from '../components/inventario/Inventario';
 import  Trabajadores  from '../components/trabajadores/trabajadores'; // Importa el componente Trabajadores
 import  Usuarios  from '../components/usuarios/usuarios'; // Importa el componente Usuarios
-import  Detalle_venta  from '../components/detalle_venta/detalle_venta'; // Importa el componente detalle venta
+import  DetalleVenta  from '../components/detalle_venta/detalle_venta'; // Importa el componente detalle venta
 import  Categorias  from '../components/categorias/categorias'; // Importa el componente categoria
 import  Tallas  from '../components/tallas/tallas'; // Importa el componente tallas
-import  Ventas  from '../components/ventas/ventas'; // Importa el componente ventas
-import  Pedido_apartado  from '../components/pedido_apartado/pedido_apartado'; // Importa el componente pedido_apartado
-import  Detalle_pedido_apartado  from '../components/detalle_pedido_apartado/detalle_pedido_apartado'; // Importa el componente pedido_apartado
+import  Ventas  from '../components/ventas/VentasD'; // Importa el componente ventas
+import  PedidoApartado  from '../components/pedido_apartado/pedido_apartado'; // Importa el componente pedido_apartado
+import  DetallePedidoApartado  from '../components/detalle_pedido_apartado/detalle_pedido_apartado'; // Importa el componente pedido_apartado
 
 
 
@@ -36,12 +36,12 @@ export const MisRutas = () => {
         <Route path="/reportes" element={<Reportes />} />  
         <Route path="/trabajadores" element={<Trabajadores />} />
         <Route path="/usuarios" element={<Usuarios />} />
-        <Route path="/detalle-venta" element={<Detalle_venta />} />
+        <Route path="/detalle-venta" element={<DetalleVenta />} />
         <Route path="/categorias" element={<Categorias />} />
         <Route path="/tallas" element={<Tallas />} />
         <Route path="/ventas" element={<Ventas />} />
-        <Route path="/pedido-apartado" element={<Pedido_apartado />} />
-        <Route path="/detalle-pedido-apartado" element={<Detalle_pedido_apartado />} />
+        <Route path="/pedido-apartado" element={<PedidoApartado />} />
+        <Route path="/detalle-pedido-apartado" element={<DetallePedidoApartado />} />
       </Routes>
     </section>
     {/*Footer */}

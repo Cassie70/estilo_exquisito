@@ -1,16 +1,21 @@
 import React, { useState } from 'react';
 
 export const Producto = ({ productoEsca, setProductos, idDeTall }) => {
+  
   const [cantidad, setCantidad] = useState("XS"); // Estado para la talla seleccionada, inicializado a "XS"
-  const [precio, setPrecio] = useState(""); // Estado para el precio, inicializado como vacío
+  const [precio, setPrecio] = useState(1); // Estado para el precio, inicializado como vacío
 
   let producto = productoEsca.length > 0 ? productoEsca[0] : null;
 
+  let contadorId
+
   const anadiraProductos = () => {
     if (producto) {
+      contadorId=Math.random();
       // Crear un objeto del producto a guardar
       let productoNuevo = {
         ...producto,
+        idCont: contadorId,
         talla: cantidad, // Agregar la talla seleccionada al producto
         cantidad: parseFloat(precio) // Convertir el precio a un número antes de asignarlo al producto
       };

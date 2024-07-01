@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 
-const Ventas = () => {
+const VentasD = () => {
   const [ventas, setVentas] = useState([]);
   const [form, setForm] = useState({
     id_usuario: '',
@@ -222,4 +222,4 @@ const Ventas = () => {
   );
 };
 
-export default Ventas;
+export default VentasD

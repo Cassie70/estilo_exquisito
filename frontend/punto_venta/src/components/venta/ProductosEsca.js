@@ -8,9 +8,10 @@ export const ProductosEsca = ({ productos, setProductos }) => {
       const uniqueProducts = [];
       const idsVistos = new Set();
       productos.forEach(producto => {
-        if (!idsVistos.has(producto.id_producto)) {
+        const uniqueId = `${producto.id_producto}-${producto.talla}`;
+        if (!idsVistos.has(uniqueId)) {
           uniqueProducts.push(producto);
-          idsVistos.add(producto.id_producto);
+          idsVistos.add(uniqueId);
         }
       });
       return uniqueProducts;
@@ -19,31 +20,20 @@ export const ProductosEsca = ({ productos, setProductos }) => {
     setProductosUnicos(filtrarProductosUnicos());
   }, [productos]);
 
-  const eliminarProducto = (idProducto, tallaProducto) => {
+  const eliminarProducto = (id) => {
     const nuevosProductos = productos.filter(producto => (
-      !(producto.id_producto === idProducto && producto.talla === tallaProducto)
+      !(producto.idCont === id)
     ));
     setProductos(nuevosProductos);
   };
 
-
   const calcularTotal = () => {
-    let aux = 0
-    productos.map((producto) => (
-      aux += producto.cantidad * producto.precio
-    ))
-
-    return aux;
+    return productos.reduce((total, producto) => total + producto.cantidad * producto.precio, 0);
   };
 
   const calcularCantidad = () => {
-    let aux = 0
-    productos.map((producto) => (
-      aux += producto.cantidad
-    ))
-
-    return aux;
-  }
+    return productos.reduce((total, producto) => total + producto.cantidad, 0);
+  };
 
   const generarJSONEfec = () => {
     let efectivo = prompt("Por favor, ingresa el efectivo:");
@@ -93,7 +83,6 @@ export const ProductosEsca = ({ productos, setProductos }) => {
   };
 
   const generarJSONTarj = () => {
-
     let tarjeta = prompt("Por favor, ingresa tu número de tarjeta (16 dígitos):");
     let nip = prompt("Por favor, ingresa tu NIP (4 dígitos):");
     
@@ -143,7 +132,6 @@ export const ProductosEsca = ({ productos, setProductos }) => {
     } else {
         alert("Pago no autorizado");
     }
-
   };
 
   return (
@@ -163,18 +151,17 @@ export const ProductosEsca = ({ productos, setProductos }) => {
           <tbody>
             {productosUnicos && productosUnicos.length > 0 ? (
               productos.map((producto, index) => (
-                <tr key={`${producto.id_producto}-${producto.talla}`}>
+                <tr key={producto.idCont}>
                   <td>{producto.nombre}</td>
                   <td>{producto.talla}</td>
                   <td>{producto.cantidad}</td>
                   <td>${producto.precio}</td>
                   <td>${producto.precio * producto.cantidad}</td>
                   <td className="accion-buttons">
-                    <button className="eliminar" onClick={() => eliminarProducto(producto.id_producto, producto.talla)}>Eliminar</button>
+                    <button className="eliminar" onClick={() => eliminarProducto(producto.idCont)}>Eliminar</button>
                   </td>
                 </tr>
               ))
-
             ) : (
               <tr>
                 <td colSpan="6">No hay prendas para mostrar</td>
