@@ -3,7 +3,7 @@ import connection from "../../database.js"
 export class InventarioModelo {
     static async getAll() {
         try {
-            const [inventario, tableInfo] = await connection.query('SELECT id_producto,Inventario.id_talla,nombre_talla,stock FROM inventario,tallas WHERE Inventario.id_talla = Tallas.id_talla;');
+            const [inventario, tableInfo] = await connection.query('SELECT id_producto,Inventario.id_talla,nombre_talla,stock FROM Inventario,Tallas WHERE Inventario.id_talla = Tallas.id_talla;');
             return inventario;
         } catch (error) {
             throw new Error('Error al obtener todo el inventario: ' + error.message);
