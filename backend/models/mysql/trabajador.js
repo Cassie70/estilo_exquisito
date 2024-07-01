@@ -76,7 +76,7 @@ export class TrabajadorModelo {
     static async update({ id, usuario, rol, password, nombre_completo, correo_electronico }) {
         const query = `
             UPDATE Trabajador 
-            SET usuario = ?, rol = ?, contraseña = ?, nombre_completo = ?, correo_electronico = ? 
+            SET usuario = ?, rol = ?, pass = ?, nombre_completo = ?, correo_electronico = ? 
             WHERE id_trabajador = ?
         `;
         try {

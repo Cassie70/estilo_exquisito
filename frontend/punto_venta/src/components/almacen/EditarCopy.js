@@ -1,3 +1,4 @@
+import axios from 'axios';
 import React, { useState } from 'react';
 
 export const EditarCopy = ({ producto, setEditar, setListadoState }) => {
@@ -41,21 +42,17 @@ export const EditarCopy = ({ producto, setEditar, setListadoState }) => {
     }
 
     try {
-        const response = await fetch(`http://localhost:1234/productos/${id}`, {
-            method: 'PATCH',
-            body: formData,
-        });
+      const response = await axios.patch(`http://localhost:1234/productos/${id}`, formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        }
+      });
 
-      if (!response.ok) {
-        throw new Error('Error al modificar el producto.');
-      }
-
-      const data = await response.json();
-      console.log('Producto Modificado:', data);
+      console.log('Producto Modificado:', response.data);
 
       // Actualizar el listado de productos en Almacen.js
       setListadoState(prevState =>
-        prevState.map(item => (item.id_producto === id ? data : item))
+        prevState.map(item => (item.id_producto === id ? response.data : item))
       );
 
       // Cerrar formulario de edición
@@ -77,15 +74,17 @@ export const EditarCopy = ({ producto, setEditar, setListadoState }) => {
           onChange={handleInputChange}
         />
 
-        <input type='text'
+        <input
+          type='text'
           name='nombre'
           className='titulo_editado'
           defaultValue={nombre}
           onChange={handleInputChange}
         />
 
-        <input type="number"
-          name='categoria'
+        <input
+          type="number"
+          name='id_categoria'
           className='categoria_editado'
           min='1'
           max='3'
@@ -93,7 +92,8 @@ export const EditarCopy = ({ producto, setEditar, setListadoState }) => {
           onChange={handleInputChange}
         />
 
-        <input type="number"
+        <input
+          type="number"
           name='precio'
           className='precio_editado'
           min='1'

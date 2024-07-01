@@ -1465,3 +1465,33 @@ input[type="button"] {
   color: #333;
   border-top: 1px solid #ddd;
 }
+
+.chart-container {
+  width: 30%;
+  margin: 0 auto; /* Centra el gráfico horizontalmente */
+  text-align: center; /* Centra el título del gráfico */
+}
+.chart-container2 {
+  padding-top: 90px;
+  width: 30%;
+  margin: 0 auto; /* Centra el gráfico horizontalmente */
+  text-align: center; /* Centra el título del gráfico */
+}
+
+.chart-title {
+  margin-bottom: 10px;
+  font-size: 18px;
+  font-weight: bold;
+}
+
+.charts-wrapper {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+}
+
+@media (max-width: 768px) {
+  .chart-container {
+    width: 80%; /* Ajusta el tamaño para pantallas más pequeñas */
+  }
+}

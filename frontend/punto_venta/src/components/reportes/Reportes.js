@@ -1,6 +1,10 @@
 // frontend/src/components/reportes/Reportes.js
 import React, { useState } from 'react';
 import axios from 'axios';
+import { Pie, Bar } from 'react-chartjs-2';
+import { Chart as ChartJS, ArcElement, BarElement, CategoryScale, LinearScale, Tooltip, Legend } from 'chart.js';
+
+ChartJS.register(ArcElement, BarElement, CategoryScale, LinearScale, Tooltip, Legend);
 
 const Reportes = () => {
   const [mes, setMes] = useState('');
@@ -8,6 +12,12 @@ const Reportes = () => {
   const [ventas, setVentas] = useState([]);
   const [totalVentas, setTotalVentas] = useState(0);
   const [mensaje, setMensaje] = useState('');
+  const [ecommerceVentas, setEcommerceVentas] = useState(0);
+  const [posVentas, setPosVentas] = useState(0);
+  const [ventasSemanales, setVentasSemanales] = useState({
+    pos: [0, 0, 0, 0],
+    ecommerce: [0, 0, 0, 0],
+  });
 
   const handleMesChange = (e) => {
     setMes(e.target.value);
@@ -31,16 +41,63 @@ const Reportes = () => {
         setMensaje('No existen registros para la fecha introducida.');
         setVentas([]);
         setTotalVentas(0);
+        setEcommerceVentas(0);
+        setPosVentas(0);
+        setVentasSemanales({ pos: [0, 0, 0, 0], ecommerce: [0, 0, 0, 0] });
       } else {
         setVentas(ventasData);
         const total = ventasData.reduce((acc, venta) => acc + parseFloat(venta.monto), 0);
         setTotalVentas(total);
         setMensaje('');
+
+        const posId = "56663a9b-3761-11ef-89fb-a2aad19a47c0";
+        const ventasPorSemana = {
+          pos: [0, 0, 0, 0],
+          ecommerce: [0, 0, 0, 0],
+        };
+
+        ventasData.forEach(venta => {
+          const semana = Math.floor(new Date(venta.fecha).getDate() / 7);
+          if (venta.id_usuario === posId) {
+            ventasPorSemana.pos[semana] += parseFloat(venta.monto);
+          } else {
+            ventasPorSemana.ecommerce[semana] += parseFloat(venta.monto);
+          }
+        });
+
+        const posVentasTotal = ventasPorSemana.pos.reduce((acc, val) => acc + val, 0);
+        const ecommerceVentasTotal = total - posVentasTotal;
+
+        setEcommerceVentas(ecommerceVentasTotal);
+        setPosVentas(posVentasTotal);
+        setVentasSemanales(ventasPorSemana);
       }
     } catch (error) {
       console.error('Error al generar el reporte:', error);
       setMensaje('Error al generar el reporte. Intente nuevamente.');
     }
+  };
+
+  const pieData = {
+    labels: ['E-commerce', 'Punto de Venta'],
+    datasets: [
+      {
+        data: [ecommerceVentas, posVentas],
+        backgroundColor: ['#FF6384', '#36A2EB'],
+        hoverBackgroundColor: ['#FF6384', '#36A2EB'],
+      },
+    ],
+  };
+
+  const barData = {
+    labels: ['Semana 1 PV', 'Semana 1 E-commerce', 'Semana 2 PV', 'Semana 2 E-commerce', 'Semana 3 PV', 'Semana 3 E-commerce', 'Semana 4 PV', 'Semana 4 E-commerce'],
+    datasets: [
+      {
+        label: 'Ventas',
+        data: [...ventasSemanales.pos, ...ventasSemanales.ecommerce],
+        backgroundColor: ['#36A2EB', '#FF6384'],
+      },
+    ],
   };
 
   return (
@@ -76,6 +133,19 @@ const Reportes = () => {
       </form>
 
       {mensaje && <p>{mensaje}</p>}
+
+      {ventas.length > 0 && (
+        <div className="charts-wrapper">
+          <div className="chart-container">
+            <div className="chart-title">Ventas totales del mes</div>
+            <Pie data={pieData} />
+          </div>
+          <div className="chart-container2">
+            <div className="chart-title">Ventas totales del mes por semana</div>
+            <Bar data={barData} />
+          </div>
+        </div>
+      )}
 
       {ventas.length > 0 && (
         <table className="tabla-reportes">
