@@ -11,13 +11,16 @@ export const Venta = () => {
     //Aqui se irán agregando los productos que se vayan seleccionando
     const [productos, setProductos]= useState([]);
 
+    console.log(productos)
+
+
     return (
         <div className='ventas'>
             <section className='section-escanear'>
                 <Escanear setProductoEsca={setProductoEsca}/>
             </section>
             <section className='section-producto-escaneado'>
-                <Producto productoEsca={productoEsca} setProductos={setProductos}/>
+                <Producto productoEsca={productoEsca} setProductos={setProductos} />
             </section>
             <section className='section-productos-escaneados'>
                 <ProductosEsca productos={productos} setProductos={setProductos}/>

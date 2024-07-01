@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-export const Escanear = ({ setProductoEsca }) => {
+export const Escanear = ({ setProductoEsca}) => {
   const [productId, setProductId] = useState('');
 
   const obtenerProducto = () => {
@@ -26,12 +26,35 @@ export const Escanear = ({ setProductoEsca }) => {
   };
 
   const handleInputChange = event => {
-    let datosIntroducidos = event.target.value
-    let letras = datosIntroducidos.match(/[XL|X|M|S|XS]+/g);
-    let numeros = datosIntroducidos.match(/\d+/g);
-  
-    console.log('Letras:', letras);
-    console.log('Números:', numeros);
+    // let datosIntroducidos = event.target.value
+    // let letras = datosIntroducidos.match(/[XL|X|M|S|XS]+/g);
+    // let numeros = datosIntroducidos.match(/\d+/g);
+    // let letrasS = letras ? letras[0] : null;
+
+    // if (letrasS) {
+    //   switch (letrasS) {
+    //     case "XS":
+    //       setIdDeTalla(1);
+    //       break;
+    //     case "S":
+    //       setIdDeTalla(2);
+    //       break;
+    //     case "M":
+    //       setIdDeTalla(3);
+    //       break;
+    //     case "L":
+    //       setIdDeTalla(4);
+    //       break;
+    //     case "XL":
+    //       setIdDeTalla(5);
+    //       break;
+    //     default:
+    //       break;
+    //   }
+    // }
+
+    // console.log('Letras:', letras);
+    // console.log('Números:', numeros);
     setProductId(event.target.value);
   };
 
