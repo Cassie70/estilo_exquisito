@@ -56,6 +56,7 @@ export const Buscador = ({listadoState,setListadoState, setAccion}) => {
                        id="search_field"
                        name="busqueda"
                        autoComplete='off'
+                       className='input-buscador'
                        value={busqueda}
                        onChange={buscarProducto}
                 />

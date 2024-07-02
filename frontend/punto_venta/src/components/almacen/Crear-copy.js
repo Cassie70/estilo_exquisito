@@ -11,12 +11,22 @@ export const CrearCopy = ({ setListadoState }) => {
     imagen: null,
   });
 
+  const [error, setError] = useState(null);
+
   const { nombre, descripcion, precio, id_categoria, imagen } = prendaState;
 
   const handleInputChange = (e) => {
     const { name, value, files } = e.target;
     if (name === 'imagen') {
-      setPrendaState({ ...prendaState, imagen: files[0] });
+      const file = files[0];
+      const validExtensions = ['image/png', 'image/jpg', 'image/jpeg'];
+      if (file && !validExtensions.includes(file.type)) {
+        setError('Solo se permiten archivos .png, .jpg, .jpeg');
+        setPrendaState({ ...prendaState, imagen: null });
+      } else {
+        setError(null);
+        setPrendaState({ ...prendaState, imagen: file });
+      }
     } else {
       setPrendaState({ ...prendaState, [name]: value });
     }
@@ -31,14 +41,18 @@ export const CrearCopy = ({ setListadoState }) => {
       return;
     }
 
+    // Validación de archivo
+    if (!imagen) {
+      alert('Por favor selecciona un archivo de imagen.');
+      return;
+    }
+
     const formData = new FormData();
     formData.append('nombre', nombre);
     formData.append('descripcion', descripcion);
     formData.append('precio', parseFloat(precio)); // Convertir precio a float
     formData.append('id_categoria', parseInt(id_categoria)); // Convertir id_categoria a int
-    if (imagen) {
-      formData.append('imagen', imagen); // Adjuntar imagen si existe
-    }
+    formData.append('imagen', imagen); // Adjuntar imagen
 
     try {
       const response = await fetch('http://localhost:1234/upload', {
@@ -73,6 +87,8 @@ export const CrearCopy = ({ setListadoState }) => {
   return (
     <div className="add">
       <h3 className="title">{tituloComponente}</h3>
+
+      {error && <p style={{ color: 'red' }}>{error}</p>}
 
       <form onSubmit={handleSubmit}>
         <input
@@ -122,7 +138,14 @@ export const CrearCopy = ({ setListadoState }) => {
           onChange={handleInputChange}
         />
 
-        <input type="submit" value="Guardar" />
+        <button
+          type="submit"
+          disabled={!!error || !imagen}
+          className="buttonEditarCopy"
+        >
+          Guardar
+        </button>
+
       </form>
     </div>
   );

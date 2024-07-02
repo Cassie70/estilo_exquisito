@@ -266,7 +266,7 @@ input[type="button"] {
   width: 80%;
   opacity: 4;
   outline: 0;
-  border-color: transparent;
+  border-color: #00000031;
 }
 
 /*ESTILOS PARA LA BARRA LATERAL*/
@@ -302,7 +302,7 @@ input[type="button"] {
   width: 80%;
   opacity: 4;
   outline: 0;
-  border-color: transparent;
+  border-color: #00000036;
 }
 /*----------------------VENTAS----------------------*/
 .ventas {
@@ -1675,7 +1675,14 @@ input[type="button"] {
   outline: none;
   transition: border-color 0.3s;
 }
-
+.input-buscador {
+  width: 25%;
+  padding: 10px;
+  border: 1px solid #000000;
+  border-radius: 5px;
+  outline: none;
+  transition: border-color 0.3s;
+}
 .input-entrega:focus {
   border-color: #333;
 }
@@ -1702,4 +1709,10 @@ input[type="button"] {
 }
 
 /* ---------------------- FIN Estilos pestaña de Entregas ----------------------- */
-
+/* Estilos para el botón deshabilitado */
+.buttonEditarCopy button:disabled {
+  background-color: #3030306c; /* Color de fondo */
+  color: #fff; /* Color del texto */
+  cursor: not-allowed; /* Cursor que indica que el botón está deshabilitado */
+  opacity: 0.7; /* Opacidad para indicar que está deshabilitado */
+}
