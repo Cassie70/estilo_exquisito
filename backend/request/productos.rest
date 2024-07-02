@@ -28,7 +28,7 @@ Content-Type: application/json
     "imagen_url": "uploads/imagen.jpg"
 }
 ### Eliminar un producto
-DELETE http://localhost:1234/productos/6
+DELETE http://localhost:1234/productos/25
 
 #########################################################
 ###############     FIN PRODUCTOS         ###############

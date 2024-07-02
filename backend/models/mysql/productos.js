@@ -8,7 +8,7 @@ estaticos (pueden ser llamados sin instanciar la clase) cada metodo realiza una 
 export class ProductosModelo {
     static async getAll() {
         try {
-            const [productos, tableInfo] = await connection.query('SELECT * FROM Productos')
+            const [productos, tableInfo] = await connection.query('SELECT * FROM Productos where activo = 1')
             
             return productos
         } catch (error) {
@@ -18,7 +18,7 @@ export class ProductosModelo {
 
     static async getById({id}) {
         try {
-            const [producto, tableInfo] = await connection.query('SELECT * FROM Productos WHERE id_producto = ?', [id])          
+            const [producto, tableInfo] = await connection.query('SELECT * FROM Productos WHERE id_producto = ? AND activo = 1', [id])          
             return producto
         } catch (error) {
             throw new Error('Error al obtener el producto por ID: ' + error.message);
@@ -34,6 +34,7 @@ export class ProductosModelo {
                 id_categoria,
                 imagen_url,
             } = input
+            
 
             const result= await connection.query('INSERT INTO Productos (nombre, descripcion, precio, id_categoria, imagen_url) VALUES (?, ?, ?, ?, ?)'
             , [nombre, descripcion, precio, id_categoria, imagen_url])
@@ -55,7 +56,7 @@ export class ProductosModelo {
             } = input;
     
             const result = await connection.query(
-                'UPDATE Productos SET nombre = ?, descripcion = ?, precio = ?, id_categoria= ?,imagen_url = ? WHERE id_producto = ?',
+                'UPDATE Productos SET nombre = ?, descripcion = ?, precio = ?, id_categoria= ?,imagen_url = ? WHERE id_producto = ? and activo = 1',
                 [nombre, descripcion, precio, id_categoria,imagen_url, id]
             );
     
@@ -67,7 +68,7 @@ export class ProductosModelo {
 
     static async delete({id}) {
         try {
-            const result = await connection.query('DELETE FROM Productos WHERE id_producto = ?', [id])
+            const result = await connection.query('UPDATE Productos SET activo = 0 WHERE id_producto = ?', [id])
             return result;
         } catch (error) {
             throw new Error('Error al eliminar el producto: ' + error.message);

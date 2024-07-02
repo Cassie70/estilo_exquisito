@@ -25,7 +25,7 @@ export class UsuariosModelo {
     static async getByEmail({ correo_electronico }) {
         try {
             const [usuario] = await connection.query(
-                'SELECT bin_to_uuid(id_usuario) id_usuario,nombre,apellido,correo_electronico,pass,telefono,activo FROM Usuarios WHERE correo_electronico = ?',
+                'SELECT bin_to_uuid(id_usuario) id_usuario,nombre,apellido,correo_electronico,pass,telefono,activo FROM Usuarios WHERE correo_electronico = ? and activo = 1',
                 [correo_electronico]
             );
             if (usuario.length === 0) 
@@ -41,7 +41,6 @@ export class UsuariosModelo {
 
    
        const activo = await connection.query('SELECT activo FROM Usuarios WHERE correo_electronico = ?', [correo_electronico]);
-        console.log(activo[0][0].activo);
         if (activo[0][0].activo === 0) 
         {
             const query = `UPDATE Usuarios SET activo = 1, nombre = ?, apellido = ?, pass = ?, telefono = ? WHERE correo_electronico = ?`;
@@ -94,7 +93,7 @@ export class UsuariosModelo {
         const updateQuery = `
             UPDATE Usuarios 
             SET ${updateFields.join(', ')} 
-            WHERE id_usuario = UUID_TO_BIN(?)
+            WHERE id_usuario = UUID_TO_BIN(?) AND activo = 1
         `;
 
         try {
