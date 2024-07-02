@@ -16,7 +16,7 @@ import  Tallas  from '../components/tallas/tallas'; // Importa el componente tal
 import  Ventas  from '../components/ventas/VentasD'; // Importa el componente ventas
 import  PedidoApartado  from '../components/pedido_apartado/pedido_apartado'; // Importa el componente pedido_apartado
 import  DetallePedidoApartado  from '../components/detalle_pedido_apartado/detalle_pedido_apartado'; // Importa el componente pedido_apartado
-import  Reportes  from '../components/reportes/reportes';
+import  Reportes  from '../components/reportes/Reportes';
 import  Verificador  from '../components/verificador/verificador';
 import  Entregas  from '../components/entregas/entregas';
 
