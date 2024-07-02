@@ -1,7 +1,8 @@
+//frontend/src/commponents/layouts/HeaderNav.js
 import React, { useState, useEffect, useRef } from 'react';
 import { NavLink } from 'react-router-dom';
 
-const HeaderNav = () => {
+const HeaderNav = ({ userType }) => {
   const [showDropdown, setShowDropdown] = useState(false);
   const dropdownRef = useRef(null);
 
@@ -24,6 +25,62 @@ const HeaderNav = () => {
     setShowDropdown(!showDropdown);
   };
 
+  // Función para renderizar el menú según el tipo de usuario
+  const renderMenu = () => {
+    switch (userType) {
+      case 'gerente':
+        return (
+          <ul>
+            <li><NavLink to="/inicio" activeclassname="active">Inicio</NavLink></li>
+            <li ref={dropdownRef} className="dropdown">
+              <a href="#" onClick={toggleDropdown} className="dropdown-toggle" role="button" aria-haspopup="true" aria-expanded={showDropdown ? "true" : "false"}>
+                Gerente <span className="caret"></span>
+              </a>
+              {showDropdown && (
+                <ul className="dropdown-menu">
+                  <li><NavLink to="/trabajadores" activeclassname="active">Trabajadores</NavLink></li>
+                  <li><NavLink to="/usuarios" activeclassname="active">Usuarios</NavLink></li>
+                  <li><NavLink to="/detalle-venta" activeclassname="active">Detalles de Ventas</NavLink></li>
+                  <li><NavLink to="/categorias" activeclassname="active">Categorias</NavLink></li>
+                  <li><NavLink to="/tallas" activeclassname="active">Tallas</NavLink></li>
+                  <li><NavLink to="/ventas" activeclassname="active">Ventas</NavLink></li>
+                  <li><NavLink to="/pedido-apartado" activeclassname="active">Pedidos Apartados</NavLink></li>
+                  <li><NavLink to="/detalle-pedido-apartado" activeclassname="active">Detalle pedidos Apartados</NavLink></li>
+                </ul>
+              )}
+            </li>
+            <li><NavLink to="/productos" activeclassname="active">Productos</NavLink></li>
+            <li><NavLink to="/inventario" activeclassname="active">Inventario</NavLink></li>
+            <li><NavLink to="/venta" activeclassname="active">Venta</NavLink></li>
+            <li><NavLink to="/verificador" activeclassname="active">Verificador de precios</NavLink></li>
+            <li><NavLink to="/entregas" activeclassname="active">Entregas</NavLink></li>
+            <li><NavLink to="/reportes" activeclassname="active">Reportes</NavLink></li>
+          </ul>
+        );
+      case 'vendedor':
+        return (
+          <ul>
+            <li><NavLink to="/venta" activeclassname="active">Venta</NavLink></li>
+            <li><NavLink to="/verificador" activeclassname="active">Verificador de precios</NavLink></li>
+            <li><NavLink to="/entregas" activeclassname="active">Entregas</NavLink></li>
+          </ul>
+        );
+      case 'almacenista':
+        return (
+          <ul>
+            <li><NavLink to="/productos" activeclassname="active">Productos</NavLink></li>
+            <li><NavLink to="/inventario" activeclassname="active">Inventario</NavLink></li>
+          </ul>
+        );
+      default:
+        return (
+          <ul>
+            <li><NavLink to="/inicio" activeclassname="active">Inicio</NavLink></li>
+          </ul>
+        );
+    }
+  };
+
   return (
     <div className="header-principal">
       <header className="header">
@@ -32,36 +89,10 @@ const HeaderNav = () => {
 
       {/* Barra de navegación */}
       <nav className="nav">
-        <ul>
-          <li><NavLink to="/inicio" activeClassName="active">Inicio</NavLink></li>
-          {/* Elemento CRUD con menú desplegable */}
-          <li ref={dropdownRef} className="dropdown">
-            <a href="#" onClick={toggleDropdown} className="dropdown-toggle" role="button" aria-haspopup="true" aria-expanded={showDropdown ? "true" : "false"}>
-              Gerente <span className="caret"></span>
-            </a>
-            {showDropdown && (
-              <ul className="dropdown-menu">
-                <li><NavLink to="/trabajadores" activeClassName="active">Trabajadores</NavLink></li>
-                <li><NavLink to="/usuarios" activeClassName="active">Usuarios</NavLink></li>
-                <li><NavLink to="/detalle-venta" activeClassName="active">Detalles de Ventas</NavLink></li>
-                <li><NavLink to="/categorias" activeClassName="active">Categorias</NavLink></li>
-                <li><NavLink to="/tallas" activeClassName="active">Tallas</NavLink></li>
-                <li><NavLink to="/ventas" activeClassName="active">Ventas</NavLink></li>
-                <li><NavLink to="/pedido-apartado" activeClassName="active">Pedidos Apartados</NavLink></li>
-                <li><NavLink to="/detalle-pedido-apartado" activeClassName="active">Detalle pedidos Apartados</NavLink></li>
-              </ul>
-            )}
-          </li>
-          <li><NavLink to="/productos" activeClassName="active">Productos</NavLink></li>
-          <li><NavLink to="/inventario" activeClassName="active">Inventario</NavLink></li>
-          <li><NavLink to="/venta" activeClassName="active">Venta</NavLink></li>
-          <li><NavLink to="/verificador" activeClassName="active">Verificador de precios</NavLink></li>
-          <li><NavLink to="/entregas" activeClassName="active">Entregas</NavLink></li>
-          <li><NavLink to="/reportes" activeClassName="active">Reportes</NavLink></li>
-        </ul>
+        {renderMenu()}
       </nav>
     </div>
   );
-}
+};
 
 export default HeaderNav;

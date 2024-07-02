@@ -2,8 +2,8 @@ POST http://localhost:1234/login-trabajador
 Content-Type: application/json
 
 {
-    "usuario": "cassie77",
-    "pass": "777"
+    "usuario": "ArySha",
+    "pass": "12345678"
 }
 ###
 POST http://localhost:1234/trabajadores

@@ -55,7 +55,7 @@ export const Editar = ({ producto, setEditar, setListadoState }) => {
                 />
 
 
-                <input type='submit' className='editar' value="Actualizar" />
+                <input type='submit' className='button-buscador' value="Actualizar" />
             </form>
         </div>
     )

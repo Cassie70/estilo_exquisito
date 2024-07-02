@@ -688,11 +688,12 @@ input[type="button"] {
 }
 
 .tabla-usuarios .accion-buttons button.eliminar {
-  background-color: #ff3b3b96; /* Rojo */
+  background-color: #dc3545; /* Rojo */
   color: #fff;
-  cursor: not-allowed; /* Muestra que el botón está deshabilitado */
 }
-
+.tabla-usuarios .accion-buttons button.eliminar:hover {
+  background-color: #c82333; /* Rojo más oscuro al pasar el mouse */
+}
 /* ---------------------- FIN Estilos pestaña de Usuarios ----------------------- */
 /* ---------------------- Estilos pestaña de Detalle de Venta ----------------------- */
 
