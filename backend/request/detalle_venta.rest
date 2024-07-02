@@ -39,7 +39,7 @@ Content-Type: application/json
 }
 
 ### Eliminar un detalle de venta
-DELETE http://localhost:1234/detalle-venta/5
+DELETE http://localhost:1234/detalle-venta/9
 #########################################################
 ###############  FIN DETALLE VENTA        ###############
 #########################################################

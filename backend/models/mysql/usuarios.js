@@ -3,7 +3,7 @@ import connection from "../../database.js";
 export class UsuariosModelo {
     static async getAll() {
         try {
-            const [usuarios] = await connection.query('SELECT bin_to_uuid(id_usuario) id_usuario,nombre,apellido,correo_electronico,pass,telefono FROM Usuarios');
+            const [usuarios] = await connection.query('SELECT bin_to_uuid(id_usuario) id_usuario,nombre,apellido,correo_electronico,pass,telefono FROM Usuarios WHERE activo = 1');
             return usuarios;
         } catch (error) {
             throw new Error('Error al obtener todos los usuarios: ' + error.message);
@@ -13,7 +13,7 @@ export class UsuariosModelo {
     static async getById({ id_usuario }) {
         try {
             const [usuario] = await connection.query(
-                'SELECT bin_to_uuid(id_usuario) id_usuario,nombre,apellido,correo_electronico,pass,telefono FROM Usuarios WHERE id_usuario = UUID_TO_BIN(?)',
+                'SELECT bin_to_uuid(id_usuario) id_usuario,nombre,apellido,correo_electronico,pass,telefono FROM Usuarios WHERE id_usuario = UUID_TO_BIN(?) and activo = 1',
                 [id_usuario]
             );
             return usuario;
@@ -25,7 +25,7 @@ export class UsuariosModelo {
     static async getByEmail({ correo_electronico }) {
         try {
             const [usuario] = await connection.query(
-                'SELECT bin_to_uuid(id_usuario) id_usuario,nombre,apellido,correo_electronico,pass,telefono FROM Usuarios WHERE correo_electronico = ?',
+                'SELECT bin_to_uuid(id_usuario) id_usuario,nombre,apellido,correo_electronico,pass,telefono,activo FROM Usuarios WHERE correo_electronico = ? and activo = 1',
                 [correo_electronico]
             );
             if (usuario.length === 0) 
@@ -38,6 +38,19 @@ export class UsuariosModelo {
     }
 
     static async create({ nombre, apellido, correo_electronico, pass, telefono }) {
+
+   
+       const activo = await connection.query('SELECT activo FROM Usuarios WHERE correo_electronico = ?', [correo_electronico]);
+        if (activo[0][0].activo === 0) 
+        {
+            const query = `UPDATE Usuarios SET activo = 1, nombre = ?, apellido = ?, pass = ?, telefono = ? WHERE correo_electronico = ?`;
+            try {
+                const [result] = await connection.query(query, [nombre, apellido, pass, telefono, correo_electronico]);
+                throw new Error('Usuario existente, activado correctamente');
+            } catch (error) {
+                throw new Error('Error al activar el usuario: ' + error.message);
+            }
+        }
         const query = `
             INSERT INTO Usuarios (nombre, apellido, correo_electronico, pass, telefono) 
             VALUES (?, ?, ?, ?, ?)
@@ -80,7 +93,7 @@ export class UsuariosModelo {
         const updateQuery = `
             UPDATE Usuarios 
             SET ${updateFields.join(', ')} 
-            WHERE id_usuario = UUID_TO_BIN(?)
+            WHERE id_usuario = UUID_TO_BIN(?) AND activo = 1
         `;
 
         try {
@@ -91,11 +104,11 @@ export class UsuariosModelo {
         }
     }
 
-    /*
+    
     static async delete({ id_usuario }) {
         try {
             const [result] = await connection.query(
-                'DELETE FROM Usuarios WHERE id_usuario = UUID_TO_BIN(?)',
+                'UPDATE Usuarios SET activo=0 WHERE id_usuario = UUID_TO_BIN(?)',
                 [id_usuario]
             );
             return result;
@@ -103,6 +116,6 @@ export class UsuariosModelo {
             throw new Error('Error al eliminar el usuario: ' + error.message);
         }
     }
-    */
+    
 }
 
