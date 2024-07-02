@@ -30,7 +30,7 @@ export class UsuariosController {
         const { correo_electronico } = req.params;
         try {
             const usuario = await this.usuariosModelo.getByEmail({ correo_electronico });
-            if (usuario.length > 0) return res.json(usuario);
+            if (usuario) return res.json(usuario);
             res.status(404).json({ error: 'Usuario no encontrado' });
         } catch (error) {
             res.status(500).json({ error: error.message });
@@ -97,7 +97,7 @@ export class UsuariosController {
         }
     }
 
-    /*
+    
     delete = async (req, res) => {
         const { id } = req.params;
         try {
@@ -107,6 +107,6 @@ export class UsuariosController {
             res.status(500).json({ error: error.message });
         }
     }
-    */
+    
 }
 

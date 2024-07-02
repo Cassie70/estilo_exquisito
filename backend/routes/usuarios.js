@@ -21,7 +21,7 @@ export const createUsuariosRouter = ({ usuariosModelo }) => {
     usuariosRouter.patch('/:id/telefono', usuariosController.update);
     */
 
-    //usuariosRouter.delete('/:id', usuariosController.delete);
+    usuariosRouter.delete('/:id', usuariosController.delete);
 
     return usuariosRouter;
 };

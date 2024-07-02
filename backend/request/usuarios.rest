@@ -18,7 +18,7 @@ Content-Type: application/json
 {
     "nombre": "Connor",
     "apellido": "Mendoza",
-    "correo_electronico": "soyconnor@example.com",
+    "correo_electronico": "luis.fernandez@example.com",
     "pass": "Tamales18",
     "telefono": "5613773057"
 }
@@ -36,7 +36,7 @@ Content-Type: application/json
 }
 
 ### Eliminar un usuario 
-###DELETE http://localhost:1234/usuarios/a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a11
+DELETE http://localhost:1234/usuarios/e4eebc99-9c0b-4ef8-bb6d-6bb9bd380e55
 #########################################################
 ###############      FIN    USUARIOS      ###############
 #########################################################
