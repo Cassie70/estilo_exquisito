@@ -18,6 +18,7 @@ import  PedidoApartado  from '../components/pedido_apartado/pedido_apartado'; //
 import  DetallePedidoApartado  from '../components/detalle_pedido_apartado/detalle_pedido_apartado'; // Importa el componente pedido_apartado
 import  Reportes  from '../components/reportes/reportes';
 import  Verificador  from '../components/verificador/verificador';
+import  Entregas  from '../components/entregas/entregas';
 
 
 export const MisRutas = () => {
@@ -43,6 +44,7 @@ export const MisRutas = () => {
         <Route path="/pedido-apartado" element={<PedidoApartado />} />
         <Route path="/detalle-pedido-apartado" element={<DetallePedidoApartado />} />
         <Route path="/verificador" element={<Verificador />} />
+        <Route path="/entregas" element={<Entregas />} />
       </Routes>
     </section>
     {/*Footer */}

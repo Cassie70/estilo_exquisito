@@ -1644,3 +1644,62 @@ input[type="button"] {
 }
 
 /* ---------------------- FIN Estilos para el componente Escanear ----------------------- */
+/* ---------------------- Estilos pestaña de Entregas ----------------------- */
+
+.entregas {
+  width: 80%;
+  margin: 20px auto;
+  padding: 20px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.entregas h2 {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.entregas-id {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+}
+
+.input-entrega {
+  width: 25%;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  outline: none;
+  transition: border-color 0.3s;
+}
+
+.input-entrega:focus {
+  border-color: #333;
+}
+
+.boton-entrega {
+  padding: 10px 20px;
+  background-color: #28a745;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.boton-entrega:hover {
+  background-color: #218838;
+}
+
+.mensaje-entrega {
+  margin-top: 20px;
+  text-align: center;
+  font-size: 1.2em;
+  color: #333;
+}
+
+/* ---------------------- FIN Estilos pestaña de Entregas ----------------------- */
+

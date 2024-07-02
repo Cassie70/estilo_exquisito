@@ -83,7 +83,7 @@ const VentasD = () => {
       id_usuario: venta.id_usuario,
       monto: venta.monto.toString(),
       id_estado: venta.id_estado.toString(),
-      fecha: formatDateTimeForInput(venta.fecha) // Convertir fecha al formato del input datetime-local
+      fecha: formatDateTimeForInput(venta.fecha)
     });
     setEditing(true);
     setEditId(venta.id_venta);
@@ -113,7 +113,6 @@ const VentasD = () => {
     clearForm();
   };
 
-  // Convierte la fecha al formato YYYY-MM-DDTHH:mm para el input datetime-local
   const formatDateTimeForInput = (dateTime) => {
     const date = new Date(dateTime);
     const year = date.getFullYear();
@@ -124,7 +123,6 @@ const VentasD = () => {
     return `${year}-${month}-${day}T${hours}:${minutes}`;
   };
 
-  // Convierte la fecha del input datetime-local al formato YYYY-MM-DD HH:MM:SS para el backend
   const formatDateTimeForBackend = (dateTime) => {
     const date = new Date(dateTime);
     const year = date.getFullYear();
@@ -164,9 +162,10 @@ const VentasD = () => {
             required
           >
             <option value="">Seleccione un estado</option>
-            <option value="1">Completado</option>
-            <option value="2">Pendiente</option>
-            <option value="3">Cancelado</option>
+            <option value="1">Apartado</option>
+            <option value="2">Cancelado</option>
+            <option value="3">Completado</option>
+            <option value="4">Pendiente</option>
           </select>
           <input
             type="datetime-local"
@@ -208,7 +207,15 @@ const VentasD = () => {
               <td>{venta.id_venta}</td>
               <td>{venta.id_usuario}</td>
               <td>{venta.monto}</td>
-              <td>{venta.id_estado === 1 ? 'Completado' : venta.id_estado === 2 ? 'Pendiente' : 'Cancelado'}</td>
+              <td>
+                {venta.id_estado === 1
+                  ? 'Apartado'
+                  : venta.id_estado === 2
+                  ? 'Cancelado'
+                  : venta.id_estado === 3
+                  ? 'Completado'
+                  : 'Pendiente'}
+              </td>
               <td>{venta.fecha}</td>
               <td className="accion-buttons">
                 <button className="editar" onClick={() => handleEdit(venta)}>Editar</button>
@@ -222,4 +229,4 @@ const VentasD = () => {
   );
 };
 
-export default VentasD
+export default VentasD;

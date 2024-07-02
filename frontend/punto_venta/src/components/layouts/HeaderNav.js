@@ -56,6 +56,7 @@ const HeaderNav = () => {
           <li><NavLink to="/inventario" activeClassName="active">Inventario</NavLink></li>
           <li><NavLink to="/venta" activeClassName="active">Venta</NavLink></li>
           <li><NavLink to="/verificador" activeClassName="active">Verificador de precios</NavLink></li>
+          <li><NavLink to="/entregas" activeClassName="active">Entregas</NavLink></li>
           <li><NavLink to="/reportes" activeClassName="active">Reportes</NavLink></li>
         </ul>
       </nav>

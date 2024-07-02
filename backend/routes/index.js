@@ -13,3 +13,4 @@ export { createCategoriasRouter } from './categorias.js';
 export { createLoginUsuarioRouter } from './login_usuario.js';
 export { createLoginTrabajadorRouter } from './login_trabajador.js';
 export { createSimuladorRouter } from './simulador.js';
+export { createEntregasRouter } from './entregas.js';
