@@ -64,7 +64,7 @@ export const Buscador = ({ listadoState, setListadoState, setAccion }) => {
                     autoComplete='off'
                     onChange={buscarProducto}
                 />
-                <button type="button" onClick={buscarProducto}>Buscar</button>
+                <button className="button-buscador" type="button" onClick={buscarProducto}>Buscar</button>
             </form>
         </div>
     );

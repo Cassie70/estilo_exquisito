@@ -189,7 +189,7 @@ nav .dropdown-menu {
   padding-left: 25px;
   padding-right: 25px;
 }
-
+/*
 .layout button,
 input[type="submit"],
 input[type="button"] {
@@ -206,7 +206,7 @@ input[type="button"] {
   font-weight: 500;
   cursor: pointer;
   transition: all 300ms;
-}
+}*/
 
 .layout .info {
   width: 5px;
@@ -1710,9 +1710,70 @@ input[type="button"] {
 
 /* ---------------------- FIN Estilos pestaña de Entregas ----------------------- */
 /* Estilos para el botón deshabilitado */
-.buttonEditarCopy button:disabled {
-  background-color: #3030306c; /* Color de fondo */
+.buttonEditarCopy:disabled {
+  background-color: #303030c0; /* Color de fondo */
   color: #fff; /* Color del texto */
   cursor: not-allowed; /* Cursor que indica que el botón está deshabilitado */
   opacity: 0.7; /* Opacidad para indicar que está deshabilitado */
+}
+.buttonEditarCopy {
+  width: 100px;
+  background: black;
+  color: white;
+  border: 0;
+  outline: 0;
+  padding: 15px;
+  border-radius: 3px;
+  margin-top: 15px;
+  text-transform: capitalize;
+  font-size: 16px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 300ms;
+}
+.buttonEditarCopy:hover {
+  background-color: #000000c0; /* Color de fondo */
+  color: #fff; /* Color del texto */
+}
+
+.button-buscador{
+  width: 100px;
+  background: black;
+  color: white;
+  border: 0;
+  outline: 0;
+  padding: 15px;
+  border-radius: 3px;
+  margin-top: 15px;
+  margin-right: 2px;
+  text-transform: capitalize;
+  font-size: 16px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 300ms;
+}
+.button-buscador:hover {
+  background-color: #000000c0; /* Color de fondo */
+  color: #fff; /* Color del texto */
+}
+
+.button-borrador{
+  width: 100px;
+  background: rgb(151, 16, 16);
+  color: white;
+  border: 0;
+  outline: 0;
+  padding: 15px;
+  border-radius: 3px;
+  margin-top: 15px;
+  margin-left: 5px;
+  text-transform: capitalize;
+  font-size: 16px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 300ms;
+}
+.button-borrador:hover {
+  background-color: #7a1313c9; /* Color de fondo */
+  color: #fff; /* Color del texto */
 }

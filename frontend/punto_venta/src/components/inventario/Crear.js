@@ -113,6 +113,7 @@ export const Crear = (setListadoState) => {
 
         <input type="submit"
           value="Guardar"
+          className='button-buscador'
         />
 
       </form>

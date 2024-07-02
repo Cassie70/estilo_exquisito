@@ -61,7 +61,7 @@ export const Buscador = ({listadoState,setListadoState, setAccion}) => {
                        onChange={buscarProducto}
                 />
 
-                <button>Buscar</button>
+                <button className='button-buscador'>Buscar</button>
 
             </form>
         </div>

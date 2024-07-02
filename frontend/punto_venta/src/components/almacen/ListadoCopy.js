@@ -35,8 +35,8 @@ export const ListadoCopy = ({ listadoState, setListadoState }) => {
                             <img src={`http://localhost:1234/${producto.imagen_url}`} alt={producto.nombre} />
                             <h3 className="title">{producto.nombre}</h3>
                             <h2 className='precio'>${producto.precio}</h2>
-                            <button className="edit" onClick={() => { setEditar(producto.id_producto) }}>Editar</button>
-                            <button className="delete" onClick={() => { borrarProducto(producto.id_producto) }}>Borrar</button>
+                            <button className="button-buscador" onClick={() => { setEditar(producto.id_producto) }}>Editar</button>
+                            <button className="button-borrador" onClick={() => { borrarProducto(producto.id_producto) }}>Borrar</button>
 
                             {/*Aparece formulario de editar*/}
                             {editar === producto.id_producto && (

@@ -95,8 +95,8 @@ export const Listado = ({ listadoState, setListadoState }) => {
                             <h3 className="title">ID del Producto: {producto.id_producto}</h3>
                             <h2 className='precio'>Talla: {obtenerTalla(producto.id_talla)}</h2>
 
-                            <button className="edit" onClick={() => setEditar(producto.id_producto)}>Editar</button>
-                            <button className="delete" onClick={() => borrarProducto(producto.id_producto, producto.id_talla)}>Borrar</button>
+                            <button className="button-buscador" onClick={() => setEditar(producto.id_producto)}>Editar</button>
+                            <button className="button-borrador" onClick={() => borrarProducto(producto.id_producto, producto.id_talla)}>Borrar</button>
 
                             {/* Aparece formulario de editar */}
                             {editar === producto.id_producto && (

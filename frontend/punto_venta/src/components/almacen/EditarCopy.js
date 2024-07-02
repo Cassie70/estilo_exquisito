@@ -2,7 +2,7 @@ import axios from 'axios';
 import React, { useState } from 'react';
 
 export const EditarCopy = ({ producto, setEditar, setListadoState }) => {
-  const titulo_componente = "Editar Película";
+  const titulo_componente = "Editar Prenda";
 
   const [productoState, setProductoState] = useState({
     nombre: producto.nombre,
@@ -11,13 +11,22 @@ export const EditarCopy = ({ producto, setEditar, setListadoState }) => {
     id_categoria: producto.id_categoria,
     imagen: null,
   });
+  const [error, setError] = useState(null);
 
   const { nombre, precio, descripcion, id_categoria, imagen } = productoState;
 
   const handleInputChange = (e) => {
     const { name, value, files } = e.target;
     if (name === 'imagen') {
-      setProductoState({ ...productoState, imagen: files[0] });
+      const file = files[0];
+      const validExtensions = ['image/png', 'image/jpg', 'image/jpeg'];
+      if (file && !validExtensions.includes(file.type)) {
+        setError('Solo se permiten archivos .png, .jpg, .jpeg');
+        setProductoState({ ...productoState, imagen: null });
+      } else {
+        setError(null);
+        setProductoState({ ...productoState, imagen: file });
+      }
     } else {
       setProductoState({ ...productoState, [name]: value });
     }
@@ -67,10 +76,11 @@ export const EditarCopy = ({ producto, setEditar, setListadoState }) => {
       <h3 className='title'>{titulo_componente}</h3>
       <form onSubmit={e => guardarEdicion(e, producto.id_producto)}>
 
-        <input
+      <input
           type="file"
+          id="imagen"
           name="imagen"
-          accept="image/*"
+          accept=".png,.jpg,.jpeg"
           onChange={handleInputChange}
         />
 
@@ -109,7 +119,7 @@ export const EditarCopy = ({ producto, setEditar, setListadoState }) => {
           onChange={handleInputChange}
         />
 
-        <input type='submit' className='editar' value="Actualizar" />
+        <input disabled={!!error} type='submit' className='buttonEditarCopy' value="Actualizar" />
       </form>
     </div>
   );

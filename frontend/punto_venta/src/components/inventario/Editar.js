@@ -1,7 +1,7 @@
 import React from 'react'
 
 export const Editar = ({ producto, setEditar, setListadoState }) => {
-    const titulo_componente = "Editar Pelicula"
+    const titulo_componente = "Editar Stock"
 
 
     const guardarEdicion = (e, id) => {
