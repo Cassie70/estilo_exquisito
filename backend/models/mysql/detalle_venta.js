@@ -26,7 +26,7 @@ export class DetalleVentaModelo {
             }
 
             // Si es un apartado y han pasado más de 24 horas, cancelar la venta
-            if (venta.id_estado === 1 && venta.horas_transcurridas > 24) { // 1: apartada
+            if (venta.id_estado === 1 && venta.horas_transcurridas > 48) { // 1: apartada
                 await connection.query(
                     `UPDATE Ventas SET id_estado = 3 WHERE BIN_TO_UUID(id_venta) = ?`, // 3: cancelada
                     [id_venta]
@@ -57,7 +57,7 @@ export class DetalleVentaModelo {
                  JOIN 
                     Tallas t ON dv.id_talla = t.id_talla
                  JOIN 
-                    EstadoVentas ev ON v.id_estado = ev.id_estado`,
+                    estados ev ON v.id_estado = ev.id_estado`,
                 [id_venta]
             );
 

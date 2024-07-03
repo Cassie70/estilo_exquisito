@@ -44,12 +44,12 @@ export default function Header({ isFixed, className }: HeaderProps) {
   const [menuOpen, setMenuOpen] = useState(false);
   const toggleMenu = () => setMenuOpen(!menuOpen);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  
   useEffect(() => {
     const correo_electronico = Cookies.get("correo_electronico");
-    const id_usuario = Cookies.get("id_usuario");
-    const token = Cookies.get("token");
+    const usuario = Cookies.get("id_usuario");
 
-    if (correo_electronico && id_usuario && token) {
+    if (correo_electronico && usuario ) {
       setIsLoggedIn(true);
     }
   }, []);

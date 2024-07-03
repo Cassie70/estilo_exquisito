@@ -15,13 +15,17 @@ import FlexBox from "@component/FlexBox";
 import TextField from "@component/text-field";
 import { Button, IconButton } from "@component/buttons";
 import { H3, H5, H6, SemiSpan } from "@component/Typography";
+import { useAppContext } from "@context/app-context";
+import Cookies from "js-cookie";
 // STYLED COMPONENT
 import { StyledRoot } from "./styles";
+import { Cookie } from "next/font/google";
 
 // Instancia de SweetAlert2 para React
 const MySwal = withReactContent(Swal);
 
 export default function Signup() {
+  const { state, dispatch } = useAppContext();
   const { passwordVisibility, togglePasswordVisibility } = useVisibility();
 
   const initialValues = {
@@ -62,15 +66,26 @@ export default function Signup() {
       // Llamar a la API para crear el usuario
       let response = await api.createUser(values);
       console.log("User Created", response);
+      //guardar en cookies
+      
+      sessionStorage.setItem("user", JSON.stringify(response));
+
+      // Guardar en cookies
+      Cookies.set("user", JSON.stringify(response), { expires: 1 });
+
+      dispatch({ type: "SET_USER", payload: response });
   
       // Validar que el usuario fue creado exitosamente
-      if (response.affectedRows === 1) {
+      if (response.id_usuario) {
         // Mostrar mensaje de éxito
         MySwal.fire({
           title: "Cuenta Creada",
           text: "¡Tu cuenta ha sido creada exitosamente!",
           icon: "success",
           confirmButtonText: "OK"
+        }).then(() => {
+          // Redirigir al usuario a la página de inicio
+          window.location.href = "/";
         });
       } else {
         // Mostrar mensaje de error

@@ -9,6 +9,9 @@ import MenuItem from "../MenuItem";
 import styled from "styled-components";
 import { getTheme } from "@utils/utils";
 import Typography, { Span } from "../Typography";
+import Cookies from 'js-cookie';
+import { useAppContext } from "@context/app-context";
+
 const StyledUserMenu = styled(Box)`
   position: absolute;
   top: 50px;
@@ -31,13 +34,33 @@ type UserMenuProps = { menuOpen: boolean };
 
 const userNavs = [
   { title: "Ver Perfil", url: "/profile" },
-  { title: "Cerrar Sesión", url: "/logout" },
+  { title: "Cerrar Sesión", url: "#" },
 ];
 
 export default function UserMenu({ menuOpen }: UserMenuProps) {
+  const { dispatch } = useAppContext();
+
+  const handleLogout = () => {
+    // Eliminar cookies
+    Cookies.remove("token");
+    Cookies.remove("correo_electronico");
+    Cookies.remove("id_usuario");
+    Cookies.remove("nombre");
+    Cookies.remove("telefono");
+
+    // Limpiar el estado global
+    dispatch({ type: "LOGOUT_USER" });
+
+    // Limpiar sessionStorage
+    sessionStorage.clear();
+
+    // Redirigir al usuario a la página de inicio
+    window.location.href = "/";
+  };
+
   const renderMenuItems = (list: { title: string; url: string }[]) => {
     return list.map((item) => (
-      <NavLink href={item.url} key={item.title}>
+      <NavLink href={item.url} key={item.title} onClick={item.title === "Cerrar Sesión" ? handleLogout : undefined}>
         <MenuItem>
           <Span className="nav-link">{item.title}</Span>
         </MenuItem>

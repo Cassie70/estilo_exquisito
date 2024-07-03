@@ -38,31 +38,32 @@ export class UsuariosController {
     }
 
     create = async (req, res) => {
-        const result = SchemaUsuarios.validarCrearUsuario(req.body);
-        if (!result.success) return res.status(400).json(result);
+    const result = SchemaUsuarios.validarCrearUsuario(req.body);
+    if (!result.success) return res.status(400).json(result);
 
-        const { nombre, apellido, correo_electronico, pass, telefono } = req.body;
+    const { nombre, apellido, correo_electronico, pass, telefono } = req.body;
 
-        try {
-            // Encriptar la contraseña antes de almacenarla
-            const hashedPassword = await bcrypt.hash(pass, 10);
+    try {
+        // Encriptar la contraseña antes de almacenarla
+        const hashedPassword = await bcrypt.hash(pass, 10);
 
-            const nuevoUsuario = await this.usuariosModelo.create({ 
-                nombre, 
-                apellido, 
-                correo_electronico, 
-                pass: hashedPassword, 
-                telefono 
-            });
+        const nuevoUsuario = await this.usuariosModelo.create({ 
+            nombre, 
+            apellido, 
+            correo_electronico, 
+            pass: hashedPassword, 
+            telefono 
+        });
 
-            // No devolver la contraseña en la respuesta
-            delete nuevoUsuario.pass;
+        // No devolver la contraseña en la respuesta
+        const { id_usuario } = nuevoUsuario;
+        delete nuevoUsuario.pass;
 
-            res.status(201).json(nuevoUsuario);
-        } catch (error) {
-            res.status(500).json({ error: error.message });
-        }
+        res.status(201).json({ id_usuario, nombre, apellido, correo_electronico, telefono, message: 'Usuario creado exitosamente' });
+    } catch (error) {
+        res.status(500).json({ error: error.message });
     }
+}
 
     update = async (req, res) => {
         const { id } = req.params;

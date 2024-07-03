@@ -38,26 +38,26 @@ export class UsuariosModelo {
     }
 
     static async create({ nombre, apellido, correo_electronico, pass, telefono }) {
-
-   
-       const activo = await connection.query('SELECT activo FROM Usuarios WHERE correo_electronico = ?', [correo_electronico]);
-        if (activo[0].length > 0 && activo[0][0].activo === 0) 
-        {
-            const query = `UPDATE Usuarios SET activo = 1, nombre = ?, apellido = ?, pass = ?, telefono = ? WHERE correo_electronico = ?`;
-            try {
-                const [result] = await connection.query(query, [nombre, apellido, pass, telefono, correo_electronico]);
-                throw new Error('Usuario existente, activado correctamente');
-            } catch (error) {
-                throw new Error('Error al activar el usuario: ' + error.message);
-            }
-        }
-        const query = `
-            INSERT INTO Usuarios (nombre, apellido, correo_electronico, pass, telefono) 
-            VALUES (?, ?, ?, ?, ?)
-        `;
         try {
+            // Verificar si el usuario ya existe y está inactivo
+            const [activo] = await connection.query('SELECT id_usuario, activo FROM Usuarios WHERE correo_electronico = ?', [correo_electronico]);
+            if (activo.length > 0 && activo[0].activo === 0) {
+                // Si el usuario existe pero está inactivo, actualiza sus datos y actívalo
+                const query = `UPDATE Usuarios SET activo = 1, nombre = ?, apellido = ?, pass = ?, telefono = ? WHERE correo_electronico = ?`;
+                await connection.query(query, [nombre, apellido, pass, telefono, correo_electronico]);
+                return { id_usuario: activo[0].id_usuario, message: 'Usuario existente, activado correctamente' };
+            }
+    
+            // Insertar nuevo usuario
+            const query = `
+                INSERT INTO Usuarios (nombre, apellido, correo_electronico, pass, telefono) 
+                VALUES (?, ?, ?, ?, ?)
+            `;
             const [result] = await connection.query(query, [nombre, apellido, correo_electronico, pass, telefono]);
-            return result;
+    
+            // Recuperar el id_usuario recién insertado
+            const [nuevoUsuario] = await connection.query('SELECT bin_to_uuid(id_usuario) AS id_usuario FROM Usuarios WHERE correo_electronico = ?', [correo_electronico]);
+            return nuevoUsuario[0];
         } catch (error) {
             throw new Error('Error al crear el usuario: ' + error.message);
         }
