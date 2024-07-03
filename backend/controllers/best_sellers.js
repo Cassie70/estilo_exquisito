@@ -6,8 +6,9 @@ export class BestSellersController{
     }
 
     bestSellers = async (req, res) => {
+        const {mes, anio} = req.params;
         try {
-            const bestSellers = await this.detalleVentaModelo.bestSellers();
+            const bestSellers = await this.detalleVentaModelo.bestSellers({mes, anio});
             res.json(bestSellers);
         } catch (error) {
             console.log(error)

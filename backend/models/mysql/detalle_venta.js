@@ -196,16 +196,28 @@ export class DetalleVentaModelo {
         }
     }
 
-    static async bestSellers(){
-        try{
-            const [bestSellers] = await connection.query(`SELECT nombre, SUM(cantidad) total_vendido, nombre_talla, imagen_url
-                FROM Detalle_venta
-                JOIN Tallas ON Detalle_venta.id_talla = Tallas.id_talla
-                JOIN Productos ON Productos.id_producto = Detalle_venta.id_producto
-                GROUP BY Productos.id_producto, nombre, nombre_talla
-                ORDER BY total_vendido DESC
-                LIMIT 5;`
-        );
+    static async bestSellers({ mes, anio }) {
+        try {
+            const [bestSellers] = await connection.query(
+                `SELECT 
+                    Productos.nombre, 
+                    SUM(Detalle_venta.cantidad) AS total_vendido, 
+                    Tallas.nombre_talla, 
+                    Productos.imagen_url
+                 FROM 
+                    Detalle_venta
+                    JOIN Tallas ON Detalle_venta.id_talla = Tallas.id_talla
+                    JOIN Productos ON Productos.id_producto = Detalle_venta.id_producto
+                    JOIN Ventas ON Detalle_venta.id_venta = Ventas.id_venta
+                 WHERE 
+                    YEAR(Ventas.fecha) = ? AND MONTH(Ventas.fecha) = ?
+                 GROUP BY 
+                    Productos.id_producto, Productos.nombre, Tallas.nombre_talla
+                 ORDER BY 
+                    total_vendido DESC
+                 LIMIT 5;`,
+                [anio, mes]
+            );
             return bestSellers;
         } catch (error) {
             throw new Error('Error al obtener los productos más vendidos: ' + error.message);

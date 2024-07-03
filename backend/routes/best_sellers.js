@@ -6,7 +6,7 @@ export const createBestSellersRouter = ({detalleVentaModelo}) => {
 
     const bestSellersController = new BestSellersController({detalleVentaModelo})
 
-    bestSellersRouter.get('/', bestSellersController.bestSellers)
+    bestSellersRouter.get('/:mes/:anio', bestSellersController.bestSellers)
 
     return bestSellersRouter;
 }
