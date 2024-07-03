@@ -38,7 +38,7 @@ export const Producto = ({ productoEsca, setProductos, idDeTall }) => {
             <h3>{producto.nombre}</h3>
             <p>${producto.precio}</p>
             <label htmlFor="cantidad">TALLA:</label>
-            <select id="cantidad" value={cantidad} onChange={(e) => setCantidad(e.target.value)}>
+            <select id="cantidad" className="talla-venta" value={cantidad} onChange={(e) => setCantidad(e.target.value)}>
               <option value="XS">XS</option>
               <option value="S">S</option>
               <option value="M">M</option>
@@ -47,6 +47,7 @@ export const Producto = ({ productoEsca, setProductos, idDeTall }) => {
             </select>
             <label htmlFor="cantidad">Cantidad:</label>
             <input
+              className='cantidad-venta'
               type="number"
               id="cantidad"
               placeholder="Ingrese la cantidad"
