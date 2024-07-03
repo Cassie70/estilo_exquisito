@@ -98,7 +98,7 @@ img {
 nav .dropdown-menu {
   display: flex;
   flex-direction: column;
-  height: 600px;
+  height: 450px;
   position: absolute;
   top: 117%;
   left: -12px;
