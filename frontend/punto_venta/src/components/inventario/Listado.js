@@ -1,11 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Editar } from './Editar';
-<<<<<<< Updated upstream
 import { v4 as uuidv4 } from 'uuid';
-=======
-import '../../css/almacen.css'; // Asegúrate de importar tu archivo de estilos
->>>>>>> Stashed changes
-
+import '../../css/almacen.css';
 export const Listado = ({ listadoState, setListadoState }) => {
     const [editar, setEditar] = useState(0);
     const [productos, setProductos] = useState([]);
@@ -105,11 +101,7 @@ export const Listado = ({ listadoState, setListadoState }) => {
                     if (!productoInfo) return null; // Si no se encuentra el producto, no mostrar
 
                     return (
-<<<<<<< Updated upstream
-                        <article key={uuidv4()} className="peli-item shadow-md">
-=======
-                        <article key={producto.id_producto} className={`peli-item shadow-md ${getStockClass(producto.stock)}`}>
->>>>>>> Stashed changes
+                        <article key={uuidv4()} className={`peli-item shadow-md ${getStockClass(producto.stock)}`}>
                             <img src={`http://localhost:1234/${productoInfo.imagen_url}`} alt={productoInfo.nombre} />
                             <h3 className="title">ID del Producto: {producto.id_producto}</h3>
                             <h2 className='precio'>{obtenerTalla(producto.id_talla)}</h2>
