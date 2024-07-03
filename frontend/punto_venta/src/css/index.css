@@ -1020,21 +1020,23 @@ input[type="button"] {
 }
 
 .tabla-tallas .accion-buttons button.editar {
-  background-color: #ffc107;
+  background-color: #ffc1079d;
   color: #333;
+  cursor: not-allowed;
 }
 
 .tabla-tallas .accion-buttons button.editar:hover {
-  background-color: #ffca2c;
+  background-color: #ffc1079d;
 }
 
 .tabla-tallas .accion-buttons button.eliminar {
-  background-color: #dc3545;
+  background-color: #ff3b3b96; /* Rojo */
   color: #fff;
+  cursor: not-allowed;
 }
 
 .tabla-tallas .accion-buttons button.eliminar:hover {
-  background-color: #c82333;
+  background-color: #ff3b3b96; /* Rojo */
 }
 /* ---------------------- FIN Estilos pestaña de Tallas ----------------------- */
 /* ---------------------- Estilos pestaña de Ventas ----------------------- */

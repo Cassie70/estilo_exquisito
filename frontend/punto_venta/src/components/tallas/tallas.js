@@ -99,7 +99,7 @@ const Tallas = () => {
   return (
     <div>
       <h2>Tallas</h2>
-      <form onSubmit={handleSubmit} className="form-tallas">
+      <form onSubmit={handleSubmit} className="form-tallas" hidden>
         <div className="inputs-tallas">
           <input
             type="text"
@@ -139,8 +139,9 @@ const Tallas = () => {
               <td>{talla.id_talla}</td>
               <td>{talla.nombre_talla}</td>
               <td className="accion-buttons">
-                <button className="editar" onClick={() => handleEdit(talla)}>Editar</button>
-                <button className="eliminar" onClick={() => handleDelete(talla.id_talla)}>Eliminar</button>
+                <button className="editar" dislabled>Editar</button>
+                <button className="eliminar" disabled>Eliminar</button>
+                
               </td>
             </tr>
           ))}
