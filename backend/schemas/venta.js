@@ -18,8 +18,8 @@ export class SchemaVenta {
             return { success: false, error: 'El monto debe ser mayor a 0' };
         }
 
-        if (typeof id_estado !== 'number' || id_estado < 1 || id_estado > 3) {
-            return { success: false, error: 'El campo id_estado debe ser un número entre 1 y 3' };
+        if (typeof id_estado !== 'number' || id_estado < 1 || id_estado > 6) {
+            return { success: false, error: 'El campo id_estado debe ser un número entre 1 y 6' };
         }
 
         const fechaRegex = /^\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}$/;
@@ -52,8 +52,8 @@ export class SchemaVenta {
             }
         }
 
-        if (id_estado !== undefined && (typeof id_estado !== 'number' || id_estado < 1 || id_estado > 3)) {
-            return { success: false, error: 'El campo id_estado debe ser un número entre 1 y 3' };
+        if (id_estado !== undefined && (typeof id_estado !== 'number' || id_estado < 1 || id_estado > 6)) {
+            return { success: false, error: 'El campo id_estado debe ser un número entre 1 y 6' };
         }
 
         return { success: true, value: venta };

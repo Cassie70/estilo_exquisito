@@ -36,7 +36,7 @@ PATCH http://localhost:1234/ventas/f5eebc99-9c0b-4ef8-bb6d-6bb9bd380f66
 Content-Type: application/json
 
 {
-    "id_usuario": "a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a11",
+    "id_usuario": "e4eebc99-9c0b-4ef8-bb6d-6bb9bd380e55",
     "monto": 150.75,
     "fecha": "2024-06-07 15:32:14",
     "id_estado": 2
