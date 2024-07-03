@@ -27,6 +27,7 @@ export const ProductosEsca = ({ productos, setProductos }) => {
       !(producto.idCont === id)
     ));
     setProductos(nuevosProductos);
+    alert("Producto Eliminado de la lista")
   };
 
   const calcularTotal = () => {
@@ -38,55 +39,62 @@ export const ProductosEsca = ({ productos, setProductos }) => {
   };
 
   const generarVentaEfectivo = () => {
-    let efectivo = prompt("Por favor, ingresa el efectivo:");
-  
-    if (efectivo !== null) {
-      let efectivoInt = parseInt(efectivo);
-      let total = calcularTotal();
-  
-      if (isNaN(efectivoInt) || efectivoInt < total) {
-        alert("Efectivo insuficiente o entrada inválida. Por favor, inténtelo de nuevo.");
-        return;
+    let total = calcularTotal();
+    if (total !== 0) {
+      let efectivo = prompt("Por favor, ingresa el efectivo:");
+
+      if (efectivo !== null) {
+        let efectivoInt = parseInt(efectivo);
+
+        if (isNaN(efectivoInt) || efectivoInt < total) {
+          alert("Efectivo insuficiente o entrada inválida. Por favor, inténtelo de nuevo.");
+          return;
+        }
+        let cambio = efectivoInt - total;
+        alert("Cambio: " + cambio);
+
+        const json = generarJSON(total, productos);
+        fetchVenta(json);
+      }else {
+        alert("Pago no autorizado");
       }
-  
-      let cambio = efectivoInt - total;
-      alert("Cambio: " + cambio);
-  
-      const json = generarJSON(total, productos);
-      console.log(json);
-      fetchVenta(json);
     } else {
-      alert("Pago no autorizado");
+      alert("No hay ventas por hacer");
     }
   };
 
   const generarVentaTarjeta = () => {
-    let tarjeta = prompt("Por favor, ingresa tu número de tarjeta (16 dígitos):");
-    let nip = prompt("Por favor, ingresa tu NIP (4 dígitos):");
-    
-    function validarTarjeta(tarjeta) {
+    let total = calcularTotal();
+    if (total !== 0) {
+      let tarjeta = prompt("Por favor, ingresa tu número de tarjeta (16 dígitos):");
+      let nip = prompt("Por favor, ingresa tu NIP (4 dígitos):");
+
+      function validarTarjeta(tarjeta) {
         // Verifica que el número de tarjeta tenga 16 dígitos
         let regex = /^\d{16}$/;
         return regex.test(tarjeta);
-    }
-    
-    function validarNip(nip) {
+      }
+
+      function validarNip(nip) {
         // Verifica que el NIP tenga 4 dígitos
         let regex = /^\d{4}$/;
         return regex.test(nip);
-    }
-    
-    if (tarjeta !== null && nip !== null) {
-        if (validarTarjeta(tarjeta) && validarNip(nip)) {
-            alert("Pago autorizado desde la tarjeta: " + tarjeta + ". ¡Ya puede retirar su tarjeta!");
+      }
 
-            const json = generarJSON(calcularTotal(), productos);
-            fetchVenta(json);
+      if (tarjeta !== null && nip !== null) {
+        if (validarTarjeta(tarjeta) && validarNip(nip)) {
+          alert("Pago autorizado desde la tarjeta: " + tarjeta + ". ¡Ya puede retirar su tarjeta!");
+
+          const json = generarJSON(calcularTotal(), productos);
+          fetchVenta(json);
         } else {
-            alert("Número de tarjeta o NIP inválido. Por favor, inténtelo de nuevo.");
+          alert("Número de tarjeta o NIP inválido. Por favor, inténtelo de nuevo.");
         }
-    } else {
+      } else {
         alert("Pago no autorizado");
+      }
+    } else {
+      alert("No hay ventas por hacer")
     }
   };
 
@@ -106,7 +114,7 @@ export const ProductosEsca = ({ productos, setProductos }) => {
     }).then(data => {
       alert('Venta realizada con éxito');
       console.log('ID de la venta:', data.id_venta); // Mostrar el ID de la venta en la consola
-      
+
       // Hacer la solicitud para descargar el PDF
       return fetch('http://localhost:1234/ticket/' + data.id_venta, {
         method: 'GET',
@@ -134,31 +142,31 @@ export const ProductosEsca = ({ productos, setProductos }) => {
       console.error('Error en la petición:', error);
     });
   }
-  
-  
 
-  function generarJSON(total, productos){
+
+
+  function generarJSON(total, productos) {
     const json = {
-      id_usuario: id_punto_venta, 
+      id_usuario: id_punto_venta,
       total: total,
       es_apartado: false,  // O 1 si es un apartado, esto también debería ser dinámico
       productos: productos.map(producto => {
         let tallas;
-        if (producto.tallas === "XL") {
+        if (producto.talla === "XL") {
           tallas = 5;
-        } else if (producto.tallas === "L") {
+        } else if (producto.talla === "L") {
           tallas = 4;
-        } else if (producto.tallas === "M") {
+        } else if (producto.talla === "M") {
           tallas = 3;
-        } else if (producto.tallas === "S") {
+        } else if (producto.talla === "S") {
           tallas = 2;
-        } else {
+        } else if (producto.talla === "XS") {
           tallas = 1;
         }
 
         return {
           id_producto: producto.id_producto,
-          id_talla: tallas, 
+          id_talla: tallas,
           cantidad: producto.cantidad
         };
       })

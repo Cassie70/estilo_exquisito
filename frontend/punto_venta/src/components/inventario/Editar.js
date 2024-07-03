@@ -31,9 +31,11 @@ export const Editar = ({ producto, setEditar, setListadoState }) => {
             })
             .then(data => {
                 console.log('Producto Modificado:', data);
+                alert("Producto Editado Correctamente")
             })
             .catch(error => {
                 console.log('Error al modificar producto:', error);
+                alert("Error al editar producto")
             });
 
         setEditar(0);
