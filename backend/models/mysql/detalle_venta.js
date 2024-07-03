@@ -195,5 +195,21 @@ export class DetalleVentaModelo {
             throw new Error('Error al eliminar el detalle de venta: ' + error.message);
         }
     }
+
+    static async bestSellers(){
+        try{
+            const [bestSellers] = await connection.query(`SELECT nombre, SUM(cantidad) total_vendido, nombre_talla
+                FROM Detalle_venta
+                JOIN Tallas ON Detalle_venta.id_talla = Tallas.id_talla
+                JOIN Productos ON Productos.id_producto = Detalle_venta.id_producto
+                GROUP BY Productos.id_producto, nombre, nombre_talla
+                ORDER BY total_vendido DESC
+                LIMIT 5;`
+        );
+            return bestSellers;
+        } catch (error) {
+            throw new Error('Error al obtener los productos más vendidos: ' + error.message);
+        }
+    }
 }
 

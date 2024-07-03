@@ -404,5 +404,7 @@ DELETE http://localhost:1234/detalle-venta/5
 ###############  FIN DETALLE VENTA        ###############
 #########################################################
 
-
 GET  http://localhost:1234/ticket
+
+###
+GET http://localhost:1234/best-sellers
