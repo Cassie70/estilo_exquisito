@@ -75,14 +75,33 @@ const tailwindStyles = `
 function Recuperacion() {
   const [correo, setCorreo] = useState('');
 
-  const handleRecuperar = () => {
-    // Aquí se podría implementar la lógica para enviar el correo de recuperación
-    // Por ahora mostramos un mensaje
-    Swal.fire({
-      title: 'Recuperación de Contraseña',
-      text: `Si el correo ${correo} existe en nuestro sistema, se enviará un correo con su contraseña.`,
-      icon: 'info',
-    });
+  const handleRecuperar = async () => {
+    try {
+      const response = await fetch('http://localhost:1234/recuperacion', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ correo_electronico: correo }),
+      });
+
+      if (!response.ok) {
+        throw new Error('Error al procesar la solicitud');
+      }
+
+      const data = await response.json();
+      Swal.fire({
+        title: 'Recuperación de Contraseña',
+        text: data.mensaje,
+        icon: 'success',
+      });
+    } catch (error) {
+      Swal.fire({
+        title: 'Recuperación de Contraseña',
+        text: error.message,
+        icon: 'error',
+      });
+    }
   };
 
   return (
