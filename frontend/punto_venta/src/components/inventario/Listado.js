@@ -1,6 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { Editar } from './Editar';
+<<<<<<< Updated upstream
 import { v4 as uuidv4 } from 'uuid';
+=======
+import '../../css/almacen.css'; // Asegúrate de importar tu archivo de estilos
+>>>>>>> Stashed changes
 
 export const Listado = ({ listadoState, setListadoState }) => {
     const [editar, setEditar] = useState(0);
@@ -83,6 +87,16 @@ export const Listado = ({ listadoState, setListadoState }) => {
         }
     }
 
+    const getStockClass = (stock) => {
+        if (stock < 5) {
+            return 'low-stock';
+        } else if (stock >= 5 && stock <= 10) {
+            return 'medium-stock';
+        } else {
+            return 'high-stock';
+        }
+    }
+
     return (
         <>
             {listadoState !== null ? (
@@ -91,10 +105,15 @@ export const Listado = ({ listadoState, setListadoState }) => {
                     if (!productoInfo) return null; // Si no se encuentra el producto, no mostrar
 
                     return (
+<<<<<<< Updated upstream
                         <article key={uuidv4()} className="peli-item shadow-md">
+=======
+                        <article key={producto.id_producto} className={`peli-item shadow-md ${getStockClass(producto.stock)}`}>
+>>>>>>> Stashed changes
                             <img src={`http://localhost:1234/${productoInfo.imagen_url}`} alt={productoInfo.nombre} />
                             <h3 className="title">ID del Producto: {producto.id_producto}</h3>
-                            <h2 className='precio'>Talla: {obtenerTalla(producto.id_talla)}</h2>
+                            <h2 className='precio'>{obtenerTalla(producto.id_talla)}</h2>
+                            <h2 className='precio'>Stock: {producto.stock}</h2>
 
                             <button className="button-buscador" onClick={() => setEditar(producto.id_producto)}>Editar</button>
                             <button className="button-borrador" onClick={() => borrarProducto(producto.id_producto, producto.id_talla)}>Borrar</button>
