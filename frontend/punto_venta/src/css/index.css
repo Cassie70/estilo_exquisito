@@ -1778,3 +1778,36 @@ input[type="button"] {
   background-color: #7a1313c9; /* Color de fondo */
   color: #fff; /* Color del texto */
 }
+
+/* frontend/src/components/reportes/Reportes.css */
+.best-sellers {
+  margin: 20px auto;
+  width: 80%;
+}
+
+.best-sellers h3 {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.best-sellers ul {
+  list-style: none;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+}
+
+.best-sellers li {
+  background-color: #f4f4f4;
+  padding: 10px;
+  margin: 10px;
+  border-radius: 5px;
+  width: 150px;
+  text-align: center;
+}
+
+.best-sellers img {
+  border-radius: 5px;
+  margin-bottom: 10px;
+}
