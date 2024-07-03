@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import axios from 'axios';
 import { Bar } from 'react-chartjs-2';
 import { Chart as ChartJS, BarElement, CategoryScale, LinearScale, Tooltip, Legend } from 'chart.js';
@@ -196,7 +196,11 @@ const Reportes = () => {
             {ventas.map((venta) => (
               <tr key={venta.id_venta}>
                 <td>{venta.id_venta}</td>
-                <td>{venta.id_usuario}</td>
+                <td>
+                  {venta.id_usuario === "97376864-382c-11ef-89fb-a2aad19a47c0"
+                  ? 'Punto de Venta'
+                  : 'E-commerce'}
+                </td>
                 <td>{venta.monto}</td>
                 <td>Completado</td>
                 <td>{new Date(venta.fecha).toLocaleDateString()}</td>
