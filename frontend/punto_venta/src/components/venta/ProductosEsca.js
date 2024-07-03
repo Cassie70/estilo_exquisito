@@ -178,7 +178,7 @@ export const ProductosEsca = ({ productos, setProductos }) => {
   return (
     <>
       <div className='productos-prepago'>
-        <table className="tabla-tallas">
+        <table className="tabla-usuarios">
           <thead>
             <tr>
               <th>Productos</th>
