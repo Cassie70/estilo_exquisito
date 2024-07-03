@@ -44,8 +44,6 @@ const HeaderNav = ({ userType }) => {
                   <li><NavLink to="/categorias" activeclassname="active">Categorias</NavLink></li>
                   <li><NavLink to="/tallas" activeclassname="active">Tallas</NavLink></li>
                   <li><NavLink to="/ventas" activeclassname="active">Ventas</NavLink></li>
-                  <li><NavLink to="/pedido-apartado" activeclassname="active">Pedidos Apartados</NavLink></li>
-                  <li><NavLink to="/detalle-pedido-apartado" activeclassname="active">Detalle pedidos Apartados</NavLink></li>
                 </ul>
               )}
             </li>
