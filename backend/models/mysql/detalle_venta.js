@@ -211,5 +211,20 @@ export class DetalleVentaModelo {
             throw new Error('Error al obtener los productos más vendidos: ' + error.message);
         }
     }
+
+    static async bestCategorias(){
+        try{
+            const [bestCategorias] = await connection.query(`SELECT nombre_categoria, SUM(cantidad) total_vendido
+                FROM Detalle_venta
+                JOIN Productos ON Productos.id_producto = Detalle_venta.id_producto
+                JOIN Categorias ON Productos.id_categoria = Categorias.id_categoria
+                GROUP BY Productos.id_categoria, nombre_categoria
+                ORDER BY total_vendido DESC`
+        );
+            return bestCategorias;
+        }catch (error) {
+            throw new Error('Error al obtener las categorias más vendidas: ' + error.message);
+        }   
+    }
 }
 

@@ -408,3 +408,5 @@ GET  http://localhost:1234/ticket
 
 ###
 GET http://localhost:1234/best-sellers
+###
+GET http://localhost:1234/best-categorias
