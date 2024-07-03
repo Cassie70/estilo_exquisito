@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react';
 
+const id_punto_venta = '97376864-382c-11ef-89fb-a2aad19a47c0';
+
 export const ProductosEsca = ({ productos, setProductos }) => {
   const [productosUnicos, setProductosUnicos] = useState([]);
 
@@ -35,7 +37,7 @@ export const ProductosEsca = ({ productos, setProductos }) => {
     return productos.reduce((total, producto) => total + producto.cantidad, 0);
   };
 
-  const generarJSONEfec = () => {
+  const generarVentaEfectivo = () => {
     let efectivo = prompt("Por favor, ingresa el efectivo:");
   
     if (efectivo !== null) {
@@ -50,39 +52,15 @@ export const ProductosEsca = ({ productos, setProductos }) => {
       let cambio = efectivoInt - total;
       alert("Cambio: " + cambio);
   
-      const json = {
-        id_usuario: "af8ce9c7-337c-11ef-8690-00e04c368ecb",  // Este debería ser dinámico en una aplicación real
-        total: total,
-        es_apartado: false,  // O 1 si es un apartado, esto también debería ser dinámico
-        productos: productos.map(producto => {
-          let tallas;
-          if (producto.tallas === "XL") {
-            tallas = 5;
-          } else if (producto.tallas === "L") {
-            tallas = 4;
-          } else if (producto.tallas === "M") {
-            tallas = 3;
-          } else if (producto.tallas === "S") {
-            tallas = 2;
-          } else {
-            tallas = 1;
-          }
-  
-          return {
-            id_producto: producto.id_producto,
-            id_talla: tallas, 
-            cantidad: producto.cantidad
-          };
-        })
-      };
-  
-      console.log(JSON.stringify(json, null, 2));
+      const json = generarJSON(total, productos);
+      console.log(json);
+      fetchVenta(json);
     } else {
       alert("Pago no autorizado");
     }
   };
 
-  const generarJSONTarj = () => {
+  const generarVentaTarjeta = () => {
     let tarjeta = prompt("Por favor, ingresa tu número de tarjeta (16 dígitos):");
     let nip = prompt("Por favor, ingresa tu NIP (4 dígitos):");
     
@@ -101,31 +79,9 @@ export const ProductosEsca = ({ productos, setProductos }) => {
     if (tarjeta !== null && nip !== null) {
         if (validarTarjeta(tarjeta) && validarNip(nip)) {
             alert("Pago autorizado desde la tarjeta: " + tarjeta + ". ¡Ya puede retirar su tarjeta!");
-            let tallas
 
-            if (productos.tallas === "XL") {
-              tallas = 5;
-            } else if (productos.tallas === "L") {
-              tallas = 4;
-            } else if (productos.tallas === "M") {
-              tallas = 3;
-            } else if (productos.tallas === "S") {
-              tallas = 2;
-            } else {
-              tallas = 1;
-            }
-        
-            const json = {
-              id_usuario: "af8ce9c7-337c-11ef-8690-00e04c368ecb",  // Este debería ser dinámico en una aplicación real
-              total: calcularTotal(),
-              es_apartado: false,  // O 1 si es un apartado, esto también debería ser dinámico
-              productos: productos.map(producto => ({
-                id_producto: producto.id_producto,
-                id_talla: tallas,  // Usamos talla directamente ya que idDeTalla no se usa en el código proporcionado
-                cantidad: producto.cantidad
-              }))
-            };
-            console.log(json);
+            const json = generarJSON(calcularTotal(), productos);
+            fetchVenta(json);
         } else {
             alert("Número de tarjeta o NIP inválido. Por favor, inténtelo de nuevo.");
         }
@@ -133,6 +89,54 @@ export const ProductosEsca = ({ productos, setProductos }) => {
         alert("Pago no autorizado");
     }
   };
+
+  function fetchVenta(json) {
+    fetch('http://localhost:1234/ventas/venta_ecommerce', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(json)
+    }).then(response => {
+      if (response.ok) {
+        alert('Venta realizada con éxito');
+      } else {
+        alert('Error al realizar la venta');
+      }
+    }).catch(error => {
+      console.error('Error en la petición:', error);
+    });
+  }
+
+  function generarJSON(total, productos){
+    const json = {
+      id_usuario: id_punto_venta, 
+      total: total,
+      es_apartado: false,  // O 1 si es un apartado, esto también debería ser dinámico
+      productos: productos.map(producto => {
+        let tallas;
+        if (producto.tallas === "XL") {
+          tallas = 5;
+        } else if (producto.tallas === "L") {
+          tallas = 4;
+        } else if (producto.tallas === "M") {
+          tallas = 3;
+        } else if (producto.tallas === "S") {
+          tallas = 2;
+        } else {
+          tallas = 1;
+        }
+
+        return {
+          id_producto: producto.id_producto,
+          id_talla: tallas, 
+          cantidad: producto.cantidad
+        };
+      })
+    };
+
+    return json;
+  }
 
   return (
     <>
@@ -185,7 +189,7 @@ export const ProductosEsca = ({ productos, setProductos }) => {
               <h4>${calcularTotal()}</h4>
               <h5>- Insertar número de tarjeta</h5>
               <h5>- Insertar código de seguridad</h5>
-              <button onClick={generarJSONTarj}>Pagar</button>
+              <button onClick={generarVentaTarjeta}>Pagar</button>
             </div>
           </div>
 
@@ -193,7 +197,7 @@ export const ProductosEsca = ({ productos, setProductos }) => {
             <div className='cash-datos'>
               <h3>PAGO EN EFECTIVO</h3>
               <h4>${calcularTotal()}</h4>
-              <button onClick={generarJSONEfec}>Pagar</button>
+              <button onClick={generarVentaEfectivo}>Pagar</button>
             </div>
           </div>
         </div>

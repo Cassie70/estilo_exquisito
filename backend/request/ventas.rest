@@ -49,3 +49,25 @@ DELETE http://localhost:1234/ventas/58aec0a3-374c-11ef-b07d-08bfb8a373be
 #########################################################
 ###############      FIN    VENTAS        ###############
 #########################################################
+
+### GENERAR UNA NUEVA VENTA
+POST http://localhost:1234/ventas/venta_ecommerce
+Content-Type: application/json
+
+{
+    "id_usuario": "97376864-382c-11ef-89fb-a2aad19a47c0",
+    "total": 450,
+    "es_apartado": true,
+    "productos": [
+        {
+            "id_producto": 1,
+            "id_talla": 1,
+            "cantidad": 2
+        },
+        {
+            "id_producto": 2,
+            "id_talla": 1,
+            "cantidad": 1
+        }
+    ]
+}
