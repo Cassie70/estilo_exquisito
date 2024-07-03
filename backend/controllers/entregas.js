@@ -21,7 +21,7 @@ export class EntregasController {
             const updatedVenta = await this.entregasModelo.update({
                 id,
                 fecha,
-                id_estado: 3
+                id_estado: 5
             });
 
             res.json({ message: 'Estado de la venta actualizado a entregado', updatedVenta });
