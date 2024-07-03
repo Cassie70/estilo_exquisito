@@ -49,6 +49,7 @@ export const Inventario = () => {
       {/*Barra Lateral*/}
       <aside className="lateral">
         <Buscador listadoState={listadoState} setListadoState={setListadoState} setAccion={setAccion}/>
+        
         <Crear setListadoState={setListadoState}/>
       </aside>
 

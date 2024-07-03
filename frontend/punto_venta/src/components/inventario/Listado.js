@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Editar } from './Editar';
+import { v4 as uuidv4 } from 'uuid';
 
 export const Listado = ({ listadoState, setListadoState }) => {
     const [editar, setEditar] = useState(0);
@@ -90,7 +91,7 @@ export const Listado = ({ listadoState, setListadoState }) => {
                     if (!productoInfo) return null; // Si no se encuentra el producto, no mostrar
 
                     return (
-                        <article key={producto.id_producto} className="peli-item shadow-md">
+                        <article key={uuidv4()} className="peli-item shadow-md">
                             <img src={`http://localhost:1234/${productoInfo.imagen_url}`} alt={productoInfo.nombre} />
                             <h3 className="title">ID del Producto: {producto.id_producto}</h3>
                             <h2 className='precio'>Talla: {obtenerTalla(producto.id_talla)}</h2>
