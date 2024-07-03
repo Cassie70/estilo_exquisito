@@ -14,4 +14,8 @@ export { createLoginUsuarioRouter } from './login_usuario.js';
 export { createLoginTrabajadorRouter } from './login_trabajador.js';
 export { createSimuladorRouter } from './simulador.js';
 export { createEntregasRouter } from './entregas.js';
+<<<<<<< HEAD
 export { createBestSellersRouter} from './best_sellers.js'
+=======
+export { createRecuperacionRouter } from './recuperacion.js';
+>>>>>>> 2b664ee8fb2f0988fc1b7dd9473fb59a0e8469f5

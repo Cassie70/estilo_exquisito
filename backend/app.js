@@ -49,7 +49,12 @@ app.use('/login-usuario', routes.createLoginUsuarioRouter({ usuariosModelo: mode
 app.use('/login-trabajador', routes.createLoginTrabajadorRouter({ trabajadorModelo: models.TrabajadorModelo }));
 app.use('/simulador', routes.createSimuladorRouter({ simuladorModelo: models.SimuladorModelo }));
 app.use('/entregas', routes.createEntregasRouter({ entregasModelo: models.EntregasModelo }));
+<<<<<<< HEAD
 app.use('/best-sellers',routes.createBestSellersRouter({detalleVentaModelo: models.DetalleVentaModelo}));
+=======
+app.use('/recuperacion', routes.createRecuperacionRouter({ recuperacionModelo: models.RecuperacionModelo }));
+
+>>>>>>> 2b664ee8fb2f0988fc1b7dd9473fb59a0e8469f5
 // Aquí se define el puerto en el que se va a correr el servidor, si no se define se usará el puerto 1234
 const PORT = process.env.PORT ?? 1234;
 

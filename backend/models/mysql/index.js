@@ -12,3 +12,4 @@ export { ProductosTallasInventarioModelo } from './productos_tallas_inventario.j
 export { CategoriasModelo } from './categorias.js';
 export { SimuladorModelo } from './simulador.js';
 export { EntregasModelo } from './entregas.js';
+export { RecuperacionModelo } from './recuperacion.js';
