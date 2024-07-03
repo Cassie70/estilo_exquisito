@@ -120,8 +120,8 @@ export class VentaModelo {
 
             // Crear la venta o apartado
             await connection.query(
-                `INSERT INTO Ventas (id_venta, id_usuario, monto, id_estado, fecha) 
-                 VALUES (UUID_TO_BIN(?), UUID_TO_BIN(?), ?, ?, NOW())`, 
+                `INSERT INTO Ventas (id_venta, id_usuario, monto, id_estado) 
+                 VALUES (UUID_TO_BIN(?), UUID_TO_BIN(?), ?, ?)`, 
                 [id_venta, id_usuario, total, id_estado]
             );
 
