@@ -99,14 +99,43 @@ export const ProductosEsca = ({ productos, setProductos }) => {
       body: JSON.stringify(json)
     }).then(response => {
       if (response.ok) {
-        alert('Venta realizada con éxito');
+        return response.json(); // Convertir la respuesta a JSON
       } else {
-        alert('Error al realizar la venta');
+        throw new Error('Error al realizar la venta');
       }
+    }).then(data => {
+      alert('Venta realizada con éxito');
+      console.log('ID de la venta:', data.id_venta); // Mostrar el ID de la venta en la consola
+      
+      // Hacer la solicitud para descargar el PDF
+      return fetch('http://localhost:1234/ticket/' + data.id_venta, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/pdf'
+        }
+      });
+    }).then(response => {
+      if (response.ok) {
+        return response.blob(); // Obtener el PDF como un Blob
+      } else {
+        throw new Error('Error al descargar el ticket');
+      }
+    }).then(blob => {
+      // Crear una URL para el Blob y abrirla
+      const url = window.URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = 'ticket.pdf';
+      document.body.appendChild(a);
+      a.click(); // Descargar el archivo
+      window.URL.revokeObjectURL(url); // Limpiar la URL del Blob
+      a.remove(); // Eliminar el elemento <a>
     }).catch(error => {
       console.error('Error en la petición:', error);
     });
   }
+  
+  
 
   function generarJSON(total, productos){
     const json = {
