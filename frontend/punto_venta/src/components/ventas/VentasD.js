@@ -163,8 +163,8 @@ const VentasD = () => {
           >
             <option value="">Seleccione un estado</option>
             <option value="1">Apartado</option>
-            <option value="2">Cancelado</option>
-            <option value="3">Completado</option>
+            <option value="3">Cancelado</option>
+            <option value="2">Completado</option>
             <option value="4">Pendiente</option>
           </select>
           <input
@@ -210,9 +210,9 @@ const VentasD = () => {
               <td>
                 {venta.id_estado === 1
                   ? 'Apartado'
-                  : venta.id_estado === 2
-                  ? 'Cancelado'
                   : venta.id_estado === 3
+                  ? 'Cancelado'
+                  : venta.id_estado === 2
                   ? 'Completado'
                   : 'Pendiente'}
               </td>
