@@ -21,35 +21,30 @@ const Reportes = () => {
   const [bestSellers, setBestSellers] = useState([]);
   const [bestCategorias, setBestCategorias] = useState([]);
 
-  useEffect(() => {
-    const fetchBestSellers = async () => {
-      try {
-        const response = await axios.get('http://localhost:1234/best-sellers');
-        setBestSellers(response.data);
-      } catch (error) {
-        console.error('Error al obtener los productos más vendidos:', error);
-      }
-    };
-
-    const fetchBestCategorias = async () => {
-      try {
-        const response = await axios.get('http://localhost:1234/best-categorias');
-        setBestCategorias(response.data);
-      } catch (error) {
-        console.error('Error al obtener las categorías más vendidas:', error);
-      }
-    };
-
-    fetchBestSellers();
-    fetchBestCategorias();
-  }, []);
-
   const handleMesChange = (e) => {
     setMes(e.target.value);
   };
 
   const handleAnioChange = (e) => {
     setAnio(e.target.value);
+  };
+
+  const fetchBestSellers = async (mes, anio) => {
+    try {
+      const response = await axios.get(`http://localhost:1234/best-sellers/${mes}/${anio}`);
+      setBestSellers(response.data);
+    } catch (error) {
+      console.error('Error al obtener los productos más vendidos:', error);
+    }
+  };
+
+  const fetchBestCategorias = async (mes, anio) => {
+    try {
+      const response = await axios.get(`http://localhost:1234/best-categorias/${mes}/${anio}`);
+      setBestCategorias(response.data);
+    } catch (error) {
+      console.error('Error al obtener las categorías más vendidas:', error);
+    }
   };
 
   const handleGenerarReporte = async () => {
@@ -97,6 +92,11 @@ const Reportes = () => {
         setPosVentas(posVentasTotal);
         setVentasSemanales(ventasPorSemana);
       }
+
+      // Fetch the best sellers and best categories after setting ventas data
+      await fetchBestSellers(mes, anio);
+      await fetchBestCategorias(mes, anio);
+
     } catch (error) {
       console.error('Error al generar el reporte:', error);
       setMensaje('Error al generar el reporte. Intente nuevamente.');
@@ -182,7 +182,8 @@ const Reportes = () => {
             {bestCategorias.map((categoria, index) => (
               <li key={index}>
                 <div className="precio">{categoria.nombre_categoria}</div>
-                <div className="precio">Total Vendido: {categoria.total_vendido}</div>
+                <div className="precio">Total Ventas: {categoria.total_ventas}</div>
+                <div className="precio">Monto Vendido: ${categoria.total_monto_vendido}</div>
               </li>
             ))}
           </ul>
@@ -237,3 +238,4 @@ const Reportes = () => {
 };
 
 export default Reportes;
+
