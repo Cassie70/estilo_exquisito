@@ -1,10 +1,10 @@
-// frontend/src/components/reportes/Reportes.js
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import axios from 'axios';
-import { Pie, Bar } from 'react-chartjs-2';
-import { Chart as ChartJS, ArcElement, BarElement, CategoryScale, LinearScale, Tooltip, Legend } from 'chart.js';
+import { Bar } from 'react-chartjs-2';
+import { Chart as ChartJS, BarElement, CategoryScale, LinearScale, Tooltip, Legend } from 'chart.js';
+import ReportePie from './reportesPie';
 
-ChartJS.register(ArcElement, BarElement, CategoryScale, LinearScale, Tooltip, Legend);
+ChartJS.register(BarElement, CategoryScale, LinearScale, Tooltip, Legend);
 
 const Reportes = () => {
   const [mes, setMes] = useState('');
@@ -12,14 +12,13 @@ const Reportes = () => {
   const [ventas, setVentas] = useState([]);
   const [totalVentas, setTotalVentas] = useState(0);
   const [mensaje, setMensaje] = useState('');
-  const [ecommerceVentas, setEcommerceVentas] = useState(0);
-  const [posVentas, setPosVentas] = useState(0);
   const [ventasSemanales, setVentasSemanales] = useState({
     pos: [0, 0, 0, 0],
     ecommerce: [0, 0, 0, 0],
   });
   const [bestSellers, setBestSellers] = useState([]);
   const [bestCategorias, setBestCategorias] = useState([]);
+  const [barData, setBarData] = useState({});
 
   const handleMesChange = (e) => {
     setMes(e.target.value);
@@ -61,8 +60,6 @@ const Reportes = () => {
         setMensaje('No existen registros para la fecha introducida.');
         setVentas([]);
         setTotalVentas(0);
-        setEcommerceVentas(0);
-        setPosVentas(0);
         setVentasSemanales({ pos: [0, 0, 0, 0], ecommerce: [0, 0, 0, 0] });
       } else {
         setVentas(ventasData);
@@ -70,7 +67,7 @@ const Reportes = () => {
         setTotalVentas(total);
         setMensaje('');
 
-        const posId = "56663a9b-3761-11ef-89fb-a2aad19a47c0";
+        const posId = "97376864-382c-11ef-89fb-a2aad19a47c0";
         const ventasPorSemana = {
           pos: [0, 0, 0, 0],
           ecommerce: [0, 0, 0, 0],
@@ -85,15 +82,20 @@ const Reportes = () => {
           }
         });
 
-        const posVentasTotal = ventasPorSemana.pos.reduce((acc, val) => acc + val, 0);
-        const ecommerceVentasTotal = total - posVentasTotal;
-
-        setEcommerceVentas(ecommerceVentasTotal);
-        setPosVentas(posVentasTotal);
         setVentasSemanales(ventasPorSemana);
+
+        setBarData({
+          labels: ['Semana 1 PV', 'Semana 1 E-commerce', 'Semana 2 PV', 'Semana 2 E-commerce', 'Semana 3 PV', 'Semana 3 E-commerce', 'Semana 4 PV', 'Semana 4 E-commerce'],
+          datasets: [
+            {
+              label: 'Ventas',
+              data: ventasPorSemana.pos.map((posVenta, index) => [posVenta, ventasPorSemana.ecommerce[index]]).flat(),
+              backgroundColor: ['#36A2EB', '#FF6384'],
+            },
+          ],
+        });
       }
 
-      // Fetch the best sellers and best categories after setting ventas data
       await fetchBestSellers(mes, anio);
       await fetchBestCategorias(mes, anio);
 
@@ -101,28 +103,6 @@ const Reportes = () => {
       console.error('Error al generar el reporte:', error);
       setMensaje('Error al generar el reporte. Intente nuevamente.');
     }
-  };
-
-  const pieData = {
-    labels: ['E-commerce', 'Punto de Venta'],
-    datasets: [
-      {
-        data: [ecommerceVentas, posVentas],
-        backgroundColor: ['#FF6384', '#36A2EB'],
-        hoverBackgroundColor: ['#FF6384', '#36A2EB'],
-      },
-    ],
-  };
-
-  const barData = {
-    labels: ['Semana 1 PV', 'Semana 1 E-commerce', 'Semana 2 PV', 'Semana 2 E-commerce', 'Semana 3 PV', 'Semana 3 E-commerce', 'Semana 4 PV', 'Semana 4 E-commerce'],
-    datasets: [
-      {
-        label: 'Ventas',
-        data: [...ventasSemanales.pos, ...ventasSemanales.ecommerce],
-        backgroundColor: ['#36A2EB', '#FF6384'],
-      },
-    ],
   };
 
   return (
@@ -190,12 +170,10 @@ const Reportes = () => {
         </div>
       )}
 
+      <ReportePie mes={mes} anio={anio} />
+
       {ventas.length > 0 && (
         <div className="charts-wrapper">
-          <div className="chart-container">
-            <div className="chart-title">Ventas totales del mes</div>
-            <Pie data={pieData} />
-          </div>
           <div className="chart-container2">
             <div className="chart-title">Ventas totales del mes por semana</div>
             <Bar data={barData} />
@@ -210,7 +188,7 @@ const Reportes = () => {
               <th>ID Venta</th>
               <th>ID Usuario</th>
               <th>Monto</th>
-              <th>ID Estado</th>
+              <th>Estado</th>
               <th>Fecha</th>
             </tr>
           </thead>
@@ -218,7 +196,11 @@ const Reportes = () => {
             {ventas.map((venta) => (
               <tr key={venta.id_venta}>
                 <td>{venta.id_venta}</td>
-                <td>{venta.id_usuario}</td>
+                <td>
+                  {venta.id_usuario === "97376864-382c-11ef-89fb-a2aad19a47c0"
+                  ? 'Punto de Venta'
+                  : 'E-commerce'}
+                </td>
                 <td>{venta.monto}</td>
                 <td>Completado</td>
                 <td>{new Date(venta.fecha).toLocaleDateString()}</td>
@@ -238,4 +220,3 @@ const Reportes = () => {
 };
 
 export default Reportes;
-
