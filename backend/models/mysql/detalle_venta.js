@@ -212,15 +212,24 @@ export class DetalleVentaModelo {
         }
     }
 
-    static async bestCategorias(){
+    static async bestCategorias({mes, anio}){
         try{
-            const [bestCategorias] = await connection.query(`SELECT nombre_categoria, SUM(cantidad) total_vendido
-                FROM Detalle_venta
-                JOIN Productos ON Productos.id_producto = Detalle_venta.id_producto
-                JOIN Categorias ON Productos.id_categoria = Categorias.id_categoria
-                GROUP BY Productos.id_categoria, nombre_categoria
-                ORDER BY total_vendido DESC`
-        );
+            const [bestCategorias] = await connection.query(`SELECT 
+                c.nombre_categoria,
+                COUNT(dv.id_detalle_venta) AS total_ventas,
+                SUM(dv.cantidad * dv.precio_unitario) AS total_monto_vendido
+            FROM 
+                Ventas v
+                INNER JOIN Detalle_venta dv ON v.id_venta = dv.id_venta
+                INNER JOIN Productos p ON dv.id_producto = p.id_producto
+                INNER JOIN Categorias c ON p.id_categoria = c.id_categoria
+            WHERE 
+                YEAR(v.fecha) = ? AND MONTH(v.fecha) = ?
+            GROUP BY 
+                c.nombre_categoria
+            ORDER BY 
+                total_monto_vendido DESC;`
+        ,[anio, mes]);
             return bestCategorias;
         }catch (error) {
             throw new Error('Error al obtener las categorias más vendidas: ' + error.message);

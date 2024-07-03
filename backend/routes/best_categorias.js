@@ -6,7 +6,7 @@ export const createBestCategoriasRouter = ({detalleVentaModelo}) => {
 
     const bestCategoriasController = new BestCategoriasController({detalleVentaModelo})
 
-    bestCategoriasRouter.get('/', bestCategoriasController.bestCategorias)
+    bestCategoriasRouter.get('/:mes/:anio', bestCategoriasController.bestCategorias)
 
     return bestCategoriasRouter;
 }

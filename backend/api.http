@@ -409,4 +409,4 @@ GET  http://localhost:1234/ticket
 ###Obtener 5 productos mas vendidos
 GET http://localhost:1234/best-sellers
 ###Obtener 3 categrias mas vendidas por orden
-GET http://localhost:1234/best-categorias
+GET http://localhost:1234/best-categorias/
