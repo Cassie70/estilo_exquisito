@@ -198,7 +198,7 @@ export class DetalleVentaModelo {
 
     static async bestSellers(){
         try{
-            const [bestSellers] = await connection.query(`SELECT nombre, SUM(cantidad) total_vendido, nombre_talla
+            const [bestSellers] = await connection.query(`SELECT nombre, SUM(cantidad) total_vendido, nombre_talla, imagen_url
                 FROM Detalle_venta
                 JOIN Tallas ON Detalle_venta.id_talla = Tallas.id_talla
                 JOIN Productos ON Productos.id_producto = Detalle_venta.id_producto
