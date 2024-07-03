@@ -16,3 +16,4 @@ export { createSimuladorRouter } from './simulador.js';
 export { createEntregasRouter } from './entregas.js';
 export { createBestSellersRouter} from './best_sellers.js'
 export { createRecuperacionRouter } from './recuperacion.js';
+export { createBestCategoriasRouter } from './best_categorias.js';
