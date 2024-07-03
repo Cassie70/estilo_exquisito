@@ -1,5 +1,5 @@
 // frontend/src/components/reportes/Reportes.js
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Pie, Bar } from 'react-chartjs-2';
 import { Chart as ChartJS, ArcElement, BarElement, CategoryScale, LinearScale, Tooltip, Legend } from 'chart.js';
@@ -18,6 +18,31 @@ const Reportes = () => {
     pos: [0, 0, 0, 0],
     ecommerce: [0, 0, 0, 0],
   });
+  const [bestSellers, setBestSellers] = useState([]);
+  const [bestCategorias, setBestCategorias] = useState([]);
+
+  useEffect(() => {
+    const fetchBestSellers = async () => {
+      try {
+        const response = await axios.get('http://localhost:1234/best-sellers');
+        setBestSellers(response.data);
+      } catch (error) {
+        console.error('Error al obtener los productos más vendidos:', error);
+      }
+    };
+
+    const fetchBestCategorias = async () => {
+      try {
+        const response = await axios.get('http://localhost:1234/best-categorias');
+        setBestCategorias(response.data);
+      } catch (error) {
+        console.error('Error al obtener las categorías más vendidas:', error);
+      }
+    };
+
+    fetchBestSellers();
+    fetchBestCategorias();
+  }, []);
 
   const handleMesChange = (e) => {
     setMes(e.target.value);
@@ -134,6 +159,36 @@ const Reportes = () => {
 
       {mensaje && <p>{mensaje}</p>}
 
+      {bestSellers.length > 0 && (
+        <div className="best-sellers">
+          <h3>Top 5 Productos Más Vendidos</h3>
+          <ul>
+            {bestSellers.map((producto, index) => (
+              <li key={index}>
+                <img src={`http://localhost:1234/${producto.imagen_url}`} alt={producto.nombre} width="50" height="50" />
+                <div className="precio">{producto.nombre}</div>
+                <div className="precio">Talla: {producto.nombre_talla}</div>
+                <div className="precio">Vendidos: {producto.total_vendido}</div>
+              </li>
+            ))}
+          </ul>
+        </div>
+      )}
+
+      {bestCategorias.length > 0 && (
+        <div className="best-categorias">
+          <h3>Top 3 Categorías Más Vendidas</h3>
+          <ul>
+            {bestCategorias.map((categoria, index) => (
+              <li key={index}>
+                <div className="precio">{categoria.nombre_categoria}</div>
+                <div className="precio">Total Vendido: {categoria.total_vendido}</div>
+              </li>
+            ))}
+          </ul>
+        </div>
+      )}
+
       {ventas.length > 0 && (
         <div className="charts-wrapper">
           <div className="chart-container">
@@ -164,7 +219,7 @@ const Reportes = () => {
                 <td>{venta.id_venta}</td>
                 <td>{venta.id_usuario}</td>
                 <td>{venta.monto}</td>
-                <td>{venta.id_estado}</td>
+                <td>Completado</td>
                 <td>{new Date(venta.fecha).toLocaleDateString()}</td>
               </tr>
             ))}
