@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 
+
 const DetalleVenta = () => {
   const [detalles, setDetalles] = useState([]);
   const [form, setForm] = useState({
@@ -109,6 +110,31 @@ const DetalleVenta = () => {
     clearForm();
   };
 
+  const usedColors = new Set();
+
+  const generateLightColor = () => {
+    let color;
+    do {
+      const randomChannel = () => Math.floor(Math.random() * 128 + 170); // Valores entre 128 y 255 para asegurar que sean claros
+      const r = randomChannel();
+      const g = randomChannel();
+      const b = randomChannel();
+      color = `rgb(${r}, ${g}, ${b})`;
+    } while (usedColors.has(color));
+    usedColors.add(color);
+    return color;
+  };
+  
+  const idVentaColorMap = {};
+  
+  const getColorForIdVenta = (idVenta) => {
+    if (!idVentaColorMap[idVenta]) {
+      idVentaColorMap[idVenta] = generateLightColor();
+    }
+    return idVentaColorMap[idVenta];
+  };
+
+
   return (
     <div>
       <h2>Detalle de Venta</h2>
@@ -177,21 +203,23 @@ const DetalleVenta = () => {
             <th>ID Detalle</th>
             <th>ID Venta</th>
             <th>ID Producto</th>
+            <th>Nombre Producto</th>
             <th>Precio Unitario</th>
             <th>Cantidad</th>
-            <th>ID Talla</th>
+            <th>Talla</th>
             <th>Acciones</th>
           </tr>
         </thead>
         <tbody>
           {detalles.map((detalle) => (
-            <tr key={detalle.id_detalle_venta}>
+            <tr key={detalle.id_detalle_venta} style={{ backgroundColor: getColorForIdVenta(detalle.id_venta) }}>
               <td>{detalle.id_detalle_venta}</td>
               <td>{detalle.id_venta}</td>
               <td>{detalle.id_producto}</td>
+              <td>{detalle.nombre}</td>
               <td>{detalle.precio_unitario}</td>
               <td>{detalle.cantidad}</td>
-              <td>{detalle.id_talla}</td>
+              <td>{detalle.nombre_talla}</td>
               <td className="accion-buttons">
                 <button className="editar" onClick={() => handleEdit(detalle)}>Editar</button>
                 <button className="eliminar" disabled>Eliminar</button>

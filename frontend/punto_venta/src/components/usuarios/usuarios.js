@@ -178,7 +178,7 @@ const Usuarios = () => {
               <td>{usuario.telefono}</td>
               <td className="accion-buttons">
                 <button className="editar" onClick={() => handleEdit(usuario)}>Editar</button>
-                <button className="eliminar" onClick={() => handleDelete(usuario)}>Eliminar</button>
+                <button className="eliminar" onClick={() => handleDelete(usuario.id_usuario)}>Eliminar</button>
               </td>
             </tr>
           ))}

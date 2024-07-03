@@ -3,7 +3,7 @@ import connection from "../../database.js"
 export class DetalleVentaModelo {
     static async getAll() {
         try {
-            const [detalleVentas] = await connection.query('SELECT id_detalle_venta,bin_to_uuid(id_venta) id_venta,id_producto,precio_unitario,cantidad,id_talla FROM Detalle_venta;');
+            const [detalleVentas] = await connection.query('SELECT id_detalle_venta,bin_to_uuid(id_venta) id_venta, Productos.id_producto,nombre, precio_unitario, cantidad,Tallas.id_talla,nombre_talla FROM Detalle_venta,Tallas,Productos where Detalle_venta.id_talla = Tallas.id_talla and Productos.id_producto = Detalle_venta.id_producto;');
             return detalleVentas;
         } catch (error) {
             throw new Error('Error al obtener todos los detalles de venta: ' + error.message);
