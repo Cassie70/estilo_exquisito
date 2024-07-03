@@ -63,9 +63,11 @@ export const CrearCopy = ({ setListadoState }) => {
       if (!response.ok) {
         throw new Error('Error al subir la imagen y guardar el producto.');
       }
+      alert("Error al Agregar Producto")
 
       const data = await response.json();
       console.log('Producto Agregado:', data);
+      alert("Producto Agregado Correctamente, favor de actualizar la pagina")
 
       // Limpiar el formulario después de éxito
       setPrendaState({

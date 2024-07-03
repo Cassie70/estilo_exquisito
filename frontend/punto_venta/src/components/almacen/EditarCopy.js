@@ -58,6 +58,7 @@ export const EditarCopy = ({ producto, setEditar, setListadoState }) => {
       });
 
       console.log('Producto Modificado:', response.data);
+      alert("Producto Editado Correctamente, favor de actualizar la pagina")
 
       // Actualizar el listado de productos en Almacen.js
       setListadoState(prevState =>

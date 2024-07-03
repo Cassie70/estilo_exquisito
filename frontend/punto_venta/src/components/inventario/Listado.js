@@ -40,9 +40,11 @@ export const Listado = ({ listadoState, setListadoState }) => {
             })
             .then(data => {
                 console.log('Producto Eliminado:', data);
+                alert("Producto eliminado correctamente")
             })
             .catch(error => {
                 console.log('Error al eliminar producto:', error);
+                alert("Error al eliminar producto")
             });
 
         fetch('http://localhost:1234/inventario', {

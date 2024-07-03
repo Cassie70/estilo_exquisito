@@ -21,6 +21,7 @@ export const Producto = ({ productoEsca, setProductos, idDeTall }) => {
       };
 
       setProductos(prevProductos => [...prevProductos, productoNuevo]);
+      alert("Producto Agregado a la Lista")
     }
   };
 
@@ -35,7 +36,6 @@ export const Producto = ({ productoEsca, setProductos, idDeTall }) => {
         {producto ? (
           <>
             <h3>{producto.nombre}</h3>
-            <p>{producto.descripcion}</p>
             <p>${producto.precio}</p>
             <label htmlFor="cantidad">TALLA:</label>
             <select id="cantidad" value={cantidad} onChange={(e) => setCantidad(e.target.value)}>

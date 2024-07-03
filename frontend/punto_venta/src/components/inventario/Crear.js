@@ -49,9 +49,11 @@ export const Crear = (setListadoState) => {
       })
       .then(data => {
         console.log('Producto Agregado:', data);
+        alert("Producto Agregado a la base de datos")
       })
       .catch(error => {
         console.log('Error al agregar producto:', error);
+        alert("Error al agregar producto")
       });
 
     // Limpiar el formulario
