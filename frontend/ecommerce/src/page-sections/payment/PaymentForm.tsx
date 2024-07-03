@@ -335,7 +335,7 @@ export default function PaymentForm() {
                 )}
               </Formik>
             )}
-            <Radio
+            {/* <Radio
               name="cod"
               color="secondary"
               checked={paymentMethod === "cod"}
@@ -352,7 +352,7 @@ export default function PaymentForm() {
                   Has seleccionado pagar en efectivo. Completarás el pago cuando recojas tu pedido en la tienda.
                 </Typography>
               </Box>
-            )}
+            )} */}
           </Card1>
         ) : (
           <StyledRoot mx="auto" my="2rem" boxShadow="large" borderRadius={8}>

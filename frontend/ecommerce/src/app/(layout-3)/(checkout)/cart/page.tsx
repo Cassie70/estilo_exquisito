@@ -43,7 +43,13 @@ const getTallaId = (nombreTalla: string): number | undefined => {
   return foundSize?.id;
 };
 const generateVentaData = (state: any) => {
-  const id_usuario = state.user.id_usuario;
+  const cookieString = Cookies.get('user');
+      if (cookieString) {
+        const decodedString = decodeURIComponent(cookieString);
+        const userObject = JSON.parse(decodedString);
+        state.user = userObject;
+      }
+  const id_usuario = state.user.id_usuario || sessionStorage.getItem("id_usuario") || Cookies.get("user");
 
   const total = state.cart.reduce((accumulator: number, item: any) => {
     return accumulator + (item.precio * item.qty);
@@ -81,7 +87,11 @@ export default function Cart() {
   const handleApartar = async () => {
     try {
       const data = generateVentaData(state);
+      console.log("data", data);
+      
       const response = await api.createTicket(data);
+      console.log("handleApartar", data);
+      
       dispatch({ type: "CLEAR_CART" });
       console.log("response", response);
 
@@ -90,6 +100,10 @@ export default function Cart() {
         text: "Tu venta ha sido apartada con éxito.",
         icon: "success",
         confirmButtonText: "OK"
+      }).then((result) => {
+        if (result.isConfirmed) {
+          window.location.href = `http://localhost:1234/ticket/${response.id_venta}`;
+        } 
       });
     } catch (error) {
       console.error("Error al apartar la venta", error);

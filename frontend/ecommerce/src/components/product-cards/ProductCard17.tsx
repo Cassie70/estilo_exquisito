@@ -64,13 +64,13 @@ interface ProductSize {
 
 type ProductCard17Props = {
   id_producto: number;
-  nombre: string;
-  descripcion: string;
+  nombre?: string;
+  descripcion?: string;
   precio?: number;
   nombre_categoria: string;
-  imagen_url: string;
-  fecha_agregada: string;
-  tallas: ProductSize[];
+  imagen_url?: string;
+  fecha_agregada?: string;
+  tallas?: ProductSize[];
 };
 
 // ==============================================================

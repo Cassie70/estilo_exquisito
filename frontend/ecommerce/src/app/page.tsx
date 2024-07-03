@@ -37,7 +37,8 @@ export default function FashionThree() {
         
         const blogs = await api.getBlogs();
         const services = await api.getServices();
-        const featureProducts = await api.getFeatureProducts();
+        //const featureProducts = await api.getFeatureProducts();
+       
         const mainCarouselData = await api.getMainCarouselData();
 
         // Guardar los productos y otros datos en el contexto
@@ -53,6 +54,7 @@ export default function FashionThree() {
 
   // Acceder a los productos desde el contexto
   const { products,services, blogs } = state;
+  const featureProducts = products.slice(0, 4);
 
   return (
     <Fragment>
@@ -73,7 +75,7 @@ export default function FashionThree() {
         {/* SALE OFFER BANNERS AREA */}
         <Section5 />
         {/* FEATURED PRODUCTS AREA */}
-        {/* <Section6 products={featureProducts} /> */}
+        <Section6 products={featureProducts} />
         {/* SERVICE LIST AREA */}
         {/* <Section7 services={services} /> */}
         {/* BLOG LIST AREA */}

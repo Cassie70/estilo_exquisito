@@ -19,15 +19,13 @@ export default function Section6({ products }: Section6Props) {
 
       <Grid container spacing={5}>
         {products.map((product, i) => (
-          <Grid item md={3} sm={6} xs={12} key={product.id + i}>
+          <Grid item md={3} sm={6} xs={12} key={product.id_producto + i}>
             <ProductCard17
-              id={product.id}
-              slug={product.slug}
-              title={product.title}
-              price={product.price}
-              images={product.images}
-              imgUrl={product.thumbnail}
-              category={product.categories[0]}
+              id_producto ={product.id_producto}
+              nombre={product.nombre}
+              precio={product.precio}
+              imagen_url={product.imagen_url}
+              nombre_categoria={product.nombre_categoria}
             />
           </Grid>
         ))}

@@ -3,7 +3,7 @@ export const aboutLinks = [
   "Our Stores",
   "Our Cares",
   "Terms & Conditions",
-  "Privacy Policy"
+  "Privacy Policy",
 ];
 
 export const customerCareLinks = [

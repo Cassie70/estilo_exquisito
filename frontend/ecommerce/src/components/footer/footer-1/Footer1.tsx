@@ -23,13 +23,11 @@ export default function Footer1() {
             <Grid container spacing={6}>
               <Grid item lg={4} md={6} sm={6} xs={12}>
                 <Link href="/">
-                  <Image alt="logo" mb="1.25rem" src="/assets/images/logo.svg" />
+                  {/* <Image alt="logo" mb="1.25rem" src="/assets/images/logo.svg" /> */}
                 </Link>
 
                 <Paragraph mb="1.25rem" color="gray.500">
-                  Lorem ipsum dolor sit amet, consectetur adipiscing elit. Auctor libero id et, in
-                  gravida. Sit diam duis mauris nulla cursus. Erat et lectus vel ut sollicitudin
-                  elit at amet.
+                  Estilo Exquisito una empresa dedicada en a la venta de ropa unitaria y al por mayor.
                 </Paragraph>
 
                 <AppStore />
@@ -37,21 +35,21 @@ export default function Footer1() {
 
               <Grid item lg={2} md={6} sm={6} xs={12}>
                 <Typography mb="1.25rem" lineHeight="1" fontSize="25px" fontWeight="600">
-                  About Us
+                  Acerca de nosotros
                 </Typography>
 
                 <div>
-                  {aboutLinks.map((item, ind) => (
-                    <StyledLink href="/" key={ind}>
-                      {item}
+                
+                    <StyledLink href="/terminos" key={1}>
+                      Terminos y condiciones
                     </StyledLink>
-                  ))}
+                  
                 </div>
               </Grid>
 
-              <Grid item lg={3} md={6} sm={6} xs={12}>
+              {/* <Grid item lg={3} md={6} sm={6} xs={12}>
                 <Typography mb="1.25rem" lineHeight="1" fontSize="25px" fontWeight="600">
-                  Customer Care
+                  Atención a clientes
                 </Typography>
 
                 <div>
@@ -61,23 +59,23 @@ export default function Footer1() {
                     </StyledLink>
                   ))}
                 </div>
-              </Grid>
+              </Grid> */}
 
               <Grid item lg={3} md={6} sm={6} xs={12}>
                 <Typography mb="1.25rem" lineHeight="1" fontSize="25px" fontWeight="600">
-                  Contact Us
+                  Contactanos
                 </Typography>
 
                 <Typography py="0.3rem" color="gray.500">
-                  70 Washington Square South, New York, NY 10012, United States
+                ESCOM IPN, Unidad Profesional Adolfo López Mateos, Av. Juan de Dios Bátiz, Nueva Industrial Vallejo, Gustavo A. Madero, 07320 Ciudad de México, CDMX
                 </Typography>
 
                 <Typography py="0.3rem" color="gray.500">
-                  Email: uilib.help@gmail.com
+                  Correo: estilo.exquisito@gmail.com
                 </Typography>
 
                 <Typography py="0.3rem" mb="1rem" color="gray.500">
-                  Phone: +1 1123 456 780
+                  Teléfono: +52 56 1656 6110
                 </Typography>
 
                 <FlexBox className="flex" mx="-5px">
