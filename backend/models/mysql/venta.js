@@ -202,7 +202,7 @@ export class VentaModelo {
     static async getByDate({ mes, anio }) {
         try {
             const [ventas, tableInfo] = await connection.query(
-                'SELECT BIN_TO_UUID(id_venta) AS id_venta, BIN_TO_UUID(id_usuario) AS id_usuario, monto, id_estado, fecha FROM Ventas WHERE MONTH(fecha) = ? AND YEAR(fecha) = ? AND id_estado = 3',
+                'SELECT BIN_TO_UUID(id_venta) AS id_venta, BIN_TO_UUID(id_usuario) AS id_usuario, monto, id_estado, fecha FROM Ventas WHERE MONTH(fecha) = ? AND YEAR(fecha) = ? AND id_estado = 5',
                 [mes, anio]
             );
             return ventas;

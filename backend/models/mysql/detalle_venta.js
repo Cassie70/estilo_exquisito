@@ -196,31 +196,52 @@ export class DetalleVentaModelo {
         }
     }
 
-    static async bestSellers(){
-        try{
-            const [bestSellers] = await connection.query(`SELECT nombre, SUM(cantidad) total_vendido, nombre_talla, imagen_url
-                FROM Detalle_venta
-                JOIN Tallas ON Detalle_venta.id_talla = Tallas.id_talla
-                JOIN Productos ON Productos.id_producto = Detalle_venta.id_producto
-                GROUP BY Productos.id_producto, nombre, nombre_talla
-                ORDER BY total_vendido DESC
-                LIMIT 5;`
-        );
+    static async bestSellers({ mes, anio }) {
+        try {
+            const [bestSellers] = await connection.query(
+                `SELECT 
+                    Productos.nombre, 
+                    SUM(Detalle_venta.cantidad) AS total_vendido, 
+                    Tallas.nombre_talla, 
+                    Productos.imagen_url
+                 FROM 
+                    Detalle_venta
+                    JOIN Tallas ON Detalle_venta.id_talla = Tallas.id_talla
+                    JOIN Productos ON Productos.id_producto = Detalle_venta.id_producto
+                    JOIN Ventas ON Detalle_venta.id_venta = Ventas.id_venta
+                 WHERE 
+                    YEAR(Ventas.fecha) = ? AND MONTH(Ventas.fecha) = ?
+                 GROUP BY 
+                    Productos.id_producto, Productos.nombre, Tallas.nombre_talla
+                 ORDER BY 
+                    total_vendido DESC
+                 LIMIT 5;`,
+                [anio, mes]
+            );
             return bestSellers;
         } catch (error) {
             throw new Error('Error al obtener los productos más vendidos: ' + error.message);
         }
     }
 
-    static async bestCategorias(){
+    static async bestCategorias({mes, anio}){
         try{
-            const [bestCategorias] = await connection.query(`SELECT nombre_categoria, SUM(cantidad) total_vendido
-                FROM Detalle_venta
-                JOIN Productos ON Productos.id_producto = Detalle_venta.id_producto
-                JOIN Categorias ON Productos.id_categoria = Categorias.id_categoria
-                GROUP BY Productos.id_categoria, nombre_categoria
-                ORDER BY total_vendido DESC`
-        );
+            const [bestCategorias] = await connection.query(`SELECT 
+                c.nombre_categoria,
+                COUNT(dv.id_detalle_venta) AS total_ventas,
+                SUM(dv.cantidad * dv.precio_unitario) AS total_monto_vendido
+            FROM 
+                Ventas v
+                INNER JOIN Detalle_venta dv ON v.id_venta = dv.id_venta
+                INNER JOIN Productos p ON dv.id_producto = p.id_producto
+                INNER JOIN Categorias c ON p.id_categoria = c.id_categoria
+            WHERE 
+                YEAR(v.fecha) = ? AND MONTH(v.fecha) = ?
+            GROUP BY 
+                c.nombre_categoria
+            ORDER BY 
+                total_monto_vendido DESC;`
+        ,[anio, mes]);
             return bestCategorias;
         }catch (error) {
             throw new Error('Error al obtener las categorias más vendidas: ' + error.message);

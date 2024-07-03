@@ -163,9 +163,9 @@ const VentasD = () => {
           >
             <option value="">Seleccione un estado</option>
             <option value="1">Apartado</option>
-            <option value="3">Cancelado</option>
-            <option value="2">Completado</option>
-            <option value="4">Pendiente</option>
+            <option value="5">Completado</option>
+            <option value="4">Cancelada</option>
+            <option value="6">Pendiente</option>
           </select>
           <input
             type="datetime-local"
@@ -209,12 +209,14 @@ const VentasD = () => {
               <td>{venta.monto}</td>
               <td>
                 {venta.id_estado === 1
-                  ? 'Apartado'
-                  : venta.id_estado === 3
-                  ? 'Cancelado'
-                  : venta.id_estado === 2
-                  ? 'Completado'
-                  : 'Pendiente'}
+                  ? 'Apartada'
+                  : venta.id_estado === 5
+                  ? 'Completada'
+                  : venta.id_estado === 4
+                  ? 'Cancelada'
+                  : venta.id_estado === 6
+                  ? 'Pendiente'
+                  : 'Desconocido'}
               </td>
               <td>{venta.fecha}</td>
               <td className="accion-buttons">
