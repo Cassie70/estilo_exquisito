@@ -84,7 +84,10 @@ export const Listado = ({ listadoState, setListadoState }) => {
     }
 
     const getStockClass = (stock) => {
-        if (stock < 5) {
+        if (stock === 0) {
+            return 'no-stock';
+        } 
+        else if (stock < 5) {
             return 'low-stock';
         } else if (stock >= 5 && stock <= 10) {
             return 'medium-stock';

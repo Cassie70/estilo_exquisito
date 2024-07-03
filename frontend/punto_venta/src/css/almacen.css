@@ -9,3 +9,7 @@
 .high-stock {
     background-color: #ccffcc; /* Verde claro para stock alto */
 }
+
+.no-stock {
+    background-color: #ff6666; /* Rojo oscuro para stock nulo */
+}
