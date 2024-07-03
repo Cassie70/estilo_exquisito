@@ -6,7 +6,7 @@ export class SimuladorModelo {
             await connection.beginTransaction();
             
             // Actualizar los estados en la tabla ventas
-            await connection.query('UPDATE ventas SET id_estado = ? WHERE id_estado = 1', [id_estado]);
+            await connection.query('UPDATE Ventas SET id_estado = ? WHERE id_estado = 1', [id_estado]);
 
             await connection.commit();
             return { success: true, message: 'Estados actualizados correctamente' };

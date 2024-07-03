@@ -6,7 +6,7 @@
 GET http://localhost:1234/ventas
 
 ### Recuperar una venta por su id_venta
-GET http://localhost:1234/ventas/f5eebc99-9c0b-4ef8-bb6d-6bb9bd380f66
+GET http://localhost:1234/ventas/0ebcb828-db18-452e-8231-76a28c11dfe9
 
 ### Recuperar ventas por el id_usuario
 GET http://localhost:1234/ventas/usuario/af8ce9c7-337c-11ef-8690-00e04c368ecb

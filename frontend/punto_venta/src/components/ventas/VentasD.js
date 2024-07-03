@@ -134,6 +134,16 @@ const VentasD = () => {
     return `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
   };
 
+  const handleSimulador = async () => {
+    try {
+      const response = await axios.patch('http://localhost:1234/simulador/cambiarEstado4', { id_estado: 4 });
+      console.log('Simulador 48 horas ejecutado:', response.data);
+      fetchVentas();
+    } catch (error) {
+      console.error('Error al ejecutar simulador 48 horas:', error);
+    }
+  };
+
   return (
     <div>
       <h2>Ventas</h2>
@@ -163,6 +173,7 @@ const VentasD = () => {
           >
             <option value="">Seleccione un estado</option>
             <option value="1">Apartado</option>
+            <option value="2">Pagada</option>
             <option value="5">Completado</option>
             <option value="4">Cancelada</option>
             <option value="6">Pendiente</option>
@@ -212,6 +223,8 @@ const VentasD = () => {
                   ? 'Apartada'
                   : venta.id_estado === 5
                   ? 'Completada'
+                  : venta.id_estado === 2
+                  ? 'Pagada'
                   : venta.id_estado === 4
                   ? 'Cancelada'
                   : venta.id_estado === 6
@@ -227,8 +240,11 @@ const VentasD = () => {
           ))}
         </tbody>
       </table>
+
+      <button onClick={handleSimulador}>SIMULADOR 48 horas</button>
     </div>
   );
 };
 
 export default VentasD;
+
