@@ -73,7 +73,7 @@ export default function ProductCard7(props: ProductCard7Props) {
         alt={nombre}
         width={140}
         height={140}
-        src={ `${API_URL}/imagen/${imagen_url}.png`}
+        src={ `${API_URL}/${imagen_url}`}
       />
 
       <FlexBox

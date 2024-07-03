@@ -105,7 +105,7 @@ export default function MiniCart({ toggleSidenav = () => { } }: MiniCartProps) {
                   mx="1rem"
                   alt={item.nombre}
                   //src={item.imgUrl || "/assets/images/products/iphone-x.png"}
-                  src={`${API_URL}/imagen/${item.imagen_url}.png`}
+                  src={`${API_URL}/${item.imagen_url}`}
                 />
               </Link>
 

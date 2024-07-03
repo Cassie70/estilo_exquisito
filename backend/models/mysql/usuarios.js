@@ -41,7 +41,7 @@ export class UsuariosModelo {
 
    
        const activo = await connection.query('SELECT activo FROM Usuarios WHERE correo_electronico = ?', [correo_electronico]);
-        if (activo[0][0].activo === 0) 
+        if (activo[0].length > 0 && activo[0][0].activo === 0) 
         {
             const query = `UPDATE Usuarios SET activo = 1, nombre = ?, apellido = ?, pass = ?, telefono = ? WHERE correo_electronico = ?`;
             try {

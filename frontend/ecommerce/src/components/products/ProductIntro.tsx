@@ -68,7 +68,7 @@ export default function ProductIntro({ imagen_url, nombre, precio, id_producto, 
               <Image
                 width={300}
                 height={300}
-                src={`${API_URL}/imagen/${imagen_url}.png`}
+                src={`${API_URL}/${imagen_url}`}
                 style={{ display: "block", width: "100%", height: "auto" }}
               />
             </FlexBox>

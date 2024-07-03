@@ -118,7 +118,7 @@ export default function ProductCard17(props: ProductCard17Props) {
     <Wrapper>
       <CardMedia>
         <Link href={`/product/${id_producto}`}>
-          <NextImage width={300} height={300} src={ `${API_URL}/imagen/${imagen_url}.png`} alt={nombre} className="product-img" />
+          <NextImage width={300} height={300} src={ `${API_URL}/${imagen_url}`} alt={nombre} className="product-img" />
         </Link>
 
         <AddToCartButton className="product-actions" onClick={handleAddToCart}>

@@ -41,6 +41,7 @@ app.use('/trabajadores', routes.createTrabajadorRouter({ trabajadorModelo: model
 app.use('/pedido-apartado', routes.createPedidoApartadoRouter({ pedidoApartadoModelo: models.PedidoApartadoModelo }));
 app.use('/detalle-pedido-apartado', routes.createDetallePedidoApartadoRouter({ detallePedidoApartadoModelo: models.DetallePedidoApartadoModelo }));
 app.use('/usuarios', routes.createUsuariosRouter({ usuariosModelo: models.UsuariosModelo }));
+app.use('/usuarios-ecommerce', routes.createUsuariosRouter({ usuariosModelo: models.UsuariosEcommerceModelo }));
 app.use('/detalle-venta', routes.createDetalleVentaRouter({ detalleVentaModelo: models.DetalleVentaModelo }));
 app.use('/ticket', routes.createTicketRouter({ ticketModelo: models.TicketModelo }));
 app.use('/productos-stock', routes.createProductosTallasInventarioRouter({ productosTallasInventarioModelo: models.ProductosTallasInventarioModelo }));

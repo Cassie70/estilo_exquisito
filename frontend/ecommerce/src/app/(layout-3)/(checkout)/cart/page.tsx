@@ -129,9 +129,7 @@ export default function Cart() {
                 ${currency(getTotalPrice())}
               </Typography>
             </FlexBox>
-
             <Divider mb="1rem" />
-
             <Link href="/payment">
               <Button variant="contained" color="primary" fullwidth>
                 Pagar Ahora

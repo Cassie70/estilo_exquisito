@@ -169,7 +169,7 @@ export default function ProductCard1({
           </FlexBox>
 
           <Link href={`/product/${id_producto}`}>
-            <NextImage alt={nombre} width={277} src={ `${API_URL}/imagen/${imagen_url}.png`} height={270} />
+            <NextImage alt={nombre} width={277} src={ `${API_URL}/${imagen_url}`} height={270} />
           </Link>
         </div>
 
